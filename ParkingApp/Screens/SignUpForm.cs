@@ -4,11 +4,11 @@ using System.Windows.Forms;
 
 namespace ParkingApp
 {
-    public partial class SignInForm : Form
+    public partial class SignIn : Form
     {
         private FileWorkerWithUsers fileWorker = new FileWorkerWithUsers();
 
-        public SignInForm()
+        public SignIn()
         {
             InitializeComponent();
         }
@@ -25,38 +25,36 @@ namespace ParkingApp
                     if (radioButton1.Checked)
                     {
                         addToTheFile(createNewUser(login, password, Globals.ADMINISTRATOR));
-                        AdministratorSignInForm administratorForm = new AdministratorSignInForm();
-                        administratorForm.Show();
                     }
                     else
                     {
                         addToTheFile(createNewUser(login, password, Globals.MANAGER));
-                        ManagerSignInForm managerSignInForm = new ManagerSignInForm();
-                        managerSignInForm.Show();
                     }
+                    SignInForm signInForm = new SignInForm("new");
+                    signInForm.Show();
                     this.Hide();
                 }
                 else
                 {
-                    MessageBox.Show("Пользователь с таким логином уже зарегистрирован в приложении", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Такой пользователь уже существует", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        //создает нового пользователя
+        // creates new user
         private User createNewUser(String login, String password, String type)
         {
             User newUser = new User(login, password, type);
             return newUser;
         }
 
-        //добавляет нового пользователя в конец файла
+        // adding new user to the end of file
         private void addToTheFile(User user)
         {
             fileWorker.addUserToFile(user);
         }
 
-        //todo реализовать проверку валидности введенных данных (длина, символы)
+        // validation, lenght etc?
         private bool isCorrectData(String login, String password, String repeatPassword)
         {
             if (login.Length > 2 && password.Length > 2)
@@ -67,18 +65,18 @@ namespace ParkingApp
                 }
                 else
                 {
-                    MessageBox.Show("Введенные пароли должны совпадать", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Пароли должны совпадать", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
             else
             {
-                MessageBox.Show("Логин и пароль должны иметь как минимум 3 символа", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Минимальная длина логина и пароля - 3 символа", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
 
-        //вернуть тру если пользователь с таким именем найден
+        // check if user already exists
         private bool isExist(String login, List<User> users)
         {
             if(users == null)
@@ -98,13 +96,13 @@ namespace ParkingApp
             }
         }
 
-        //считать всех пользователей из файла
+        // read all users from file
         private List<User> getUsers()
         {
             return fileWorker.readUsers();
         }
 
-        //Разрешены только буквы и цифры для логина и пароля
+        // only letters available for login and password
         private void keyPress(object sender, KeyPressEventArgs e)
         {
             if (!(char.IsLetterOrDigit(e.KeyChar) || char.IsControl(e.KeyChar)))
@@ -116,7 +114,7 @@ namespace ParkingApp
         private void backToMainScreenBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MainScreenForm mainScreenForm = new MainScreenForm();
+            MainMenu mainScreenForm = new MainMenu();
             mainScreenForm.Show();
         }
 

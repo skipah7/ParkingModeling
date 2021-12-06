@@ -6,25 +6,30 @@ namespace ParkingApp
     {
         private FileWorkerWithUsers fileWorker = new FileWorkerWithUsers();
 
-        //Проверяет существует ли в файл пользователь с переданными параметрами
-        public bool isExisted(string login, string password, string type)
+        // checks if user exists in file
+        public string isExisted(string login, string password)
         {
             List<User> users = fileWorker.readUsers();
             if (users == null)
             {
-                return false;
+                return "";
             }
             foreach (User u in users)
             {
                 if(u.getLogin()!=null && u.getPassword()!=null && u.getType() != null)
                 {
-                    if (u.getLogin().Equals(login) && u.getPassword().Equals(password) && u.getType().Equals(type))
+                    if (u.getLogin().Equals(login) && u.getPassword().Equals(password) && u.getType().Equals(Globals.ADMINISTRATOR))
                     {
-                        return true;
+                        return Globals.ADMINISTRATOR;
+                    }
+
+                    if (u.getLogin().Equals(login) && u.getPassword().Equals(password) && u.getType().Equals(Globals.MANAGER))
+                    {
+                        return Globals.MANAGER;
                     }
                 }
             }
-            return false;
+            return "";
         }
     }
 }

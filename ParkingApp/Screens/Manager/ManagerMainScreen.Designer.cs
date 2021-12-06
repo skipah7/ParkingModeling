@@ -32,24 +32,27 @@
             this.startModelingBtn = new System.Windows.Forms.Button();
             this.configureModellingParamsBtn = new System.Windows.Forms.Button();
             this.loadparkingBtn = new System.Windows.Forms.Button();
+            this.loginLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // backToMainScreenBtn
             // 
-            this.backToMainScreenBtn.Location = new System.Drawing.Point(-2, -4);
+            this.backToMainScreenBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.backToMainScreenBtn.Location = new System.Drawing.Point(60, 247);
             this.backToMainScreenBtn.Margin = new System.Windows.Forms.Padding(2);
             this.backToMainScreenBtn.Name = "backToMainScreenBtn";
-            this.backToMainScreenBtn.Size = new System.Drawing.Size(139, 22);
+            this.backToMainScreenBtn.Size = new System.Drawing.Size(128, 30);
             this.backToMainScreenBtn.TabIndex = 20;
-            this.backToMainScreenBtn.Text = "Сменить пользователя";
+            this.backToMainScreenBtn.Text = "Выйти";
             this.backToMainScreenBtn.UseVisualStyleBackColor = true;
             this.backToMainScreenBtn.Click += new System.EventHandler(this.backToMainScreenBtn_Click);
             // 
             // startModelingBtn
             // 
-            this.startModelingBtn.Location = new System.Drawing.Point(127, 34);
+            this.startModelingBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.startModelingBtn.Location = new System.Drawing.Point(34, 28);
             this.startModelingBtn.Name = "startModelingBtn";
-            this.startModelingBtn.Size = new System.Drawing.Size(181, 52);
+            this.startModelingBtn.Size = new System.Drawing.Size(193, 40);
             this.startModelingBtn.TabIndex = 21;
             this.startModelingBtn.Text = "Запустить моделирование";
             this.startModelingBtn.UseVisualStyleBackColor = true;
@@ -57,9 +60,10 @@
             // 
             // configureModellingParamsBtn
             // 
-            this.configureModellingParamsBtn.Location = new System.Drawing.Point(127, 92);
+            this.configureModellingParamsBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.configureModellingParamsBtn.Location = new System.Drawing.Point(34, 74);
             this.configureModellingParamsBtn.Name = "configureModellingParamsBtn";
-            this.configureModellingParamsBtn.Size = new System.Drawing.Size(181, 52);
+            this.configureModellingParamsBtn.Size = new System.Drawing.Size(193, 40);
             this.configureModellingParamsBtn.TabIndex = 22;
             this.configureModellingParamsBtn.Text = "Настроить параметры моделирования";
             this.configureModellingParamsBtn.UseVisualStyleBackColor = true;
@@ -67,20 +71,34 @@
             // 
             // loadparkingBtn
             // 
-            this.loadparkingBtn.Location = new System.Drawing.Point(127, 150);
+            this.loadparkingBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.loadparkingBtn.Location = new System.Drawing.Point(34, 120);
             this.loadparkingBtn.Name = "loadparkingBtn";
-            this.loadparkingBtn.Size = new System.Drawing.Size(181, 52);
+            this.loadparkingBtn.Size = new System.Drawing.Size(193, 40);
             this.loadparkingBtn.TabIndex = 23;
-            this.loadparkingBtn.Text = "Загрузить парковку";
+            this.loadparkingBtn.Text = "Загрузить топологию";
             this.loadparkingBtn.UseVisualStyleBackColor = true;
             this.loadparkingBtn.Click += new System.EventHandler(this.loadparkingBtn_Click);
+            // 
+            // loginLabel
+            // 
+            this.loginLabel.AutoSize = true;
+            this.loginLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.loginLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.loginLabel.Location = new System.Drawing.Point(208, 9);
+            this.loginLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.loginLabel.Name = "loginLabel";
+            this.loginLabel.Size = new System.Drawing.Size(37, 16);
+            this.loginLabel.TabIndex = 24;
+            this.loginLabel.Text = "User";
             // 
             // ManagerMainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(433, 224);
+            this.ClientSize = new System.Drawing.Size(256, 288);
+            this.Controls.Add(this.loginLabel);
             this.Controls.Add(this.loadparkingBtn);
             this.Controls.Add(this.configureModellingParamsBtn);
             this.Controls.Add(this.startModelingBtn);
@@ -88,10 +106,11 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ManagerMainScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Главное меню управляющего";
+            this.Text = "User";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
             this.Resize += new System.EventHandler(this.preventResize);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -101,5 +120,6 @@
         private System.Windows.Forms.Button startModelingBtn;
         private System.Windows.Forms.Button configureModellingParamsBtn;
         private System.Windows.Forms.Button loadparkingBtn;
+        private System.Windows.Forms.Label loginLabel;
     }
 }

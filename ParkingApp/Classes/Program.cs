@@ -13,7 +13,7 @@ namespace ParkingApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainScreenForm());
+            Application.Run(new MainMenu());
         }
     }
 }

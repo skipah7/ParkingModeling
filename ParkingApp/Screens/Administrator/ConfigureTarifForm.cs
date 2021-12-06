@@ -53,13 +53,6 @@ namespace ParkingApp
             return tariff;
         }
 
-        private void backToMainAdminScreenBtn_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            AdministratorMainScreen administratorMainScreen = new AdministratorMainScreen();
-            administratorMainScreen.Show();
-        }
-
         private void clickRadioBtn(object sender, EventArgs e)
         {
             if (dayRateRadioBtn.Checked)
@@ -71,14 +64,7 @@ namespace ParkingApp
                 dayRateRadioBtn.Checked = false;
             }
         }
-
-        private void validation(object sender, KeyPressEventArgs e)
-        {
-            if(!(char.IsDigit(e.KeyChar) || char.IsControl(e.KeyChar))){
-                e.Handled = true;
-            }
-        }
-
+        /*
         private void saveAndBackBtn_Click(object sender, EventArgs e)
         {
             Globals.tariff = createTariff();
@@ -86,10 +72,20 @@ namespace ParkingApp
             AdministratorMainScreen administratorMainScreen = new AdministratorMainScreen();
             administratorMainScreen.Show();
         }
-
-        private void carPriceField_TextChanged(object sender, EventArgs e)
+        */
+        private void validation(object sender, KeyPressEventArgs e)
         {
+            if (!(char.IsDigit(e.KeyChar) || char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
+            }
+        }
 
+        private void backToMainAdminScreenBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AdministratorMainScreen administratorMainScreen = new AdministratorMainScreen();
+            administratorMainScreen.Show();
         }
 
         private void preventResize(object sender, EventArgs e)

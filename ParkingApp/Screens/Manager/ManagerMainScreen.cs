@@ -36,18 +36,18 @@ namespace ParkingApp
                     Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
                     Globals.IS_CORRECT_PARKING = true;
 
-                    MessageBox.Show("Парковка успешно загружена!", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                    MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
                 }
                 else
                 {
-                    MessageBox.Show("Упс...Что-то пошло не так. Воможно, файл был поврежден :(", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
+                    MessageBox.Show("Ошибка. Вероятно, файл поврежден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
                 }
             }
             this.Show();
         }
 
 
-        //Загрузка парковки из файла парковки
+        // load parking from file
         private ParkingField loadParkingFromFile()
         {
             FileWorkerWithParkingField fileWorker = new FileWorkerWithParkingField();
@@ -61,11 +61,11 @@ namespace ParkingApp
         private void backToMainScreenBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MainScreenForm mainScreenForm = new MainScreenForm();
+            MainMenu mainScreenForm = new MainMenu();
             mainScreenForm.Show();
         }
 
-        //Запустить моделирование
+        // launch modelling
         private void button1_Click(object sender, EventArgs e)
         {            
             if (Globals.IS_CORRECT_PARKING)
@@ -95,6 +95,13 @@ namespace ParkingApp
             loadParking();
         }
 
+        private void configureModellingParamsBtn_Click(object sender, EventArgs e)
+        {
+            ConfigureModelingParamsForm paramsForm = new ConfigureModelingParamsForm();
+            paramsForm.Show();
+            this.Hide();
+        }
+
         private void preventResize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Maximized)
@@ -106,13 +113,6 @@ namespace ParkingApp
         private void shutDownApplication(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
-        }
-
-        private void configureModellingParamsBtn_Click(object sender, EventArgs e)
-        {
-            ConfigureModelingParamsForm paramsForm = new ConfigureModelingParamsForm();
-            paramsForm.Show();
-            this.Hide();
         }
     }
 }

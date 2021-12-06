@@ -79,7 +79,6 @@
             this.carPriceField.Size = new System.Drawing.Size(39, 20);
             this.carPriceField.TabIndex = 3;
             this.carPriceField.Text = "100";
-            this.carPriceField.TextChanged += new System.EventHandler(this.carPriceField_TextChanged);
             this.carPriceField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.validation);
             // 
             // label1

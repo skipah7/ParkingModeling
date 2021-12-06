@@ -8,8 +8,8 @@ namespace ParkingApp
     {
         private List<User> users = null;
         
-        private String filePath = "";
-        private String fileName = "users.parking";
+        private string filePath = "";
+        private string fileName = "users.parking";
 
         public FileWorkerWithUsers()
         {
@@ -20,7 +20,7 @@ namespace ParkingApp
             }
         }
 
-        //Добавляем пользователя в список пользователей
+        // add users to the list
         public void addUserToFile(User user)
         {
             if (readUsers() == null)
@@ -32,11 +32,11 @@ namespace ParkingApp
             {
                 users.Add(user);
             }
-            //Перезаписываем файл
+            // rewrite file
             writeUsers();
         }
 
-        //Считываем всех пользователей из файла
+        // read users from file
         public List<User> readUsers()
         {
             SerializeClass ser = new SerializeClass(filePath, users);
@@ -60,7 +60,7 @@ namespace ParkingApp
             
         }
 
-        //Записываем всех пользователей
+        // write all users
         public void writeUsers()
         {
             SerializeClass ser = new SerializeClass(filePath, users);

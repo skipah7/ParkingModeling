@@ -68,11 +68,11 @@
     <Compile Include="Classes\VisualizationClasses\ProcessImagesClass.cs" />
     <Compile Include="Classes\VisualizationClasses\RoadsClass.cs" />
     <Compile Include="Classes\VisualizationClasses\VerifyParkingClass.cs" />
-    <Compile Include="Screens\AboutSystemForm.cs">
+    <Compile Include="Screens\AboutDevelopers.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Screens\AboutSystemForm.Designer.cs">
-      <DependentUpon>AboutSystemForm.cs</DependentUpon>
+    <Compile Include="Screens\AboutDevelopers.Designer.cs">
+      <DependentUpon>AboutDevelopers.cs</DependentUpon>
     </Compile>
     <Compile Include="Screens\Administrator\AdministratorMainScreen.cs">
       <SubType>Form</SubType>
@@ -80,11 +80,11 @@
     <Compile Include="Screens\Administrator\AdministratorMainScreen.Designer.cs">
       <DependentUpon>AdministratorMainScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Screens\Administrator\AdministratorSignInForm.cs">
+    <Compile Include="Screens\SignInForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Screens\Administrator\AdministratorSignInForm.Designer.cs">
-      <DependentUpon>AdministratorSignInForm.cs</DependentUpon>
+    <Compile Include="Screens\SignInForm.Designer.cs">
+      <DependentUpon>SignInForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Screens\Administrator\ConfigureTarifForm.cs">
       <SubType>Form</SubType>
@@ -105,11 +105,11 @@
     <Compile Include="Screens\Administrator\SaveForm.Designer.cs">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Screens\MainScreenForm.cs">
+    <Compile Include="Screens\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Screens\MainScreenForm.Designer.cs">
-      <DependentUpon>MainScreenForm.cs</DependentUpon>
+    <Compile Include="Screens\MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Screens\Manager\ConfigureModelingParamsForm.cs">
       <SubType>Form</SubType>
@@ -122,12 +122,6 @@
     </Compile>
     <Compile Include="Screens\Manager\ManagerMainScreen.Designer.cs">
       <DependentUpon>ManagerMainScreen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Screens\Manager\ManagerSignInForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Screens\Manager\ManagerSignInForm.Designer.cs">
-      <DependentUpon>ManagerSignInForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\BaseParkingClasses\ParkingField.cs" />
     <Compile Include="Screens\Administrator\ParkingSpaceForm.cs">
@@ -154,14 +148,14 @@
     <Compile Include="Classes\BaseParkingClasses\Tariff.cs" />
     <Compile Include="Classes\BaseParkingClasses\User.cs" />
     <Compile Include="Classes\SerializationClasses\UserValidator.cs" />
-    <EmbeddedResource Include="Screens\AboutSystemForm.resx">
-      <DependentUpon>AboutSystemForm.cs</DependentUpon>
+    <EmbeddedResource Include="Screens\AboutDevelopers.resx">
+      <DependentUpon>AboutDevelopers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Administrator\AdministratorMainScreen.resx">
       <DependentUpon>AdministratorMainScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Screens\Administrator\AdministratorSignInForm.resx">
-      <DependentUpon>AdministratorSignInForm.cs</DependentUpon>
+    <EmbeddedResource Include="Screens\SignInForm.resx">
+      <DependentUpon>SignInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Administrator\ConfigureTarifForm.resx">
       <DependentUpon>ConfigureTarifForm.cs</DependentUpon>
@@ -172,17 +166,14 @@
     <EmbeddedResource Include="Screens\Administrator\SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Screens\MainScreenForm.resx">
-      <DependentUpon>MainScreenForm.cs</DependentUpon>
+    <EmbeddedResource Include="Screens\MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Manager\ConfigureModelingParamsForm.resx">
       <DependentUpon>ConfigureModelingParamsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Manager\ManagerMainScreen.resx">
       <DependentUpon>ManagerMainScreen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Screens\Manager\ManagerSignInForm.resx">
-      <DependentUpon>ManagerSignInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Administrator\ParkingSpaceForm.resx">
       <DependentUpon>ParkingSpaceForm.cs</DependentUpon>

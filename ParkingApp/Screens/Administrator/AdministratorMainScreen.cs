@@ -70,11 +70,11 @@ namespace ParkingApp
                     Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
                     Globals.IS_CORRECT_PARKING = true;
 
-                    MessageBox.Show("Парковка успешно загружена!", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Упс...Что-то пошло не так. Воможно, файл был поврежден :(", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ошибка. Вероятно, файл был поврежден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             this.Show();
@@ -101,7 +101,7 @@ namespace ParkingApp
         private void backToMainScreenBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MainScreenForm mainScreenForm = new MainScreenForm();
+            MainMenu mainScreenForm = new MainMenu();
             mainScreenForm.Show();
         }
 

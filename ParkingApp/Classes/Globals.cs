@@ -8,15 +8,15 @@ namespace ParkingApp
 {
     public static class Globals
     {
-        //Роли пользователей в системе
+        // roles
         public static String ADMINISTRATOR = "Administrator";
         public static String MANAGER = "Manager";
 
-        //Плата взимается по часам или по сутка
+        // type of tarif
         public static String DAILY_RATE = "Daily";
         public static String HOURLY_RATE = "Hourly";
 
-        //Высота и ширина пространства парковки
+        // height and width
         public static int WIDTH = 0;
         public static int HEIGHT = 0;
 
@@ -26,7 +26,7 @@ namespace ParkingApp
 
         public static double delta;
 
-        //Тариф
+        // tariff
         public static Tariff tariff;
 
         public static ModelingParams modelingParams;
@@ -35,8 +35,8 @@ namespace ParkingApp
 
         public static bool isNewParking = true;
 
-        //Названия шаблонов, которые сохраняются в patters
-        //и представляют собой матрицу пространства парковки
+        // patterns names, saved at patterns
+        // is matrix of parking
         public const String TREE = "Tree";
         public const String CASH_BOX = "Cash box";
         public const String PARKING_PLACE = "Auto";
@@ -46,25 +46,25 @@ namespace ParkingApp
         public const String ROAD = "Road";
         public const String HIGHWAY = "Highway";
 
-        //Название файла парковки
+        // parking file name
         public static String parkingFileName = "";
-        //Путь к файлу парковки
+        // parking file path
         public static String parkingFilePath = "";
-        //Путь к одностаничному сайту
+        // path to the site
         public static string pathToHtmlFile = "";
 
-        //Директория пользователя, которая вычисляется исходя из положения папки с проектом
+        // user directory based on project path
         public static String directory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
 
-        //Матрица шаблонов, которые представляют собой пространство парковки
+        // matrix pattern, is parking space
         public static String[,] patterns = new String[WIDTH, HEIGHT];
-        //Пикчербоксы для отрисовки пространства парковки
+        //pictureboxes for parking painting
         public static List<PictureBox> pictureBoxes = new List<PictureBox>();
 
-        //Матрица шаблонов, которые представляют собой шоссе
+        // matrix pattern, is road
         public static String[,] highwayPatterns = new String[WIDTH + 1, HEIGHT + 1];
 
-        //размер поля парковки в пикселях
+        // size of parking in pixels
         public static int SCREEN_SIZE = 500;
 
         public static int PICTURE_BOX_SIZE = 50;
@@ -78,22 +78,22 @@ namespace ParkingApp
 
         public static void calculateDelta()
         {
-            //секунда х1
+            // second х1
             if(INTERVAL == 20)
             {
                 delta = 1.65;
             } 
-            //полсекунды х2
+            // half a second х2
             else if(INTERVAL == 10)
             {
                 delta = 3.2;
             }
-            //четверть секунды х4
+            // quarter second х4
             else if (INTERVAL == 5)
             {
                 delta = 3.7;
             }
-            //две секунды х1/2
+            // two seconds х1/2
             else
             {
                 delta = 1.05;
