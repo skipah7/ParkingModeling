@@ -199,9 +199,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\entrance.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\въезд.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +323,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highwayPic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\road.jpg" />
+    <None Include="Resources\tree.jpg" />
+    <None Include="Resources\entrance.jpg" />
+    <None Include="Resources\exit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parkingPlace.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

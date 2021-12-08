@@ -101,6 +101,8 @@
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.loginTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SignInForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
             this.Resize += new System.EventHandler(this.preventResize);

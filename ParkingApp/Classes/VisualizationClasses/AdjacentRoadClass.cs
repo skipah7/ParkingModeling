@@ -25,7 +25,7 @@ namespace ParkingApp.Classes
             pictureBox.Name = i + "_" + j;
             pictureBox.Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox.Image = Resources.entrancePic;
+            pictureBox.Image = Resources.roadPic;
             return pictureBox;
         }
     }

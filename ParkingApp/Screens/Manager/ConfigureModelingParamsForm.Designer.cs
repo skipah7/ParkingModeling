@@ -189,6 +189,7 @@
             this.trackBar1.Size = new System.Drawing.Size(159, 45);
             this.trackBar1.TabIndex = 48;
             this.trackBar1.Value = 1;
+            this.trackBar1.Visible = false;
             // 
             // label8
             // 
@@ -661,6 +662,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.backToAdminMainScreen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ConfigureModelingParamsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройка параметров моделирования";

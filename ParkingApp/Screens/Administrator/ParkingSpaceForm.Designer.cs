@@ -30,13 +30,6 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.grassPic = new System.Windows.Forms.PictureBox();
-            this.entrancePic = new System.Windows.Forms.PictureBox();
-            this.exitPic = new System.Windows.Forms.PictureBox();
-            this.dollarPic = new System.Windows.Forms.PictureBox();
-            this.parkingPlacePicBox = new System.Windows.Forms.PictureBox();
-            this.treePic = new System.Windows.Forms.PictureBox();
-            this.roadPic = new System.Windows.Forms.PictureBox();
             this.saveToFile = new System.Windows.Forms.Button();
             this.createNewParkingBtn = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -49,6 +42,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.widthTextBox = new System.Windows.Forms.TextBox();
             this.heightTextBox = new System.Windows.Forms.TextBox();
+            this.grassPic = new System.Windows.Forms.PictureBox();
+            this.entrancePic = new System.Windows.Forms.PictureBox();
+            this.exitPic = new System.Windows.Forms.PictureBox();
+            this.dollarPic = new System.Windows.Forms.PictureBox();
+            this.parkingPlacePicBox = new System.Windows.Forms.PictureBox();
+            this.treePic = new System.Windows.Forms.PictureBox();
+            this.roadPic = new System.Windows.Forms.PictureBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grassPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.entrancePic)).BeginInit();
@@ -81,94 +81,10 @@
             this.panel2.Controls.Add(this.parkingPlacePicBox);
             this.panel2.Controls.Add(this.treePic);
             this.panel2.Controls.Add(this.roadPic);
-            this.panel2.Location = new System.Drawing.Point(528, 29);
+            this.panel2.Location = new System.Drawing.Point(536, 170);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(226, 219);
             this.panel2.TabIndex = 11;
-            // 
-            // grassPic
-            // 
-            this.grassPic.Image = global::ParkingApp.Properties.Resources.grassPic;
-            this.grassPic.Location = new System.Drawing.Point(116, 151);
-            this.grassPic.Name = "grassPic";
-            this.grassPic.Size = new System.Drawing.Size(69, 65);
-            this.grassPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.grassPic.TabIndex = 9;
-            this.grassPic.TabStop = false;
-            this.grassPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownGrass);
-            this.grassPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
-            // 
-            // entrancePic
-            // 
-            this.entrancePic.Image = global::ParkingApp.Properties.Resources.entrancePic;
-            this.entrancePic.Location = new System.Drawing.Point(4, 80);
-            this.entrancePic.Name = "entrancePic";
-            this.entrancePic.Size = new System.Drawing.Size(69, 65);
-            this.entrancePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.entrancePic.TabIndex = 1;
-            this.entrancePic.TabStop = false;
-            this.entrancePic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownEntrancePic);
-            this.entrancePic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
-            // 
-            // exitPic
-            // 
-            this.exitPic.Image = global::ParkingApp.Properties.Resources.exitPic;
-            this.exitPic.Location = new System.Drawing.Point(154, 80);
-            this.exitPic.Name = "exitPic";
-            this.exitPic.Size = new System.Drawing.Size(69, 65);
-            this.exitPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.exitPic.TabIndex = 2;
-            this.exitPic.TabStop = false;
-            this.exitPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownExitPic);
-            this.exitPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
-            // 
-            // dollarPic
-            // 
-            this.dollarPic.Image = global::ParkingApp.Properties.Resources.cashBoxPic;
-            this.dollarPic.Location = new System.Drawing.Point(79, 80);
-            this.dollarPic.Name = "dollarPic";
-            this.dollarPic.Size = new System.Drawing.Size(69, 65);
-            this.dollarPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.dollarPic.TabIndex = 5;
-            this.dollarPic.TabStop = false;
-            this.dollarPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dollarDown);
-            this.dollarPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
-            // 
-            // parkingPlacePicBox
-            // 
-            this.parkingPlacePicBox.Image = global::ParkingApp.Properties.Resources.parkingPlacePic;
-            this.parkingPlacePicBox.Location = new System.Drawing.Point(34, 9);
-            this.parkingPlacePicBox.Name = "parkingPlacePicBox";
-            this.parkingPlacePicBox.Size = new System.Drawing.Size(69, 65);
-            this.parkingPlacePicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.parkingPlacePicBox.TabIndex = 7;
-            this.parkingPlacePicBox.TabStop = false;
-            this.parkingPlacePicBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownCar);
-            this.parkingPlacePicBox.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
-            // 
-            // treePic
-            // 
-            this.treePic.Image = global::ParkingApp.Properties.Resources.treePic;
-            this.treePic.Location = new System.Drawing.Point(34, 151);
-            this.treePic.Name = "treePic";
-            this.treePic.Size = new System.Drawing.Size(69, 65);
-            this.treePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.treePic.TabIndex = 4;
-            this.treePic.TabStop = false;
-            this.treePic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownTree);
-            this.treePic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
-            // 
-            // roadPic
-            // 
-            this.roadPic.Image = global::ParkingApp.Properties.Resources.roadPic;
-            this.roadPic.Location = new System.Drawing.Point(116, 9);
-            this.roadPic.Name = "roadPic";
-            this.roadPic.Size = new System.Drawing.Size(69, 65);
-            this.roadPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.roadPic.TabIndex = 6;
-            this.roadPic.TabStop = false;
-            this.roadPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownRoad);
-            this.roadPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // saveToFile
             // 
@@ -300,6 +216,89 @@
             this.heightTextBox.TabIndex = 22;
             this.heightTextBox.Text = "10";
             // 
+            // grassPic
+            // 
+            this.grassPic.Location = new System.Drawing.Point(116, 151);
+            this.grassPic.Name = "grassPic";
+            this.grassPic.Size = new System.Drawing.Size(69, 65);
+            this.grassPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.grassPic.TabIndex = 9;
+            this.grassPic.TabStop = false;
+            this.grassPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownGrass);
+            this.grassPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            // 
+            // entrancePic
+            // 
+            this.entrancePic.Image = global::ParkingApp.Properties.Resources.entrance;
+            this.entrancePic.Location = new System.Drawing.Point(4, 80);
+            this.entrancePic.Name = "entrancePic";
+            this.entrancePic.Size = new System.Drawing.Size(69, 65);
+            this.entrancePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.entrancePic.TabIndex = 1;
+            this.entrancePic.TabStop = false;
+            this.entrancePic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownEntrancePic);
+            this.entrancePic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            // 
+            // exitPic
+            // 
+            this.exitPic.Image = global::ParkingApp.Properties.Resources.exit;
+            this.exitPic.Location = new System.Drawing.Point(154, 80);
+            this.exitPic.Name = "exitPic";
+            this.exitPic.Size = new System.Drawing.Size(69, 65);
+            this.exitPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.exitPic.TabIndex = 2;
+            this.exitPic.TabStop = false;
+            this.exitPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownExitPic);
+            this.exitPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            // 
+            // dollarPic
+            // 
+            this.dollarPic.Image = global::ParkingApp.Properties.Resources.road;
+            this.dollarPic.Location = new System.Drawing.Point(79, 80);
+            this.dollarPic.Name = "dollarPic";
+            this.dollarPic.Size = new System.Drawing.Size(69, 65);
+            this.dollarPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dollarPic.TabIndex = 5;
+            this.dollarPic.TabStop = false;
+            this.dollarPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dollarDown);
+            this.dollarPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            // 
+            // parkingPlacePicBox
+            // 
+            this.parkingPlacePicBox.Image = global::ParkingApp.Properties.Resources.parkingPlace;
+            this.parkingPlacePicBox.Location = new System.Drawing.Point(34, 9);
+            this.parkingPlacePicBox.Name = "parkingPlacePicBox";
+            this.parkingPlacePicBox.Size = new System.Drawing.Size(69, 65);
+            this.parkingPlacePicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.parkingPlacePicBox.TabIndex = 7;
+            this.parkingPlacePicBox.TabStop = false;
+            this.parkingPlacePicBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownCar);
+            this.parkingPlacePicBox.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            // 
+            // treePic
+            // 
+            this.treePic.Image = global::ParkingApp.Properties.Resources.tree;
+            this.treePic.Location = new System.Drawing.Point(34, 151);
+            this.treePic.Name = "treePic";
+            this.treePic.Size = new System.Drawing.Size(69, 65);
+            this.treePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.treePic.TabIndex = 4;
+            this.treePic.TabStop = false;
+            this.treePic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownTree);
+            this.treePic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            // 
+            // roadPic
+            // 
+            this.roadPic.Image = global::ParkingApp.Properties.Resources.roadPic;
+            this.roadPic.Location = new System.Drawing.Point(116, 9);
+            this.roadPic.Name = "roadPic";
+            this.roadPic.Size = new System.Drawing.Size(69, 65);
+            this.roadPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.roadPic.TabIndex = 6;
+            this.roadPic.TabStop = false;
+            this.roadPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownRoad);
+            this.roadPic.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            // 
             // ParkingSpaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -324,6 +323,8 @@
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ParkingSpaceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Конфигурирование пространства парковки";

@@ -14,27 +14,27 @@ namespace ParkingApp.Classes.VisualizationClasses
             }
             else if (name.Equals(Globals.ENTRANCE))
             {
-                return Resources.entrancePic;
+                return Resources.entrance;
             }
             else if (name.Equals(Globals.EXIT))
             {
-                return Resources.exitPic;
+                return Resources.exit;
             }
             else if (name.Equals(Globals.CASH_BOX))
             {
-                return Resources.cashBoxPic;
+                return Resources.roadPic;
             }
             else if (name.Equals(Globals.PARKING_PLACE))
             {
-                return Resources.parkingPlacePic;
+                return Resources.parkingPlace;
             }
             else if (name.Equals(Globals.TREE))
             {
-                return Resources.treePic;
+                return Resources.tree;
             }
             else
             {
-                return Resources.grassPic;
+                return Resources.tree;
             }
         }
 

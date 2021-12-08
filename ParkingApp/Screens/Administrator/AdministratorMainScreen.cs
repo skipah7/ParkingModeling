@@ -1,6 +1,7 @@
 ﻿using ParkingApp.Classes;
 using System;
 using System.Windows.Forms;
+using ParkingApp.Screens;
 
 namespace ParkingApp
 {
@@ -99,6 +100,13 @@ namespace ParkingApp
         private void shutDownApplication(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void aboutDevelopersButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AboutDevelopers aboutDevelopersForm = new AboutDevelopers();
+            aboutDevelopersForm.Show();
         }
     }
 }

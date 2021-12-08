@@ -115,6 +115,7 @@
             this.aboutDevelopersButton.TabIndex = 25;
             this.aboutDevelopersButton.Text = "О разработчиках";
             this.aboutDevelopersButton.UseVisualStyleBackColor = true;
+            this.aboutDevelopersButton.Click += new System.EventHandler(this.aboutDevelopersButton_Click);
             // 
             // ManagerMainScreen
             // 
@@ -130,6 +131,8 @@
             this.Controls.Add(this.startModelingBtn);
             this.Controls.Add(this.backToMainScreenBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ManagerMainScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manager";
