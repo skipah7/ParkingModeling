@@ -19,6 +19,8 @@ namespace ParkingApp
         // height and width
         public static int WIDTH = 0;
         public static int HEIGHT = 0;
+        public static int MAX_SIZE = 10;
+        public static int MIN_SIZE = 5;
 
         public static int INTERVAL = 20;
 

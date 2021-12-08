@@ -9,7 +9,7 @@ namespace ParkingApp.Classes
 
         public FileWorkerWithParkingField(ParkingField parkingField, String fileName)
         {
-            //Объект парковки для сериализации
+            // parking object for serializing
             this.parkingField = parkingField;
             Globals.parkingFileName = fileName + ".parking";
             Globals.parkingFilePath = Globals.directory + "\\" + Globals.parkingFileName;
@@ -24,7 +24,7 @@ namespace ParkingApp.Classes
            
         }
 
-        //Десириализуем парковку
+        // desirialize parking
         public ParkingField readParkingField()
         {
             SerializeClass ser = new SerializeClass(Globals.parkingFilePath, parkingField);
@@ -45,7 +45,7 @@ namespace ParkingApp.Classes
             return null;
         }
 
-        //Сериализуем парковку
+        // serialize parking
         public void writeParkingField()
         {
             SerializeClass ser = new SerializeClass(Globals.parkingFilePath, parkingField);

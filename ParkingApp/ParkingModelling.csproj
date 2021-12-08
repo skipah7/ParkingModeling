@@ -92,12 +92,6 @@
     <Compile Include="Screens\Administrator\ConfigureTarifForm.Designer.cs">
       <DependentUpon>ConfigureTarifForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Screens\Administrator\CreateParkingField.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Screens\Administrator\CreateParkingField.Designer.cs">
-      <DependentUpon>CreateParkingField.cs</DependentUpon>
-    </Compile>
     <Compile Include="Classes\SerializationClasses\FileWorkerWithUsers.cs" />
     <Compile Include="Screens\Administrator\SaveForm.cs">
       <SubType>Form</SubType>
@@ -159,9 +153,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Administrator\ConfigureTarifForm.resx">
       <DependentUpon>ConfigureTarifForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Screens\Administrator\CreateParkingField.resx">
-      <DependentUpon>CreateParkingField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Administrator\SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>

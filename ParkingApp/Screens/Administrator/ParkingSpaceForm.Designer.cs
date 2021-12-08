@@ -40,12 +40,15 @@
             this.saveToFile = new System.Windows.Forms.Button();
             this.createNewParkingBtn = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.buttonsBox = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.leftAdjacentRoad = new System.Windows.Forms.Panel();
             this.rightAdjacentRoad = new System.Windows.Forms.Panel();
             this.upAdjacentRoad = new System.Windows.Forms.Panel();
             this.downAdjacentRoad = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.widthTextBox = new System.Windows.Forms.TextBox();
+            this.heightTextBox = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grassPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.entrancePic)).BeginInit();
@@ -54,7 +57,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.parkingPlacePicBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.roadPic)).BeginInit();
-            this.buttonsBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -69,6 +71,7 @@
             // 
             // panel2
             // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.AutoSize = true;
             this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel2.Controls.Add(this.grassPic);
@@ -78,7 +81,7 @@
             this.panel2.Controls.Add(this.parkingPlacePicBox);
             this.panel2.Controls.Add(this.treePic);
             this.panel2.Controls.Add(this.roadPic);
-            this.panel2.Location = new System.Drawing.Point(587, 29);
+            this.panel2.Location = new System.Drawing.Point(528, 29);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(226, 219);
             this.panel2.TabIndex = 11;
@@ -169,21 +172,25 @@
             // 
             // saveToFile
             // 
-            this.saveToFile.Location = new System.Drawing.Point(168, 19);
+            this.saveToFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveToFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.saveToFile.Location = new System.Drawing.Point(723, 506);
             this.saveToFile.Name = "saveToFile";
-            this.saveToFile.Size = new System.Drawing.Size(75, 49);
+            this.saveToFile.Size = new System.Drawing.Size(89, 30);
             this.saveToFile.TabIndex = 13;
-            this.saveToFile.Text = "Сохранить в файл";
+            this.saveToFile.Text = "Сохранить";
             this.saveToFile.UseVisualStyleBackColor = true;
             this.saveToFile.Click += new System.EventHandler(this.saveToFile_Click);
             // 
             // createNewParkingBtn
             // 
-            this.createNewParkingBtn.Location = new System.Drawing.Point(6, 19);
+            this.createNewParkingBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.createNewParkingBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.createNewParkingBtn.Location = new System.Drawing.Point(628, 506);
             this.createNewParkingBtn.Name = "createNewParkingBtn";
-            this.createNewParkingBtn.Size = new System.Drawing.Size(75, 49);
+            this.createNewParkingBtn.Size = new System.Drawing.Size(89, 30);
             this.createNewParkingBtn.TabIndex = 14;
-            this.createNewParkingBtn.Text = "Создать новую парковку";
+            this.createNewParkingBtn.Text = "Обновить";
             this.createNewParkingBtn.UseVisualStyleBackColor = true;
             this.createNewParkingBtn.Click += new System.EventHandler(this.createNewParkingBtn_Click);
             // 
@@ -197,24 +204,15 @@
             this.panel3.Size = new System.Drawing.Size(0, 0);
             this.panel3.TabIndex = 16;
             // 
-            // buttonsBox
-            // 
-            this.buttonsBox.Controls.Add(this.button1);
-            this.buttonsBox.Controls.Add(this.createNewParkingBtn);
-            this.buttonsBox.Controls.Add(this.saveToFile);
-            this.buttonsBox.Location = new System.Drawing.Point(570, 254);
-            this.buttonsBox.Name = "buttonsBox";
-            this.buttonsBox.Size = new System.Drawing.Size(251, 86);
-            this.buttonsBox.TabIndex = 17;
-            this.buttonsBox.TabStop = false;
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(87, 19);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(533, 506);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 49);
+            this.button1.Size = new System.Drawing.Size(89, 30);
             this.button1.TabIndex = 15;
-            this.button1.Text = "В главное меню";
+            this.button1.Text = "Назад";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -258,6 +256,50 @@
             this.downAdjacentRoad.Size = new System.Drawing.Size(0, 0);
             this.downAdjacentRoad.TabIndex = 21;
             // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(533, 475);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 16);
+            this.label2.TabIndex = 25;
+            this.label2.Text = "Ширина";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(533, 450);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 16);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Высота";
+            // 
+            // widthTextBox
+            // 
+            this.widthTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.widthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.widthTextBox.Location = new System.Drawing.Point(595, 472);
+            this.widthTextBox.MaxLength = 2;
+            this.widthTextBox.Name = "widthTextBox";
+            this.widthTextBox.Size = new System.Drawing.Size(39, 22);
+            this.widthTextBox.TabIndex = 23;
+            this.widthTextBox.Text = "10";
+            // 
+            // heightTextBox
+            // 
+            this.heightTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.heightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.heightTextBox.Location = new System.Drawing.Point(595, 447);
+            this.heightTextBox.MaxLength = 2;
+            this.heightTextBox.Name = "heightTextBox";
+            this.heightTextBox.Size = new System.Drawing.Size(39, 22);
+            this.heightTextBox.TabIndex = 22;
+            this.heightTextBox.Text = "10";
+            // 
             // ParkingSpaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -266,11 +308,17 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(824, 548);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.widthTextBox);
+            this.Controls.Add(this.heightTextBox);
+            this.Controls.Add(this.createNewParkingBtn);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.saveToFile);
             this.Controls.Add(this.downAdjacentRoad);
             this.Controls.Add(this.upAdjacentRoad);
             this.Controls.Add(this.rightAdjacentRoad);
             this.Controls.Add(this.leftAdjacentRoad);
-            this.Controls.Add(this.buttonsBox);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -289,7 +337,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.parkingPlacePicBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.roadPic)).EndInit();
-            this.buttonsBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -308,11 +355,14 @@
         private System.Windows.Forms.Button saveToFile;
         private System.Windows.Forms.Button createNewParkingBtn;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.GroupBox buttonsBox;
         private System.Windows.Forms.Panel leftAdjacentRoad;
         private System.Windows.Forms.Panel rightAdjacentRoad;
         private System.Windows.Forms.Panel upAdjacentRoad;
         private System.Windows.Forms.Panel downAdjacentRoad;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox widthTextBox;
+        private System.Windows.Forms.TextBox heightTextBox;
     }
 }

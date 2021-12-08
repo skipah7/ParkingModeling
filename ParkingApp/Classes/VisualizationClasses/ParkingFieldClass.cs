@@ -50,9 +50,9 @@ namespace ParkingApp.Classes
             {
                 Globals.pictureBoxes = new List<PictureBox>();
             }
-            for (int i = 0; i < Globals.WIDTH; i++)
+            for (int i = 0; i < Globals.HEIGHT; i++)
             {
-                for (int j = 0; j < Globals.HEIGHT; j++)
+                for (int j = 0; j < Globals.WIDTH; j++)
                 {
                     Globals.pictureBoxes.Add(createPictureBox(processImages.getImageByName(Globals.patterns[i, j]), i, j));
                 }
@@ -75,7 +75,7 @@ namespace ParkingApp.Classes
         public PictureBox createPictureBox(Image image, int i, int j)
         {
             PictureBox pictureBox1 = new PictureBox();
-            pictureBox1.Location = new Point(Globals.PICTURE_BOX_SIZE + j * Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE + i * Globals.PICTURE_BOX_SIZE);
+            pictureBox1.Location = new Point(j * Globals.PICTURE_BOX_SIZE, i * Globals.PICTURE_BOX_SIZE);
             pictureBox1.Name = i + "_" + j;
             pictureBox1.Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;

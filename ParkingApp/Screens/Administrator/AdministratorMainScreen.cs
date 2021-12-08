@@ -18,27 +18,16 @@ namespace ParkingApp
 
         private void createParking()
         {
-            if (Globals.isNewParking)
-            {
-                if (Globals.tariff == null)
-                {
-                    this.Hide();
-                    ConfigureTarifForm configureTarifForm = new ConfigureTarifForm();
-                    configureTarifForm.Show();
-                }
-                else
-                {
-                    this.Hide();
-                    CreateParkingField createParkingField = new CreateParkingField();
-                    createParkingField.Show();
-                }
-            }
-            else
-            {
-                this.Hide();
-                ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
-                parkingSpaceForm.Show();
-            }
+            Globals.isNewParking = false;
+            Globals.WIDTH = 5;
+            Globals.HEIGHT = 5;
+            Globals.patterns = new DefaultParkings().getDefault_5_5();
+            Globals.isNewParking = false;
+            Globals.highwayPatterns = new string[Globals.HEIGHT + 1, Globals.WIDTH];
+
+            this.Hide();
+            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
+            parkingSpaceForm.Show();
         }
 
         private void loadButton_Click(object sender, EventArgs e)
@@ -51,6 +40,7 @@ namespace ParkingApp
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Parking files(*.parking) | *.parking";
             openFileDialog1.InitialDirectory = Globals.directory;
+
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -80,7 +70,7 @@ namespace ParkingApp
             this.Show();
         }
 
-        //Загрузка парковки из файла парковки
+        // load parking from file
         private ParkingField loadParkingFromFile()
         {
             FileWorkerWithParkingField fileWorker = new FileWorkerWithParkingField();
@@ -89,13 +79,6 @@ namespace ParkingApp
                 return fileWorker.readParkingField();
             }
             else return null;
-        }
-
-        private void configureTariff_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            ConfigureTarifForm configureTarifForm = new ConfigureTarifForm();
-            configureTarifForm.Show();
         }
 
         private void backToMainScreenBtn_Click(object sender, EventArgs e)

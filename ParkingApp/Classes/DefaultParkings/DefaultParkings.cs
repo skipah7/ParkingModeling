@@ -5,8 +5,6 @@ namespace ParkingApp.Classes
     class DefaultParkings
     {
         private String[,] default_5_5 = new String[5,5];
-        private String[,] default_10_10 = new String[5, 5];
-        private String[,] default_7_7 = new String[5, 5];
 
         private void setDefault_5_5()
         {

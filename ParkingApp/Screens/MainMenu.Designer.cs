@@ -55,7 +55,7 @@
             this.managerBtn.Name = "managerBtn";
             this.managerBtn.Size = new System.Drawing.Size(156, 31);
             this.managerBtn.TabIndex = 3;
-            this.managerBtn.Text = "Пользователь";
+            this.managerBtn.Text = "Менеджер";
             this.managerBtn.UseVisualStyleBackColor = true;
             this.managerBtn.Click += new System.EventHandler(this.managerBtn_Click);
             // 

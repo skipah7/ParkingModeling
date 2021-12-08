@@ -19,14 +19,14 @@ namespace ParkingApp
             parkingFieldClass = new ParkingFieldClass();
 
             panel1.Location = new Point(0, 0);
-            panel2.Location = new Point(Globals.PICTURE_BOX_SIZE * Globals.HEIGHT + Globals.PICTURE_BOX_SIZE * 2 + 12, Globals.PICTURE_BOX_SIZE);           
-            buttonsBox.Location = new Point(Globals.PICTURE_BOX_SIZE * Globals.HEIGHT + Globals.PICTURE_BOX_SIZE * 2, Globals.PICTURE_BOX_SIZE + panel2.Height);            
+            heightTextBox.Text = Globals.HEIGHT.ToString();
+            widthTextBox.Text = Globals.WIDTH.ToString();
 
             if (Globals.isNewParking)
             {
                 Globals.pictureBoxes = new List<PictureBox>();
-                Globals.patterns = new String[Globals.WIDTH, Globals.HEIGHT];
-                Globals.highwayPatterns = new String[Globals.WIDTH + 1, Globals.HEIGHT + 1];
+                Globals.patterns = new string[Globals.HEIGHT, Globals.WIDTH];
+                Globals.highwayPatterns = new string[Globals.HEIGHT + 1, Globals.WIDTH];
                 parkingFieldClass.createField(panel1, Globals.WIDTH, Globals.HEIGHT);              
             }
             else
@@ -40,24 +40,13 @@ namespace ParkingApp
         private bool isCorrectField()
         {
             VerifyParkingClass verifyParking = new VerifyParkingClass();
-            if (verifyParking.isCorrectNumberOfTerminals())
+            if (verifyParking.isCorrectNumberOfTerminals() && verifyParking.isTerminalsAtTheBorder())
             {
-                if (verifyParking.isTerminalsAtTheBorder())
-                {
-                    System.Windows.Forms.MessageBox.Show("Парковка заполнена корректно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("Убедитесь в правильности заполнения пространства парковки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
+                System.Windows.Forms.MessageBox.Show("Парковка заполнена корректно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("Убедитесь в правильности заполнения пространства парковки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
+            System.Windows.Forms.MessageBox.Show("Убедитесь в правильности заполнения пространства парковки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
         }                             
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -91,12 +80,33 @@ namespace ParkingApp
             Globals.leftAdjacentRoadLength = 0;
             Globals.upAdjacentRoadLength = 0;
             Globals.downAdjacentRoadLength = 0;
-            this.Hide();
-            ConfigureTarifForm configureTarifForm = new ConfigureTarifForm();
-            configureTarifForm.Show();
+
+            if (isCorrectValues())
+            {
+                this.Hide();
+                ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
+                parkingSpaceForm.Show();
+            }
         }
 
-
+        private bool isCorrectValues()
+        {
+            int width = int.Parse(widthTextBox.Text);
+            int height = int.Parse(heightTextBox.Text);
+            if (width >= Globals.MIN_SIZE && width <= Globals.MAX_SIZE && height >= Globals.MIN_SIZE && height <= Globals.MAX_SIZE)
+            {
+                Globals.HEIGHT = height;
+                Globals.WIDTH = width;
+                Globals.downAdjacentRoadLength = height + 1;
+                Globals.leftAdjacentRoadLength = width + 1;
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Минимальное значение 5, максимальное 10", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             System.Windows.MessageBoxResult confirmResult = System.Windows.MessageBox.Show("Вы уверены? Несохраненные изменения будут потеряны!", "Подтвердить действие", System.Windows.MessageBoxButton.YesNo);
@@ -144,19 +154,6 @@ namespace ParkingApp
             grassPic.DoDragDrop(grassPic.Image, DragDropEffects.Copy);
         }
 
-        private void preventResize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized)
-            {
-                WindowState = FormWindowState.Normal;
-            }
-        }
-
-        private void shutDownApplication(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
-
         private void mouseEnterPatternsPicBox(object sender, EventArgs e)
         {
             ToolTip t = new ToolTip();
@@ -188,10 +185,30 @@ namespace ParkingApp
             {
                 t.SetToolTip((PictureBox)sender, "Трава");
             }
-
-
         }
+
+        #region helpers
+        private void validation(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar) || char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void preventResize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Maximized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void shutDownApplication(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        #endregion
     }
 }
-
-

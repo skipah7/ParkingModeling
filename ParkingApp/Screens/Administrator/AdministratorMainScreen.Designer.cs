@@ -30,9 +30,10 @@
         {
             this.createBtn = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
-            this.configureTariff = new System.Windows.Forms.Button();
             this.backToMainScreenBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.aboutSystemButton = new System.Windows.Forms.Button();
+            this.aboutDevelopersButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // createBtn
@@ -57,20 +58,9 @@
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
-            // configureTariff
-            // 
-            this.configureTariff.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.configureTariff.Location = new System.Drawing.Point(35, 120);
-            this.configureTariff.Name = "configureTariff";
-            this.configureTariff.Size = new System.Drawing.Size(193, 40);
-            this.configureTariff.TabIndex = 2;
-            this.configureTariff.Text = "Настроить тариф";
-            this.configureTariff.UseVisualStyleBackColor = true;
-            this.configureTariff.Click += new System.EventHandler(this.configureTariff_Click);
-            // 
             // backToMainScreenBtn
             // 
-            this.backToMainScreenBtn.Location = new System.Drawing.Point(63, 247);
+            this.backToMainScreenBtn.Location = new System.Drawing.Point(63, 280);
             this.backToMainScreenBtn.Margin = new System.Windows.Forms.Padding(2);
             this.backToMainScreenBtn.Name = "backToMainScreenBtn";
             this.backToMainScreenBtn.Size = new System.Drawing.Size(128, 30);
@@ -91,15 +81,38 @@
             this.label2.TabIndex = 24;
             this.label2.Text = "Admin";
             // 
+            // aboutSystemButton
+            // 
+            this.aboutSystemButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.aboutSystemButton.Location = new System.Drawing.Point(35, 163);
+            this.aboutSystemButton.Margin = new System.Windows.Forms.Padding(2);
+            this.aboutSystemButton.Name = "aboutSystemButton";
+            this.aboutSystemButton.Size = new System.Drawing.Size(193, 40);
+            this.aboutSystemButton.TabIndex = 26;
+            this.aboutSystemButton.Text = "О системе";
+            this.aboutSystemButton.UseVisualStyleBackColor = true;
+            // 
+            // aboutDevelopersButton
+            // 
+            this.aboutDevelopersButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.aboutDevelopersButton.Location = new System.Drawing.Point(35, 119);
+            this.aboutDevelopersButton.Margin = new System.Windows.Forms.Padding(2);
+            this.aboutDevelopersButton.Name = "aboutDevelopersButton";
+            this.aboutDevelopersButton.Size = new System.Drawing.Size(193, 40);
+            this.aboutDevelopersButton.TabIndex = 25;
+            this.aboutDevelopersButton.Text = "О разработчиках";
+            this.aboutDevelopersButton.UseVisualStyleBackColor = true;
+            // 
             // AdministratorMainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(256, 288);
+            this.ClientSize = new System.Drawing.Size(256, 321);
+            this.Controls.Add(this.aboutSystemButton);
+            this.Controls.Add(this.aboutDevelopersButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.backToMainScreenBtn);
-            this.Controls.Add(this.configureTariff);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.createBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -117,8 +130,9 @@
 
         private System.Windows.Forms.Button createBtn;
         private System.Windows.Forms.Button loadButton;
-        private System.Windows.Forms.Button configureTariff;
         private System.Windows.Forms.Button backToMainScreenBtn;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button aboutSystemButton;
+        private System.Windows.Forms.Button aboutDevelopersButton;
     }
 }

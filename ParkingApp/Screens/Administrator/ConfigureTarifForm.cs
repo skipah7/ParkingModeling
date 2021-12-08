@@ -24,18 +24,8 @@ namespace ParkingApp
         {
             Globals.tariff = createTariff();
             this.Hide();
-            if (Globals.isNewParking)
-            {
-                this.Hide();
-                CreateParkingField createParkingField = new CreateParkingField();
-                createParkingField.Show();
-            }
-            else
-            {
-                this.Hide();
-                ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
-                parkingSpaceForm.Show();
-            }           
+            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
+            parkingSpaceForm.Show();
         }
 
         private Tariff createTariff()
