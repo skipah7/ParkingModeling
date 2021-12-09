@@ -28,35 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.createBtn = new System.Windows.Forms.Button();
-            this.loadButton = new System.Windows.Forms.Button();
+            this.createModelButton = new System.Windows.Forms.Button();
+            this.loadModelButton = new System.Windows.Forms.Button();
             this.backToMainScreenBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.aboutSystemButton = new System.Windows.Forms.Button();
             this.aboutDevelopersButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // createBtn
+            // createModelButton
             // 
-            this.createBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.createBtn.Location = new System.Drawing.Point(35, 28);
-            this.createBtn.Name = "createBtn";
-            this.createBtn.Size = new System.Drawing.Size(193, 40);
-            this.createBtn.TabIndex = 0;
-            this.createBtn.Text = "Создать модель";
-            this.createBtn.UseVisualStyleBackColor = true;
-            this.createBtn.Click += new System.EventHandler(this.createBtn_Click);
+            this.createModelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.createModelButton.Location = new System.Drawing.Point(35, 28);
+            this.createModelButton.Name = "createModelButton";
+            this.createModelButton.Size = new System.Drawing.Size(193, 40);
+            this.createModelButton.TabIndex = 0;
+            this.createModelButton.Text = "Создать модель";
+            this.createModelButton.UseVisualStyleBackColor = true;
+            this.createModelButton.Click += new System.EventHandler(this.createModelButton_Click);
             // 
-            // loadButton
+            // loadModelButton
             // 
-            this.loadButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.loadButton.Location = new System.Drawing.Point(35, 74);
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(193, 40);
-            this.loadButton.TabIndex = 1;
-            this.loadButton.Text = "Загрузить/редактировать";
-            this.loadButton.UseVisualStyleBackColor = true;
-            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            this.loadModelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.loadModelButton.Location = new System.Drawing.Point(35, 74);
+            this.loadModelButton.Name = "loadModelButton";
+            this.loadModelButton.Size = new System.Drawing.Size(193, 40);
+            this.loadModelButton.TabIndex = 1;
+            this.loadModelButton.Text = "Загрузить/редактировать";
+            this.loadModelButton.UseVisualStyleBackColor = true;
+            this.loadModelButton.Click += new System.EventHandler(this.loadModelButton_Click);
             // 
             // backToMainScreenBtn
             // 
@@ -114,8 +114,8 @@
             this.Controls.Add(this.aboutDevelopersButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.backToMainScreenBtn);
-            this.Controls.Add(this.loadButton);
-            this.Controls.Add(this.createBtn);
+            this.Controls.Add(this.loadModelButton);
+            this.Controls.Add(this.createModelButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -130,8 +130,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button createBtn;
-        private System.Windows.Forms.Button loadButton;
+        private System.Windows.Forms.Button createModelButton;
+        private System.Windows.Forms.Button loadModelButton;
         private System.Windows.Forms.Button backToMainScreenBtn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button aboutSystemButton;

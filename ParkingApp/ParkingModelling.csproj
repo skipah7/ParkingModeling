@@ -56,7 +56,6 @@
     <Compile Include="Classes\BaseParkingClasses\TabloItem.cs" />
     <Compile Include="Classes\ModelingClasses\DistributionsClass.cs" />
     <Compile Include="Classes\VisualizationClasses\ParkingFieldClass.cs" />
-    <Compile Include="Classes\VisualizationClasses\AdjacentRoadClass.cs" />
     <Compile Include="Classes\AlgPathFindClasses\FindPaths.cs" />
     <Compile Include="Classes\AlgPathFindClasses\PathPoint.cs" />
     <Compile Include="Classes\AlgPathFindClasses\PathNode.cs" />

@@ -61,7 +61,7 @@ namespace ParkingApp.Classes
             int k = random.Next(0, 8);
             if (k == 0)
             {
-                return Resources.parkingCar1Pic;
+                return Resources.empty;
             }
             else if (k == 1)
             {
@@ -81,7 +81,7 @@ namespace ParkingApp.Classes
             }
             else if (k == 5)
             {
-                return Resources.parkingCar6Pic;
+                return Resources.heavyParkingPlace;
             }
             else
             {

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.modelPanel = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.empty = new System.Windows.Forms.PictureBox();
             this.entrance = new System.Windows.Forms.PictureBox();
@@ -62,15 +62,15 @@
             this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // modelPanel
             // 
-            this.panel1.AutoSize = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(0, 0);
-            this.panel1.TabIndex = 10;
+            this.modelPanel.AutoSize = true;
+            this.modelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.modelPanel.Location = new System.Drawing.Point(0, 0);
+            this.modelPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.modelPanel.Name = "modelPanel";
+            this.modelPanel.Size = new System.Drawing.Size(0, 0);
+            this.modelPanel.TabIndex = 10;
             // 
             // panel2
             // 
@@ -84,13 +84,14 @@
             // 
             // empty
             // 
+            this.empty.Image = global::ParkingApp.Properties.Resources.empty;
             this.empty.Location = new System.Drawing.Point(153, 74);
             this.empty.Name = "empty";
             this.empty.Size = new System.Drawing.Size(69, 65);
             this.empty.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.empty.TabIndex = 9;
             this.empty.TabStop = false;
-            this.empty.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownGrass);
+            this.empty.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownEmpty);
             this.empty.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // entrance
@@ -102,7 +103,7 @@
             this.entrance.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.entrance.TabIndex = 1;
             this.entrance.TabStop = false;
-            this.entrance.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownEntrancePic);
+            this.entrance.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownEntrance);
             this.entrance.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // exit
@@ -114,31 +115,31 @@
             this.exit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.exit.TabIndex = 2;
             this.exit.TabStop = false;
-            this.exit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownExitPic);
+            this.exit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownExit);
             this.exit.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // heavyParkingPlace
             // 
-            this.heavyParkingPlace.Image = global::ParkingApp.Properties.Resources.parkingCar6Pic;
+            this.heavyParkingPlace.Image = global::ParkingApp.Properties.Resources.heavyParkingPlace;
             this.heavyParkingPlace.Location = new System.Drawing.Point(78, 74);
             this.heavyParkingPlace.Name = "heavyParkingPlace";
             this.heavyParkingPlace.Size = new System.Drawing.Size(69, 65);
             this.heavyParkingPlace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.heavyParkingPlace.TabIndex = 5;
             this.heavyParkingPlace.TabStop = false;
-            this.heavyParkingPlace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dollarDown);
+            this.heavyParkingPlace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownHeavyParkingPlace);
             this.heavyParkingPlace.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // lightParkingPlace
             // 
-            this.lightParkingPlace.Image = global::ParkingApp.Properties.Resources.parkingPlace;
+            this.lightParkingPlace.Image = global::ParkingApp.Properties.Resources.lightParkingPlace;
             this.lightParkingPlace.Location = new System.Drawing.Point(78, 3);
             this.lightParkingPlace.Name = "lightParkingPlace";
             this.lightParkingPlace.Size = new System.Drawing.Size(69, 65);
             this.lightParkingPlace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.lightParkingPlace.TabIndex = 7;
             this.lightParkingPlace.TabStop = false;
-            this.lightParkingPlace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownCar);
+            this.lightParkingPlace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownLightParkingPlace);
             this.lightParkingPlace.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // tree
@@ -362,7 +363,7 @@
             this.Controls.Add(this.leftAdjacentRoad);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.modelPanel);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -394,7 +395,7 @@
         private System.Windows.Forms.PictureBox tree;
         private System.Windows.Forms.PictureBox empty;
         private System.Windows.Forms.PictureBox lightParkingPlace;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel modelPanel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button saveToFile;
         private System.Windows.Forms.Button refreshParking;

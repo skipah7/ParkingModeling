@@ -32,7 +32,7 @@ namespace ParkingApp.Screens.Manager
 
             panel1.Invalidate();
 
-            new RoadsClass().createRoads(panel1);
+            RoadsClass.createRoads(panel1);
             FindPaths.fillRoadMatr();
 
             configureTimer();

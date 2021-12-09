@@ -63,9 +63,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cashBoxPic {
+        internal static System.Drawing.Bitmap empty {
             get {
-                object obj = ResourceManager.GetObject("cashBoxPic", resourceCulture);
+                object obj = ResourceManager.GetObject("empty", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,16 +83,6 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap entrancePic {
-            get {
-                object obj = ResourceManager.GetObject("entrancePic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap exit {
             get {
                 object obj = ResourceManager.GetObject("exit", resourceCulture);
@@ -103,9 +93,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap exitPic {
+        internal static System.Drawing.Bitmap heavyParkingPlace {
             get {
-                object obj = ResourceManager.GetObject("exitPic", resourceCulture);
+                object obj = ResourceManager.GetObject("heavyParkingPlace", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +103,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap grassPic {
+        internal static System.Drawing.Bitmap highway {
             get {
-                object obj = ResourceManager.GetObject("grassPic", resourceCulture);
+                object obj = ResourceManager.GetObject("highway", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,19 +113,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap highwayPic1 {
+        internal static System.Drawing.Bitmap lightParkingPlace {
             get {
-                object obj = ResourceManager.GetObject("highwayPic1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingCar1Pic {
-            get {
-                object obj = ResourceManager.GetObject("parkingCar1Pic", resourceCulture);
+                object obj = ResourceManager.GetObject("lightParkingPlace", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,39 +163,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap parkingCar6Pic {
-            get {
-                object obj = ResourceManager.GetObject("parkingCar6Pic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap parkingCar7Pic {
             get {
                 object obj = ResourceManager.GetObject("parkingCar7Pic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingPlace {
-            get {
-                object obj = ResourceManager.GetObject("parkingPlace", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingPlacePic {
-            get {
-                object obj = ResourceManager.GetObject("parkingPlacePic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,29 +183,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap roadPic {
-            get {
-                object obj = ResourceManager.GetObject("roadPic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap tree {
             get {
                 object obj = ResourceManager.GetObject("tree", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap treePic {
-            get {
-                object obj = ResourceManager.GetObject("treePic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

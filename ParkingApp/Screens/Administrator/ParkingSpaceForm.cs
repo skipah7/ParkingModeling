@@ -13,28 +13,26 @@ namespace ParkingApp
         public ParkingSpaceForm()
         {
             InitializeComponent();
-
-            Globals.calculatePictureBoxSize();
-
-            parkingFieldClass = new ParkingFieldClass();
-
-            panel1.Location = new Point(0, 0);
             heightBox.Value = Globals.HEIGHT;
             widthBox.Value = Globals.WIDTH;
+            modelPanel.Location = new Point(1, 1);
+
+            Globals.calculatePictureBoxSize();
+            parkingFieldClass = new ParkingFieldClass();
 
             if (Globals.isNewParking)
             {
                 Globals.pictureBoxes = new List<PictureBox>();
                 Globals.patterns = new string[Globals.HEIGHT, Globals.WIDTH];
                 Globals.highwayPatterns = new string[Globals.HEIGHT + 1, Globals.WIDTH];
-                parkingFieldClass.createField(panel1, Globals.WIDTH, Globals.HEIGHT);              
+                parkingFieldClass.createField(modelPanel);            
             }
             else
             {
                 parkingFieldClass.fillPictureBoxesList();
-                parkingFieldClass.loadField(panel1);
+                parkingFieldClass.loadField(modelPanel);
             }
-            new RoadsClass().createRoads(panel1);
+            RoadsClass.createRoads(modelPanel);
         }             
 
         private bool isCorrectField()
@@ -48,16 +46,6 @@ namespace ParkingApp
             MessageBox.Show("Убедитесь в правильности заполнения пространства парковки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }                             
-
-        private void saveBtn_Click(object sender, EventArgs e)
-        {
-            parkingFieldClass.fillPatternsArray();
-
-            if (isCorrectField())
-            {
-                Globals.isNewParking = false;
-            }
-        }
 
         private void saveToFile_Click(object sender, EventArgs e)
         {
@@ -75,18 +63,17 @@ namespace ParkingApp
             Globals.tariff = null;
             Globals.pictureBoxes = null;
             Globals.patterns = null;
-            Globals.rightAdjacentRoadLength = 0;
-            Globals.leftAdjacentRoadLength = 0;
-            Globals.upAdjacentRoadLength = 0;
-            Globals.downAdjacentRoadLength = 0;
 
             int width = (int)widthBox.Value;
             int height = (int)heightBox.Value;
 
             Globals.HEIGHT = height;
             Globals.WIDTH = width;
+
             Globals.downAdjacentRoadLength = height + 1;
             Globals.leftAdjacentRoadLength = width + 1;
+            Globals.rightAdjacentRoadLength = 0;
+            Globals.upAdjacentRoadLength = 0;
 
             this.Hide();
             ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
@@ -94,22 +81,22 @@ namespace ParkingApp
         }
 
         #region parking elements helpers
-        private void mouseDownEntrancePic(object sender, MouseEventArgs e)
+        private void mouseDownEntrance(object sender, MouseEventArgs e)
         {
             entrance.DoDragDrop(entrance.Image, DragDropEffects.Copy);
         }
 
-        private void mouseDownExitPic(object sender, MouseEventArgs e)
+        private void mouseDownExit(object sender, MouseEventArgs e)
         {
             exit.DoDragDrop(exit.Image, DragDropEffects.Copy);
         }
 
-        private void dollarDown(object sender, MouseEventArgs e)
+        private void mouseDownHeavyParkingPlace(object sender, MouseEventArgs e)
         {
             heavyParkingPlace.DoDragDrop(heavyParkingPlace.Image, DragDropEffects.Copy);
         }
 
-        private void mouseDownCar(object sender, MouseEventArgs e)
+        private void mouseDownLightParkingPlace(object sender, MouseEventArgs e)
         {
             lightParkingPlace.DoDragDrop(lightParkingPlace.Image, DragDropEffects.Copy);
         }
@@ -124,7 +111,7 @@ namespace ParkingApp
             tree.DoDragDrop(tree.Image, DragDropEffects.Copy);
         }
 
-        private void mouseDownGrass(object sender, MouseEventArgs e)
+        private void mouseDownEmpty(object sender, MouseEventArgs e)
         {
             empty.DoDragDrop(empty.Image, DragDropEffects.Copy);
         }

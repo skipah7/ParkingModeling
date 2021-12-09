@@ -6,80 +6,83 @@ namespace ParkingApp.Classes.VisualizationClasses
 {
     class ProcessImagesClass
     {
-        public Image getImageByName(String name)
+        public Image getImageByName(string name)
         {
-            if (name.Equals(Globals.ROAD))
-            {
-                return Resources.roadPic;
-            }
-            else if (name.Equals(Globals.ENTRANCE))
+            if (name.Equals(Globals.ENTRANCE))
             {
                 return Resources.entrance;
             }
-            else if (name.Equals(Globals.EXIT))
+            if (name.Equals(Globals.EXIT))
             {
                 return Resources.exit;
             }
-            else if (name.Equals(Globals.CASH_BOX))
+            if (name.Equals(Globals.LIGHT_PARKING_PLACE))
             {
-                return Resources.roadPic;
+                return Resources.lightParkingPlace;
             }
-            else if (name.Equals(Globals.PARKING_PLACE))
+            if (name.Equals(Globals.HEAVY_PARKING_PLACE))
             {
-                return Resources.parkingPlace;
+                return Resources.heavyParkingPlace;
             }
-            else if (name.Equals(Globals.TREE))
+            if (name.Equals(Globals.ROAD))
+            {
+                return Resources.road;
+            }
+            if (name.Equals(Globals.HIGHWAY))
+            {
+                return Resources.highway;
+            }
+            if (name.Equals(Globals.TREE))
             {
                 return Resources.tree;
             }
-            else
+            if (name.Equals(Globals.EMPTY))
             {
-                return Resources.tree;
+                return Resources.empty;
             }
+
+            return Resources.road;
         }
 
-        public String getNameOfImage(Image image)
+        public string getNameOfImage(Image image)
         {
-            if (image != null)
+            if (image == null) return Globals.ROAD;
+
+            Bitmap bitmap = new Bitmap(image);
+            if (isImageSame(bitmap, new Bitmap(Resources.entrance)))
             {
-                Bitmap bitmap = new Bitmap(image);
-                if (isImageSame(bitmap, new Bitmap(Resources.entrancePic)))
-                {
-                    return Globals.ENTRANCE;
-                }
-                else if (isImageSame(bitmap, new Bitmap(Resources.exitPic)))
-                {
-                    return Globals.EXIT;
-                }
-                else if (isImageSame(bitmap, new Bitmap(Resources.parkingPlacePic)))
-                {
-                    return Globals.PARKING_PLACE;
-                }
-                else if (isImageSame(bitmap, new Bitmap(Resources.treePic)))
-                {
-                    return Globals.TREE;
-                }
-                else if (isImageSame(bitmap, new Bitmap(Resources.cashBoxPic)))
-                {
-                    return Globals.CASH_BOX;
-                }
-                else if (isImageSame(bitmap, new Bitmap(Resources.roadPic)))
-                {
-                    return Globals.ROAD;
-                }
-                else if (isImageSame(bitmap, Resources.highwayPic1))
-                {
-                    return Globals.HIGHWAY;
-                }
-                else
-                {
-                    return Globals.GRASS;
-                }
+                return Globals.ENTRANCE;
             }
-            else
+            if (isImageSame(bitmap, new Bitmap(Resources.exit)))
+            {
+                return Globals.EXIT;
+            }
+            if (isImageSame(bitmap, new Bitmap(Resources.lightParkingPlace)))
+            {
+                return Globals.LIGHT_PARKING_PLACE;
+            }
+            if (isImageSame(bitmap, new Bitmap(Resources.heavyParkingPlace)))
+            {
+                return Globals.HEAVY_PARKING_PLACE;
+            }
+            if (isImageSame(bitmap, new Bitmap(Resources.road)))
             {
                 return Globals.ROAD;
             }
+            if (isImageSame(bitmap, Resources.highway))
+            {
+                return Globals.HIGHWAY;
+            }
+            if (isImageSame(bitmap, new Bitmap(Resources.tree)))
+            {
+                return Globals.TREE;
+            }
+            if (isImageSame(bitmap, Resources.empty))
+            {
+                return Globals.EMPTY;
+            }
+
+            return Globals.ROAD;
         }
 
         public bool isImageSame(Bitmap bmp1, Bitmap bmp2)

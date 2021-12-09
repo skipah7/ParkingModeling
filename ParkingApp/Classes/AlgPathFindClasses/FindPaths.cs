@@ -37,7 +37,7 @@ namespace ParkingApp.Classes.AlgPathFind
                     {
                         parkMatr[i, j] = 0;
                     }
-                    else if (Globals.patterns[i, j] == Globals.PARKING_PLACE)
+                    else if (Globals.patterns[i, j] == Globals.LIGHT_PARKING_PLACE)
                     {
                         parkMatr[i, j] = 5;
                         parkPoints.Add(new PathPoint(i, j));

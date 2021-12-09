@@ -118,29 +118,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cashBoxPic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\касса.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\parkingCar1Pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="entrance" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\entrance.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="entrancePic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\шлагбаум.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\exit.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="exitPic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\шлагбаум отраженный.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="heavyParkingPlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sinyaya_mashinka.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="grassPic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\газон.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="highway" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\парковочное место.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="highwayPic1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\highwayPic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="parkingCar1Pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\parkingCar1Pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="lightParkingPlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\parkingPlace.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="parkingCar2Pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\parkingCar2Pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,28 +148,13 @@
   <data name="parkingCar5Pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\parkingCar5Pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="parkingCar6Pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sinyaya_mashinka.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="parkingCar7Pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\parkingCar7Pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="parkingPlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\parkingPlace.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="parkingPlacePic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\парковочное место.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="road" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\road.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="roadPic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\асфальт.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tree" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tree.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="treePic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\дерево.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

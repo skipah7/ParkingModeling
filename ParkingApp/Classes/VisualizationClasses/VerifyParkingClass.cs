@@ -21,11 +21,11 @@
                     {
                         count++;
                     }
-                    if (Globals.patterns[i, j].Equals(Globals.CASH_BOX))
+                    if (Globals.patterns[i, j].Equals(Globals.HEAVY_PARKING_PLACE))
                     {
                         count++;
                     }
-                    if (Globals.patterns[i, j].Equals(Globals.PARKING_PLACE))
+                    if (Globals.patterns[i, j].Equals(Globals.LIGHT_PARKING_PLACE))
                     {
                         parkingPlaces++;
                     }
@@ -59,7 +59,7 @@
                         {
                             y++;
                         }
-                        if (Globals.patterns[i, j].Equals(Globals.CASH_BOX))
+                        if (Globals.patterns[i, j].Equals(Globals.HEAVY_PARKING_PLACE))
                         {
                             z++;
                         }

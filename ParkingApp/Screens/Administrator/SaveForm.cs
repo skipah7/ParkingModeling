@@ -22,12 +22,12 @@ namespace ParkingApp.Screens.Administrator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!parkingFilePathTextBox.Text.ToString().Equals(""))
+            if (!parkingFilePathTextBox.Text.Equals(""))
             {
                 Globals.parkingFileName = parkingFilePathTextBox.Text;
                 fileWorker = new FileWorkerWithParkingField(new ParkingField(Globals.WIDTH, Globals.HEIGHT, Globals.patterns, Globals.tariff, Globals.leftAdjacentRoadLength, Globals.rightAdjacentRoadLength, Globals.upAdjacentRoadLength, Globals.downAdjacentRoadLength), Globals.parkingFileName);
                 fileWorker.writeParkingField();
-                System.Windows.Forms.MessageBox.Show("Файл успешно сохранен по пути: " + Globals.parkingFilePath, "Успешное сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Файл успешно сохранен по пути: " + Globals.parkingFilePath, "Успешное сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
             }
         }
@@ -35,14 +35,6 @@ namespace ParkingApp.Screens.Administrator
         private void backToParkingSpaceForm_Click(object sender, EventArgs e)
         {
             this.Hide();
-        }
-
-        private void preventResize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized)
-            {
-                WindowState = FormWindowState.Normal;
-            }
         }
 
         private void shutDownApplication(object sender, FormClosingEventArgs e)

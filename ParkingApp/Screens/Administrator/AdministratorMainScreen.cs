@@ -12,18 +12,13 @@ namespace ParkingApp
             InitializeComponent();
         }
 
-        private void createBtn_Click(object sender, EventArgs e)
-        {
-            createParking();
-        }
-
-        private void createParking()
+        private void createModelButton_Click(object sender, EventArgs e)
         {
             Globals.isNewParking = false;
+
             Globals.WIDTH = 5;
             Globals.HEIGHT = 5;
             Globals.patterns = new DefaultParkings().getDefault_5_5();
-            Globals.isNewParking = false;
             Globals.highwayPatterns = new string[Globals.HEIGHT + 1, Globals.WIDTH];
 
             this.Hide();
@@ -31,12 +26,7 @@ namespace ParkingApp
             parkingSpaceForm.Show();
         }
 
-        private void loadButton_Click(object sender, EventArgs e)
-        {
-            loadParking();            
-        }
-
-        private void loadParking()
+        private void loadModelButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Parking files(*.parking) | *.parking";

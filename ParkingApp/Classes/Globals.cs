@@ -19,8 +19,6 @@ namespace ParkingApp
         // height and width
         public static int WIDTH = 0;
         public static int HEIGHT = 0;
-        public static int MAX_SIZE = 10;
-        public static int MIN_SIZE = 5;
 
         public static int INTERVAL = 20;
 
@@ -39,14 +37,14 @@ namespace ParkingApp
 
         // patterns names, saved at patterns
         // is matrix of parking
-        public const String TREE = "Tree";
-        public const String CASH_BOX = "Cash box";
-        public const String PARKING_PLACE = "Auto";
-        public const String GRASS = "Grass";
-        public const String ENTRANCE = "Entrance";
-        public const String EXIT = "Exit";
-        public const String ROAD = "Road";
-        public const String HIGHWAY = "Highway";
+        public const string TREE = "Tree";
+        public const string HEAVY_PARKING_PLACE = "Heavy parking place";
+        public const string LIGHT_PARKING_PLACE = "Light parking place";
+        public const string EMPTY = "Empty";
+        public const string ENTRANCE = "Entrance";
+        public const string EXIT = "Exit";
+        public const string ROAD = "Road";
+        public const string HIGHWAY = "Highway";
 
         // parking file name
         public static String parkingFileName = "";
