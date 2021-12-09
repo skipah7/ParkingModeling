@@ -109,7 +109,6 @@ namespace ParkingApp.Screens.Manager
         private void validation(object sender, EventArgs e)
         {
             startTimeHours.Value = startTimeHours.Value;
-
         }
 
         private void flawLawTypeSelection(object sender, EventArgs e)

@@ -82,19 +82,12 @@ namespace ParkingApp
             else return null;
         }
 
+        #region helpers
         private void backToMainScreenBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             MainMenu mainScreenForm = new MainMenu();
             mainScreenForm.Show();
-        }
-
-        private void preventResize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized)
-            {
-                WindowState = FormWindowState.Normal;
-            }
         }
 
         private void shutDownApplication(object sender, FormClosingEventArgs e)
@@ -108,5 +101,6 @@ namespace ParkingApp
             AboutDevelopers aboutDevelopersForm = new AboutDevelopers("admin");
             aboutDevelopersForm.Show();
         }
+        #endregion
     }
 }
