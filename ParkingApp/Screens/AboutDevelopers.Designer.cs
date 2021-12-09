@@ -57,11 +57,11 @@ namespace ParkingApp.Screens
             this.label5.TabIndex = 26;
             this.label5.Text = "Самара 2021";
             // 
-            // label4
+            // exponentialLabel
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(14, 86);
-            this.label4.Name = "label4";
+            this.label4.Name = "exponentialLabel";
             this.label4.Size = new System.Drawing.Size(250, 52);
             this.label4.TabIndex = 25;
             this.label4.Text = "Система разработана студентами группы 6413:\r\nЯцкевич Дмитрий\r\nШевченко Павел\r\nКар" +

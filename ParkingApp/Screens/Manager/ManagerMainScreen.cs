@@ -119,7 +119,7 @@ namespace ParkingApp
         private void aboutDevelopersButton_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AboutDevelopers aboutDevelopersForm = new AboutDevelopers();
+            AboutDevelopers aboutDevelopersForm = new AboutDevelopers("manager");
             aboutDevelopersForm.Show();
         }
     }

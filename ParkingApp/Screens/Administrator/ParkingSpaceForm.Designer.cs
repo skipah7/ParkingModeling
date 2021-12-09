@@ -59,13 +59,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.roadPic)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
+            // deterministicParkPanel
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
+            this.panel1.Name = "deterministicParkPanel";
             this.panel1.Size = new System.Drawing.Size(0, 0);
             this.panel1.TabIndex = 10;
             // 
@@ -110,13 +110,13 @@
             this.createNewParkingBtn.UseVisualStyleBackColor = true;
             this.createNewParkingBtn.Click += new System.EventHandler(this.createNewParkingBtn_Click);
             // 
-            // panel3
+            // exponentialParkPanel
             // 
             this.panel3.AutoSize = true;
             this.panel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.Name = "panel3";
+            this.panel3.Name = "exponentialParkPanel";
             this.panel3.Size = new System.Drawing.Size(0, 0);
             this.panel3.TabIndex = 16;
             // 

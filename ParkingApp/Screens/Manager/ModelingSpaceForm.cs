@@ -240,6 +240,26 @@ namespace ParkingApp.Screens.Manager
             }
         }
 
+        private void setPlaySpeed()
+        {
+            if (1 == 1)
+            {
+                Globals.INTERVAL = 40;
+            }
+            else if (2 == 2)
+            {
+                Globals.INTERVAL = 20;
+            }
+            else if (3 == 3)
+            {
+                Globals.INTERVAL = 10;
+            }
+            else
+            {
+                Globals.INTERVAL = 5;
+            }
+        }
+
         private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             /*
