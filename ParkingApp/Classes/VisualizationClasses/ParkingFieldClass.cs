@@ -8,31 +8,24 @@ namespace ParkingApp.Classes
 {
     class ParkingFieldClass
     {
-        ProcessImagesClass processImages;
-
         public ParkingFieldClass()
         {
-            processImages = new ProcessImagesClass();
         }
 
-        public void loadField(Panel panel1)
+        public void loadField(Panel panel)
         {
-            Globals.pictureBoxes.ForEach((pic) => panel1.Controls.Add(pic));
+            Globals.pictureBoxes.ForEach((pic) => panel.Controls.Add(pic));
         }
 
         public void fillPatternsArray()
         {
             int z = 0;
-            int k = Globals.pictureBoxes.Count;
             for (int i = 0; i < Globals.WIDTH; i++)
             {
                 for (int j = 0; j < Globals.HEIGHT; j++)
                 {
-                    if (z < k)
-                    {
-                        Globals.patterns[i, j] = processImages.getNameOfImage(Globals.pictureBoxes.ElementAt(z).Image);
-                        z++;
-                    }
+                    Globals.patterns[i, j] = ImagesHelper.getNameOfImage(Globals.pictureBoxes.ElementAt(z).Image);
+                    z++;
                 }
             }
         }
@@ -45,7 +38,7 @@ namespace ParkingApp.Classes
             {
                 for (int j = 0; j < Globals.WIDTH; j++)
                 {
-                    Image image = processImages.getImageByName(Globals.patterns[i, j]);
+                    Image image = ImagesHelper.getImageByName(Globals.patterns[i, j]);
                     Globals.pictureBoxes.Add(createPictureBox(image, i, j));
                 }
             }
@@ -57,7 +50,7 @@ namespace ParkingApp.Classes
             {
                 for (int j = 0; j < Globals.WIDTH; j++)
                 {
-                    Image image = processImages.getImageByName(Globals.EMPTY);
+                    Image image = ImagesHelper.getImageByName(Globals.ROAD);
                     PictureBox pictureBox = createPictureBox(image, i, j);
 
                     Globals.pictureBoxes.Add(pictureBox);
@@ -66,6 +59,7 @@ namespace ParkingApp.Classes
             }
         }
 
+        #region main picture box + DragNDrop handlers
         public PictureBox createPictureBox(Image image, int i, int j)
         {
             PictureBox pictureBox = new PictureBox
@@ -84,13 +78,14 @@ namespace ParkingApp.Classes
 
         void pictureBoxDragDrop(object sender, DragEventArgs e)
         {
-            PictureBox p = sender as PictureBox;
-            p.Image = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
+            ((PictureBox)sender).Image = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
         }
 
         void pictureBoxDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = e.AllowedEffect;
         }
+
+        #endregion
     }
 }

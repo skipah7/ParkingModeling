@@ -1,4 +1,6 @@
 ﻿using ParkingApp.Classes;
+using ParkingApp.Classes.VisualizationClasses;
+using ParkingApp.Properties;
 using ParkingApp.Screens.Administrator;
 using System;
 using System.Collections.Generic;
@@ -32,15 +34,34 @@ namespace ParkingApp
                 parkingFieldClass.fillPictureBoxesList();
                 parkingFieldClass.loadField(modelPanel);
             }
+
+            foreach (var control in modelPanel.Controls)
+            {
+                ((PictureBox)control).DragEnter += dragValidation;
+            }
             RoadsClass.createRoads(modelPanel);
         }             
+
+        private void dragValidation(object sender, DragEventArgs e)
+        {
+            Bitmap currentImage = ((DataObject)e.Data).GetImage() as Bitmap;
+            if (!ImagesHelper.isImageSame(currentImage, Resources.entrance) && !ImagesHelper.isImageSame(currentImage, Resources.exit))
+            {
+                return;
+            }
+
+            bool isBottomRow = ((sender as PictureBox).Location.Y / (sender as PictureBox).Size.Height) == Globals.HEIGHT - 1;
+            if (!isBottomRow)
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
 
         private bool isCorrectField()
         {
             VerifyParkingClass verifyParking = new VerifyParkingClass();
             if (verifyParking.isCorrectNumberOfTerminals() && verifyParking.isTerminalsAtTheBorder())
             {
-                MessageBox.Show("Парковка заполнена корректно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
             MessageBox.Show("Убедитесь в правильности заполнения пространства парковки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);

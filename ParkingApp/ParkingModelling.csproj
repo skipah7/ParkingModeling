@@ -64,7 +64,7 @@
     <Compile Include="Classes\SerializationClasses\FileWorkerWithParkingField.cs" />
     <Compile Include="Classes\Globals.cs" />
     <Compile Include="Classes\ModelingClasses\Modeling.cs" />
-    <Compile Include="Classes\VisualizationClasses\ProcessImagesClass.cs" />
+    <Compile Include="Classes\VisualizationClasses\ImagesHelper.cs" />
     <Compile Include="Classes\VisualizationClasses\RoadsClass.cs" />
     <Compile Include="Classes\VisualizationClasses\VerifyParkingClass.cs" />
     <Compile Include="Screens\AboutDevelopers.cs">

@@ -4,9 +4,9 @@ using System.Drawing;
 
 namespace ParkingApp.Classes.VisualizationClasses
 {
-    class ProcessImagesClass
+    class ImagesHelper
     {
-        public Image getImageByName(string name)
+        public static Image getImageByName(string name)
         {
             if (name.Equals(Globals.ENTRANCE))
             {
@@ -44,28 +44,28 @@ namespace ParkingApp.Classes.VisualizationClasses
             return Resources.road;
         }
 
-        public string getNameOfImage(Image image)
+        public static string getNameOfImage(Image image)
         {
             if (image == null) return Globals.ROAD;
 
             Bitmap bitmap = new Bitmap(image);
-            if (isImageSame(bitmap, new Bitmap(Resources.entrance)))
+            if (isImageSame(bitmap, Resources.entrance))
             {
                 return Globals.ENTRANCE;
             }
-            if (isImageSame(bitmap, new Bitmap(Resources.exit)))
+            if (isImageSame(bitmap, Resources.exit))
             {
                 return Globals.EXIT;
             }
-            if (isImageSame(bitmap, new Bitmap(Resources.lightParkingPlace)))
+            if (isImageSame(bitmap, Resources.lightParkingPlace))
             {
                 return Globals.LIGHT_PARKING_PLACE;
             }
-            if (isImageSame(bitmap, new Bitmap(Resources.heavyParkingPlace)))
+            if (isImageSame(bitmap, Resources.heavyParkingPlace))
             {
                 return Globals.HEAVY_PARKING_PLACE;
             }
-            if (isImageSame(bitmap, new Bitmap(Resources.road)))
+            if (isImageSame(bitmap, Resources.road))
             {
                 return Globals.ROAD;
             }
@@ -73,7 +73,7 @@ namespace ParkingApp.Classes.VisualizationClasses
             {
                 return Globals.HIGHWAY;
             }
-            if (isImageSame(bitmap, new Bitmap(Resources.tree)))
+            if (isImageSame(bitmap, Resources.tree))
             {
                 return Globals.TREE;
             }
@@ -85,7 +85,7 @@ namespace ParkingApp.Classes.VisualizationClasses
             return Globals.ROAD;
         }
 
-        public bool isImageSame(Bitmap bmp1, Bitmap bmp2)
+        public static bool isImageSame(Bitmap bmp1, Bitmap bmp2)
         {
             if (!bmp1.Size.Equals(bmp2.Size))
             {

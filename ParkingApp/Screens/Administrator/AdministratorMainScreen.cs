@@ -15,7 +15,6 @@ namespace ParkingApp
         private void createModelButton_Click(object sender, EventArgs e)
         {
             Globals.isNewParking = false;
-
             Globals.WIDTH = 5;
             Globals.HEIGHT = 5;
             Globals.patterns = new DefaultParkings().getDefault_5_5();
