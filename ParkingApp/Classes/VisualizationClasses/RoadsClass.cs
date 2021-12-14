@@ -24,8 +24,8 @@ namespace ParkingApp.Classes
                 Location = new Point(j * Globals.PICTURE_BOX_SIZE, i * Globals.PICTURE_BOX_SIZE),
                 Name = i + "_" + j,
                 Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE),
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Image = Resources.highway
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Image = Resources.road
             };
             return pictureBox;
         }

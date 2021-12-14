@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParkingSpaceForm));
             this.modelPanel = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.empty = new System.Windows.Forms.PictureBox();
+            this.heavyParkingPlaceSecond = new System.Windows.Forms.PictureBox();
             this.entrance = new System.Windows.Forms.PictureBox();
             this.exit = new System.Windows.Forms.PictureBox();
-            this.heavyParkingPlace = new System.Windows.Forms.PictureBox();
+            this.heavyParkingPlaceMain = new System.Windows.Forms.PictureBox();
             this.lightParkingPlace = new System.Windows.Forms.PictureBox();
             this.tree = new System.Windows.Forms.PictureBox();
             this.road = new System.Windows.Forms.PictureBox();
@@ -50,10 +51,10 @@
             this.heightBox = new System.Windows.Forms.NumericUpDown();
             this.widthBox = new System.Windows.Forms.NumericUpDown();
             this.panel4 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.empty)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heavyParkingPlaceSecond)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.entrance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heavyParkingPlace)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heavyParkingPlaceMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lightParkingPlace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tree)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.road)).BeginInit();
@@ -82,17 +83,17 @@
             this.panel2.Size = new System.Drawing.Size(0, 0);
             this.panel2.TabIndex = 11;
             // 
-            // empty
+            // heavyParkingPlaceSecond
             // 
-            this.empty.Image = global::ParkingApp.Properties.Resources.empty;
-            this.empty.Location = new System.Drawing.Point(153, 74);
-            this.empty.Name = "empty";
-            this.empty.Size = new System.Drawing.Size(69, 65);
-            this.empty.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.empty.TabIndex = 9;
-            this.empty.TabStop = false;
-            this.empty.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownEmpty);
-            this.empty.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            this.heavyParkingPlaceSecond.Image = global::ParkingApp.Properties.Resources.heavyParkingPlaceSecond;
+            this.heavyParkingPlaceSecond.Location = new System.Drawing.Point(153, 74);
+            this.heavyParkingPlaceSecond.Name = "heavyParkingPlaceSecond";
+            this.heavyParkingPlaceSecond.Size = new System.Drawing.Size(69, 65);
+            this.heavyParkingPlaceSecond.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.heavyParkingPlaceSecond.TabIndex = 9;
+            this.heavyParkingPlaceSecond.TabStop = false;
+            this.heavyParkingPlaceSecond.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownEmpty);
+            this.heavyParkingPlaceSecond.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // entrance
             // 
@@ -118,21 +119,21 @@
             this.exit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownExit);
             this.exit.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
-            // heavyParkingPlace
+            // heavyParkingPlaceMain
             // 
-            this.heavyParkingPlace.Image = global::ParkingApp.Properties.Resources.heavyParkingPlace;
-            this.heavyParkingPlace.Location = new System.Drawing.Point(78, 74);
-            this.heavyParkingPlace.Name = "heavyParkingPlace";
-            this.heavyParkingPlace.Size = new System.Drawing.Size(69, 65);
-            this.heavyParkingPlace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.heavyParkingPlace.TabIndex = 5;
-            this.heavyParkingPlace.TabStop = false;
-            this.heavyParkingPlace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownHeavyParkingPlace);
-            this.heavyParkingPlace.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
+            this.heavyParkingPlaceMain.Image = global::ParkingApp.Properties.Resources.heavyParkingPlaceMain;
+            this.heavyParkingPlaceMain.Location = new System.Drawing.Point(78, 74);
+            this.heavyParkingPlaceMain.Name = "heavyParkingPlaceMain";
+            this.heavyParkingPlaceMain.Size = new System.Drawing.Size(69, 65);
+            this.heavyParkingPlaceMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.heavyParkingPlaceMain.TabIndex = 5;
+            this.heavyParkingPlaceMain.TabStop = false;
+            this.heavyParkingPlaceMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDownHeavyParkingPlace);
+            this.heavyParkingPlaceMain.MouseEnter += new System.EventHandler(this.mouseEnterPatternsPicBox);
             // 
             // lightParkingPlace
             // 
-            this.lightParkingPlace.Image = global::ParkingApp.Properties.Resources.lightParkingPlace;
+            this.lightParkingPlace.Image = ((System.Drawing.Image)(resources.GetObject("lightParkingPlace.Image")));
             this.lightParkingPlace.Location = new System.Drawing.Point(78, 3);
             this.lightParkingPlace.Name = "lightParkingPlace";
             this.lightParkingPlace.Size = new System.Drawing.Size(69, 65);
@@ -330,9 +331,9 @@
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.Controls.Add(this.entrance);
-            this.panel4.Controls.Add(this.heavyParkingPlace);
+            this.panel4.Controls.Add(this.heavyParkingPlaceMain);
             this.panel4.Controls.Add(this.exit);
-            this.panel4.Controls.Add(this.empty);
+            this.panel4.Controls.Add(this.heavyParkingPlaceSecond);
             this.panel4.Controls.Add(this.lightParkingPlace);
             this.panel4.Controls.Add(this.tree);
             this.panel4.Controls.Add(this.road);
@@ -372,10 +373,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Конфигурирование пространства парковки";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
-            ((System.ComponentModel.ISupportInitialize)(this.empty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heavyParkingPlaceSecond)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.entrance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heavyParkingPlace)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heavyParkingPlaceMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lightParkingPlace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tree)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.road)).EndInit();
@@ -391,9 +392,9 @@
         private System.Windows.Forms.PictureBox entrance;
         private System.Windows.Forms.PictureBox exit;
         private System.Windows.Forms.PictureBox road;
-        private System.Windows.Forms.PictureBox heavyParkingPlace;
+        private System.Windows.Forms.PictureBox heavyParkingPlaceMain;
         private System.Windows.Forms.PictureBox tree;
-        private System.Windows.Forms.PictureBox empty;
+        private System.Windows.Forms.PictureBox heavyParkingPlaceSecond;
         private System.Windows.Forms.PictureBox lightParkingPlace;
         private System.Windows.Forms.Panel modelPanel;
         private System.Windows.Forms.Panel panel2;

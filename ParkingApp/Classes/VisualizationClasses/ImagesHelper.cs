@@ -20,25 +20,21 @@ namespace ParkingApp.Classes.VisualizationClasses
             {
                 return Resources.lightParkingPlace;
             }
-            if (name.Equals(Globals.HEAVY_PARKING_PLACE))
+            if (name.Equals(Globals.HEAVY_PARKING_PLACE_MAIN))
             {
-                return Resources.heavyParkingPlace;
+                return Resources.heavyParkingPlaceMain;
             }
             if (name.Equals(Globals.ROAD))
             {
                 return Resources.road;
             }
-            if (name.Equals(Globals.HIGHWAY))
-            {
-                return Resources.highway;
-            }
             if (name.Equals(Globals.TREE))
             {
                 return Resources.tree;
             }
-            if (name.Equals(Globals.EMPTY))
+            if (name.Equals(Globals.HEAVY_PARKING_PLACE_SECOND))
             {
-                return Resources.empty;
+                return Resources.heavyParkingPlaceSecond;
             }
 
             return Resources.road;
@@ -61,25 +57,21 @@ namespace ParkingApp.Classes.VisualizationClasses
             {
                 return Globals.LIGHT_PARKING_PLACE;
             }
-            if (isImageSame(bitmap, Resources.heavyParkingPlace))
+            if (isImageSame(bitmap, Resources.heavyParkingPlaceMain))
             {
-                return Globals.HEAVY_PARKING_PLACE;
+                return Globals.HEAVY_PARKING_PLACE_MAIN;
             }
             if (isImageSame(bitmap, Resources.road))
             {
                 return Globals.ROAD;
             }
-            if (isImageSame(bitmap, Resources.highway))
-            {
-                return Globals.HIGHWAY;
-            }
             if (isImageSame(bitmap, Resources.tree))
             {
                 return Globals.TREE;
             }
-            if (isImageSame(bitmap, Resources.empty))
+            if (isImageSame(bitmap, Resources.heavyParkingPlaceSecond))
             {
-                return Globals.EMPTY;
+                return Globals.HEAVY_PARKING_PLACE_SECOND;
             }
 
             return Globals.ROAD;

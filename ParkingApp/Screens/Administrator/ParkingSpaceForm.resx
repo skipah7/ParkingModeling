@@ -117,4 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lightParkingPlace.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EwAACxMBAJqcGAAAAbNJREFUeF7t00Gqg0AQBmHvfylBD5ZnYAaM71c3aS1iLb5FwjTdUDiM4/gSh0Fg
+        DAJjEBiDwBgExiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATm1iDDMGCk++5gkI10
+        55UMsiPdewWDHEg3VzPIgXRzNYOcSHdXMsiJdHcldJA08y1p3540X+WxQbq0dyvNVXl8kLe0ey3NVDHI
+        Iu1eSzNVDNKk/V16X8UgTdrfpfdVDNKk/V16X8UgTdrfpfdVDNKk/V16X8UgTdrfpfdVDNKk/V16X8Ug
+        Tdrfrd9N0/Tx+9sMski719JMFYMs0u61NFPl8UHS3q00V+WxQdK+PWm+CjoIQbq7kkFOpLsrGeRAurma
+        QQ6km6sZZEe69woG2Uh3XskgTbrvDuggaebXGQTGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCIxBYAwC
+        YxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDC3BtF/BoExCIxBYAwCYxAYg8DggszzHP9/Cr8QGIPA
+        GATGIDAGgTEIjEFgDAJjEBiDwBgExiAwBkEZX389S3gfCl2k6AAAAABJRU5ErkJggg==
+</value>
+  </data>
 </root>

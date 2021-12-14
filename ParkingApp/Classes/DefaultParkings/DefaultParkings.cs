@@ -4,7 +4,7 @@ namespace ParkingApp.Classes
 {
     class DefaultParkings
     {
-        private String[,] default_5_5 = new String[5,5];
+        private string[,] default_5_5 = new String[5,5];
 
         private void setDefault_5_5()
         {
@@ -32,14 +32,14 @@ namespace ParkingApp.Classes
             default_5_5[3, 3] = Globals.ROAD;
             default_5_5[3, 4] = Globals.LIGHT_PARKING_PLACE;
 
-            default_5_5[4, 0] = Globals.HEAVY_PARKING_PLACE;
+            default_5_5[4, 0] = Globals.TREE;
             default_5_5[4, 1] = Globals.EXIT;
-            default_5_5[4, 2] = Globals.EMPTY;
+            default_5_5[4, 2] = Globals.TREE;
             default_5_5[4, 3] = Globals.ENTRANCE;
             default_5_5[4, 4] = Globals.TREE;
         }
 
-        public String[,] getDefault_5_5()
+        public string[,] getDefault_5_5()
         {
             setDefault_5_5();
             return this.default_5_5;

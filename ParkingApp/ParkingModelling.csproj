@@ -67,6 +67,11 @@
     <Compile Include="Classes\VisualizationClasses\ImagesHelper.cs" />
     <Compile Include="Classes\VisualizationClasses\RoadsClass.cs" />
     <Compile Include="Classes\VisualizationClasses\VerifyParkingClass.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Screens\AboutDevelopers.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,14 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Screens\Manager\ModelingSpaceForm.resx">
       <DependentUpon>ModelingSpaceForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,31 +198,13 @@
     <None Include="Resources\грузовушка.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\дерево.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\доллар.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\дорога.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\легковушка.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\пустое место.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\трава.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Легковая.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\парковочное место.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\шлагбаум.png" />
+    <None Include="Resources\road.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\черная машинка.png" />
@@ -240,31 +222,16 @@
     <None Include="Resources\красная машинка.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\дорога.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\асфальт.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\газон.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\дерево.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\касса.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\шлагбаум отраженный.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\черная_машинка.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highway.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\шоссе.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highwayCar1Pic.png" />
@@ -309,19 +276,24 @@
     <None Include="Resources\sinyaya_mashinka.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\highwayPic.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\highwayPic.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\road.jpg" />
     <None Include="Resources\tree.jpg" />
     <None Include="Resources\entrance.jpg" />
     <None Include="Resources\exit.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\parkingPlace.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lightParkingPlace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heavyParkingPlaceMain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heavyParkingPlaceSecond.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

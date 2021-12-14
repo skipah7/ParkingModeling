@@ -114,7 +114,7 @@ namespace ParkingApp
 
         private void mouseDownHeavyParkingPlace(object sender, MouseEventArgs e)
         {
-            heavyParkingPlace.DoDragDrop(heavyParkingPlace.Image, DragDropEffects.Copy);
+            heavyParkingPlaceMain.DoDragDrop(heavyParkingPlaceMain.Image, DragDropEffects.Copy);
         }
 
         private void mouseDownLightParkingPlace(object sender, MouseEventArgs e)
@@ -134,7 +134,7 @@ namespace ParkingApp
 
         private void mouseDownEmpty(object sender, MouseEventArgs e)
         {
-            empty.DoDragDrop(empty.Image, DragDropEffects.Copy);
+            heavyParkingPlaceSecond.DoDragDrop(heavyParkingPlaceSecond.Image, DragDropEffects.Copy);
         }
 
         private void mouseEnterPatternsPicBox(object sender, EventArgs e)

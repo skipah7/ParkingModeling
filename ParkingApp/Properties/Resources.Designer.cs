@@ -63,16 +63,6 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap empty {
-            get {
-                object obj = ResourceManager.GetObject("empty", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap entrance {
             get {
                 object obj = ResourceManager.GetObject("entrance", resourceCulture);
@@ -93,9 +83,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap heavyParkingPlace {
+        internal static System.Drawing.Bitmap heavyParkingPlaceMain {
             get {
-                object obj = ResourceManager.GetObject("heavyParkingPlace", resourceCulture);
+                object obj = ResourceManager.GetObject("heavyParkingPlaceMain", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +93,9 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap highway {
+        internal static System.Drawing.Bitmap heavyParkingPlaceSecond {
             get {
-                object obj = ResourceManager.GetObject("highway", resourceCulture);
+                object obj = ResourceManager.GetObject("heavyParkingPlaceSecond", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

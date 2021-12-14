@@ -37,14 +37,14 @@ namespace ParkingApp
 
         // patterns names, saved at patterns
         // is matrix of parking
-        public const string TREE = "Tree";
-        public const string HEAVY_PARKING_PLACE = "Heavy parking place";
-        public const string LIGHT_PARKING_PLACE = "Light parking place";
-        public const string EMPTY = "Empty";
-        public const string ENTRANCE = "Entrance";
-        public const string EXIT = "Exit";
-        public const string ROAD = "Road";
-        public const string HIGHWAY = "Highway";
+        public const string TREE = "TREE";
+        public const string HEAVY_PARKING_PLACE_MAIN = "HEAVY_PARKING_PLACE_MAIN";
+        public const string HEAVY_PARKING_PLACE_SECOND = "HEAVY_PARKING_PLACE_SECOND";
+        public const string LIGHT_PARKING_PLACE = "LIGHT_PARKING_PLACE";
+        public const string ENTRANCE = "ENTRANCE";
+        public const string EXIT = "EXIT";
+        public const string ROAD = "ROAD";
+        public const string HIGHWAY = "HIGHWAY";
 
         // parking file name
         public static String parkingFileName = "";
