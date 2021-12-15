@@ -110,22 +110,14 @@ namespace ParkingApp
         private void saveToFile_Click(object sender, EventArgs e)
         {
             parkingFieldClass.fillPatternsArray();
-            if (isCorrectField())
-            {
-                SaveForm saveForm = new SaveForm();
-                saveForm.Show();
-            }
-        }
-
-        private bool isCorrectField()
-        {
             VerifyParkingClass verifyParking = new VerifyParkingClass();
             if (verifyParking.isCorrectNumberOfTerminals() && verifyParking.isTerminalsAtTheBorder())
             {
-                return true;
+                SaveForm saveForm = new SaveForm();
+                saveForm.Show();
+                return;
             }
             MessageBox.Show("Убедитесь в правильности заполнения пространства парковки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return false;
         }
 
         private void refreshParking_Click(object sender, EventArgs e)
@@ -159,7 +151,15 @@ namespace ParkingApp
             int minCols = Math.Min(cols, original.GetLength(1));
             for (int i = 0; i < minRows; i++)
                 for (int j = 0; j < minCols; j++)
-                    newArray[i, j] = original[i, j];
+                {
+                    if (cols > original.GetLength(1))
+                    {
+                        newArray[i, j + cols - original.GetLength(1)] = original[i, j];
+                    } else
+                    {
+                        newArray[i, j] = original[i, j + original.GetLength(1) - cols];
+                    }
+                }
             return newArray;
         }
 
