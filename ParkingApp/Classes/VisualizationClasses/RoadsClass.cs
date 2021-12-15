@@ -8,21 +8,21 @@ namespace ParkingApp.Classes
     {
         public static void createRoads(Panel panel)
         {
-            for (int j = 0; j < Globals.WIDTH; j++)
+            for (int x = 0; x < Globals.WIDTH; x++)
             {
-                PictureBox pictureBox = createRoadPictureBox(Globals.HEIGHT, j);
+                PictureBox pictureBox = createRoadPictureBox(x, Globals.HEIGHT);
                 panel.Controls.Add(pictureBox);
                 pictureBox.BringToFront();
-                Globals.highwayPatterns[Globals.HEIGHT, j] = Globals.HIGHWAY;
+                Globals.highwayPatterns[x, Globals.HEIGHT] = Globals.HIGHWAY;
             }
         }
 
-        private static PictureBox createRoadPictureBox(int i, int j)
+        private static PictureBox createRoadPictureBox(int x, int y)
         {
             PictureBox pictureBox = new PictureBox
             {
-                Location = new Point(j * Globals.PICTURE_BOX_SIZE, i * Globals.PICTURE_BOX_SIZE),
-                Name = i + "_" + j,
+                Location = new Point(x * Globals.PICTURE_BOX_SIZE, y * Globals.PICTURE_BOX_SIZE),
+                Name = x + "_" + y,
                 Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Image = Resources.road

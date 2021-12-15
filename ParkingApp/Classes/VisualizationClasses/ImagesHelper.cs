@@ -8,6 +8,10 @@ namespace ParkingApp.Classes.VisualizationClasses
     {
         public static Image getImageByName(string name)
         {
+            if (name == null)
+            {
+                return Resources.road;
+            }
             if (name.Equals(Globals.ENTRANCE))
             {
                 return Resources.entrance;

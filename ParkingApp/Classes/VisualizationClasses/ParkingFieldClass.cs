@@ -16,11 +16,11 @@ namespace ParkingApp.Classes
         public void fillPatternsArray()
         {
             int z = 0;
-            for (int i = 0; i < Globals.WIDTH; i++)
+            for (int x = 0; x < Globals.WIDTH; x++)
             {
-                for (int j = 0; j < Globals.HEIGHT; j++)
+                for (int y = 0; y < Globals.HEIGHT; y++)
                 {
-                    Globals.patterns[i, j] = ImagesHelper.getNameOfImage(Globals.pictureBoxes.ElementAt(z).Image);
+                    Globals.patterns[x, y] = ImagesHelper.getNameOfImage(Globals.pictureBoxes.ElementAt(z).Image);
                     z++;
                 }
             }
@@ -30,24 +30,24 @@ namespace ParkingApp.Classes
         {
             Globals.pictureBoxes = new List<PictureBox>();
 
-            for (int i = 0; i < Globals.HEIGHT; i++)
+            for (int x = 0; x < Globals.WIDTH; x++)
             {
-                for (int j = 0; j < Globals.WIDTH; j++)
+                for (int y = 0; y < Globals.HEIGHT; y++)
                 {
-                    Image image = ImagesHelper.getImageByName(Globals.patterns[i, j]);
-                    Globals.pictureBoxes.Add(createPictureBox(image, i, j));
+                    Image image = ImagesHelper.getImageByName(Globals.patterns[x, y]);
+                    Globals.pictureBoxes.Add(createPictureBox(image, x, y));
                 }
             }
         }        
 
         public void createField(Panel panel)
         {
-            for (int i = 0; i < Globals.HEIGHT; i++)
+            for (int x = 0; x < Globals.WIDTH; x++)
             {
-                for (int j = 0; j < Globals.WIDTH; j++)
+                for (int y = 0; y < Globals.HEIGHT; y++)
                 {
                     Image image = ImagesHelper.getImageByName(Globals.ROAD);
-                    PictureBox pictureBox = createPictureBox(image, i, j);
+                    PictureBox pictureBox = createPictureBox(image, x, y);
 
                     Globals.pictureBoxes.Add(pictureBox);
                     panel.Controls.Add(pictureBox);
@@ -56,12 +56,12 @@ namespace ParkingApp.Classes
         }
 
         #region main picture box + DragNDrop handlers
-        public PictureBox createPictureBox(Image image, int i, int j)
+        public PictureBox createPictureBox(Image image, int x, int y)
         {
             PictureBox pictureBox = new PictureBox
             {
-                Location = new Point(j * Globals.PICTURE_BOX_SIZE, i * Globals.PICTURE_BOX_SIZE),
-                Name = i + "_" + j,
+                Location = new Point(x * Globals.PICTURE_BOX_SIZE, y * Globals.PICTURE_BOX_SIZE),
+                Name = x + "_" + y,
                 Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 AllowDrop = true

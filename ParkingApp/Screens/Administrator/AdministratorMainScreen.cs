@@ -18,7 +18,7 @@ namespace ParkingApp
             Globals.WIDTH = 5;
             Globals.HEIGHT = 5;
             Globals.patterns = new DefaultParkings().getDefault_5_5();
-            Globals.highwayPatterns = new string[Globals.HEIGHT + 1, Globals.WIDTH];
+            Globals.highwayPatterns = new string[Globals.WIDTH, Globals.HEIGHT + 1];
 
             this.Hide();
             ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
