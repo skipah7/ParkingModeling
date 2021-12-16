@@ -57,7 +57,7 @@ namespace ParkingApp.Screens.Manager
             FindPaths.preEndPark = null;
             FindPaths.parkPoints = new List<PathPoint>();
             FindPaths.carPoints = new List<PathPoint>();
-            Globals.tabloItems = new List<TabloItem>();
+            Globals.tabloItems = new List<TableItem>();
             FindPaths.parkMatr = null;
             FindPaths.roadMatr = null;
         }
@@ -136,12 +136,12 @@ namespace ParkingApp.Screens.Manager
             }
             if (Globals.modelingParams.onParkingInterval != 0)
             {
-                car.tabloItem = new TabloItem(Globals.modelingParams.onParkingInterval, car.parkingPlaceNumber, Globals.tariff.carPrice * Globals.modelingParams.onParkingInterval);
+                car.tabloItem = new TableItem(Globals.modelingParams.onParkingInterval, car.parkingPlaceNumber, Globals.tariff.carPrice * Globals.modelingParams.onParkingInterval);
                 Globals.tabloItems.Add(car.tabloItem);
             }
             else
             {
-                car.tabloItem = new TabloItem(Globals.modelingParams.onParkingIntervals[intervalNumber], car.parkingPlaceNumber, Convert.ToInt32(Globals.tariff.carPrice * Globals.modelingParams.onParkingIntervals[intervalNumber]));
+                car.tabloItem = new TableItem(Globals.modelingParams.onParkingIntervals[intervalNumber], car.parkingPlaceNumber, Convert.ToInt32(Globals.tariff.carPrice * Globals.modelingParams.onParkingIntervals[intervalNumber]));
                 Globals.tabloItems.Add(car.tabloItem);
             }
         }

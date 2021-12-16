@@ -49,15 +49,19 @@ namespace ParkingApp
                     Globals.upAdjacentRoadLength = parkingField.getUpRoadLength();
                     Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
                     Globals.IS_CORRECT_PARKING = true;
+                    Globals.highwayPatterns = new string[Globals.WIDTH, Globals.HEIGHT + 1];
 
                     MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Hide();
+                    ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
+                    parkingSpaceForm.Show();
                 }
                 else
                 {
                     MessageBox.Show("Ошибка. Вероятно, файл был поврежден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            this.Show();
         }
 
         // load parking from file

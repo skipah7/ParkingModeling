@@ -96,6 +96,28 @@ namespace ParkingApp.Screens.Manager
         }
 
         #region UIHelpers
+        private void showTooltip(object sender, EventArgs e)
+        {
+            trackBarTooltip.SetToolTip(sender as TrackBar, (sender as TrackBar).Value.ToString());
+        }
+
+        private void showTooltipDividedBy10(object sender, EventArgs e)
+        {
+            trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 10d).ToString());
+
+        }
+
+        private void showTooltipDividedBy100(object sender, EventArgs e)
+        {
+            trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 100d).ToString());
+
+        }
+
+        private void showTooltipDividedBy1000(object sender, EventArgs e)
+        {
+            trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 1000d).ToString());
+        }
+
         private bool checkABValues(int a, int b)
         {
             if (a > b)

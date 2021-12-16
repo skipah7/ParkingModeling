@@ -2,15 +2,19 @@
 {
     class PathNode
     {
-        // Координаты точки на карте.
+        // coordinates on map
         public PathPoint Position {get; set;}
-        // Длина пути от старта (G).
+
+        // length of the path from start (G).
         public int PathLengthFromStart {get; set;}
-        // Ссылка на точку, из которой пришли в эту точку.
+
+        // reference to the point, from which we came to this point
         public PathNode CameFrom { get; set; }
-        // Примерное расстояние до цели (H).
+
+        // roughly distance to the target (H).
         public int HeuristicEstimatePathLength { get; set; }
-        // Ожидаемое полное расстояние до цели (F).
+
+        // expected full distance to the target (F).
         public int EstimateFullPathLength
         {
             get

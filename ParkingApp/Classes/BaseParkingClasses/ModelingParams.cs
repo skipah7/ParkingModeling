@@ -13,7 +13,7 @@ namespace ParkingApp.Classes.BaseParkingClasses
         public List<double> appearanceIntervals { get; set; }
         public List<double> onParkingIntervals { get; set; }
 
-        //для детерминированного потока
+        // deterministic flow
         public ModelingParams(bool determFlow, double probability, int appearanceInterval, int onParkingInterval)
         {
             this.determFlow = determFlow;
@@ -22,7 +22,7 @@ namespace ParkingApp.Classes.BaseParkingClasses
             this.onParkingInterval = onParkingInterval;
         }
 
-        //для случайного потока
+        // random flow
         public ModelingParams(bool randomFlow, double probability, List<double> appearanceIntervals, List<double> onParkingIntervals)
         {
             this.randomFlow = randomFlow;

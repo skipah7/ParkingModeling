@@ -39,7 +39,7 @@ namespace ParkingApp.Screens.Administrator
 
         private void shutDownApplication(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            this.Hide();
         }
     }
 }

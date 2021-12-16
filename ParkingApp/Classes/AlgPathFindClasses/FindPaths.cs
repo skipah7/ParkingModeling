@@ -18,7 +18,7 @@ namespace ParkingApp.Classes.AlgPathFind
         // public static List<PathPoint> freeParkPoints = new List<PathPoint>();
         public static int[,] parkMatr;
         public static int[,] roadMatr;
-       // public static bool startEnd;
+        // public static bool startEnd;
         //  public static List<PathPoint> PointsPath = new List<PathPoint>();
 
         public static void fillParkMatr()

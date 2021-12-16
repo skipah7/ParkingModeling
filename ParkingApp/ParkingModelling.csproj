@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BaseParkingClasses\ModelingParams.cs" />
-    <Compile Include="Classes\BaseParkingClasses\TabloItem.cs" />
+    <Compile Include="Classes\BaseParkingClasses\TableItem.cs" />
     <Compile Include="Classes\ModelingClasses\DistributionsClass.cs" />
     <Compile Include="Classes\VisualizationClasses\ParkingFieldClass.cs" />
     <Compile Include="Classes\AlgPathFindClasses\FindPaths.cs" />

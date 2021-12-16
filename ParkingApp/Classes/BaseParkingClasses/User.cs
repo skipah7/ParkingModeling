@@ -5,43 +5,43 @@ namespace ParkingApp
     [Serializable]
     class User
     {
-        private String login;
-        private String password;
-        private String type;
+        private string login;
+        private string password;
+        private string type;
 
-        public User(String login, String password, String type)
+        public User(string login, string password, string type)
         {
             this.login = login;
             this.password = password;
             this.type = type;
         }
 
-        public String getLogin()
+        public string getLogin()
         {
             return this.login;
         }
 
-        public String getPassword()
+        public string getPassword()
         {
             return this.password;
         }
 
-        public void setLogin(String newLogin)
+        public void setLogin(string newLogin)
         {
             this.login = newLogin;
         }
 
-        public void setPassword(String newPassword)
+        public void setPassword(string newPassword)
         {
             this.password = newPassword;
         }
 
-        public String getType()
+        public string getType()
         {
             return this.type;
         }
 
-        public void setType(String newType)
+        public void setType(string newType)
         {
             this.type = newType;
         }

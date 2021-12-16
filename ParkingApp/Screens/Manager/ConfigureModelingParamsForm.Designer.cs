@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.backToAdminMainScreen = new System.Windows.Forms.Button();
             this.lambdaLabel = new System.Windows.Forms.Label();
             this.bLabel = new System.Windows.Forms.Label();
@@ -71,10 +72,11 @@
             this.deterministicParkLabel = new System.Windows.Forms.Label();
             this.deterministicParkInterval = new System.Windows.Forms.TrackBar();
             this.randomParkPanel = new System.Windows.Forms.Panel();
+            this.parkLawType = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.exponentialParkPanel = new System.Windows.Forms.Panel();
             this.exponentialParkValue = new System.Windows.Forms.TrackBar();
             this.lambdaLabel2 = new System.Windows.Forms.Label();
-            this.parkLawType = new System.Windows.Forms.ComboBox();
             this.normalParkPanel = new System.Windows.Forms.Panel();
             this.parkDXValue = new System.Windows.Forms.TrackBar();
             this.parkMXValue = new System.Windows.Forms.TrackBar();
@@ -85,7 +87,6 @@
             this.parkAValue = new System.Windows.Forms.TrackBar();
             this.aLabel2 = new System.Windows.Forms.Label();
             this.bLabel2 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.flowRadioButtons = new System.Windows.Forms.Panel();
             this.parkRadioButtons = new System.Windows.Forms.Panel();
             this.tariffLabel = new System.Windows.Forms.Label();
@@ -94,6 +95,7 @@
             this.dayTarifCostLabel = new System.Windows.Forms.Label();
             this.nightTarifCostLabel = new System.Windows.Forms.Label();
             this.nightTarifCost = new System.Windows.Forms.TrackBar();
+            this.trackBarTooltip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.lightCarProbability)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heavyCarProbability)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lightToHeavyRatio)).BeginInit();
@@ -250,6 +252,7 @@
             this.lightCarProbability.TabIndex = 80;
             this.lightCarProbability.TickStyle = System.Windows.Forms.TickStyle.None;
             this.lightCarProbability.Value = 50;
+            this.lightCarProbability.Scroll += new System.EventHandler(this.showTooltipDividedBy100);
             // 
             // lightCarLabel
             // 
@@ -278,6 +281,7 @@
             this.heavyCarProbability.TabIndex = 82;
             this.heavyCarProbability.TickStyle = System.Windows.Forms.TickStyle.None;
             this.heavyCarProbability.Value = 50;
+            this.heavyCarProbability.Scroll += new System.EventHandler(this.showTooltipDividedBy100);
             // 
             // lightToHeavyRationLabel
             // 
@@ -297,6 +301,7 @@
             this.lightToHeavyRatio.TabIndex = 84;
             this.lightToHeavyRatio.TickStyle = System.Windows.Forms.TickStyle.None;
             this.lightToHeavyRatio.Value = 50;
+            this.lightToHeavyRatio.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // label25
             // 
@@ -327,6 +332,7 @@
             this.deterministicAppearanceFlow.TabIndex = 88;
             this.deterministicAppearanceFlow.TickStyle = System.Windows.Forms.TickStyle.None;
             this.deterministicAppearanceFlow.Value = 10;
+            this.deterministicAppearanceFlow.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // deterministicFlowLabel
             // 
@@ -376,6 +382,7 @@
             this.flowAValue.TabIndex = 92;
             this.flowAValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.flowAValue.Value = 5;
+            this.flowAValue.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // flowBValue
             // 
@@ -388,6 +395,7 @@
             this.flowBValue.TabIndex = 93;
             this.flowBValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.flowBValue.Value = 10;
+            this.flowBValue.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // uniformFlowPanel
             // 
@@ -423,6 +431,7 @@
             this.flowDXValue.TabIndex = 93;
             this.flowDXValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.flowDXValue.Value = 25;
+            this.flowDXValue.Scroll += new System.EventHandler(this.showTooltipDividedBy10);
             // 
             // flowMXValue
             // 
@@ -434,6 +443,7 @@
             this.flowMXValue.TabIndex = 92;
             this.flowMXValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.flowMXValue.Value = 25;
+            this.flowMXValue.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // MXLabel
             // 
@@ -476,14 +486,15 @@
             this.exponentialFlowValue.TabIndex = 94;
             this.exponentialFlowValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.exponentialFlowValue.Value = 25;
+            this.exponentialFlowValue.Scroll += new System.EventHandler(this.showTooltipDividedBy100);
             // 
             // randomFlowPanel
             // 
             this.randomFlowPanel.Controls.Add(this.flowLawType);
             this.randomFlowPanel.Controls.Add(this.RandomFlowLabel);
-            this.randomFlowPanel.Controls.Add(this.exponentialFlowPanel);
             this.randomFlowPanel.Controls.Add(this.normalFlowPanel);
             this.randomFlowPanel.Controls.Add(this.uniformFlowPanel);
+            this.randomFlowPanel.Controls.Add(this.exponentialFlowPanel);
             this.randomFlowPanel.Location = new System.Drawing.Point(3, 192);
             this.randomFlowPanel.Name = "randomFlowPanel";
             this.randomFlowPanel.Size = new System.Drawing.Size(441, 110);
@@ -569,19 +580,42 @@
             this.deterministicParkInterval.TabIndex = 88;
             this.deterministicParkInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.deterministicParkInterval.Value = 100;
+            this.deterministicParkInterval.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // randomParkPanel
             // 
             this.randomParkPanel.Controls.Add(this.parkLawType);
             this.randomParkPanel.Controls.Add(this.label14);
-            this.randomParkPanel.Controls.Add(this.exponentialParkPanel);
             this.randomParkPanel.Controls.Add(this.normalParkPanel);
             this.randomParkPanel.Controls.Add(this.uniformParkPanel);
+            this.randomParkPanel.Controls.Add(this.exponentialParkPanel);
             this.randomParkPanel.Location = new System.Drawing.Point(3, 340);
             this.randomParkPanel.Name = "randomParkPanel";
             this.randomParkPanel.Size = new System.Drawing.Size(441, 110);
             this.randomParkPanel.TabIndex = 104;
             this.randomParkPanel.Visible = false;
+            // 
+            // parkLawType
+            // 
+            this.parkLawType.FormattingEnabled = true;
+            this.parkLawType.Items.AddRange(new object[] {
+            "Равномерный",
+            "Экспоненциальный",
+            "Нормальный"});
+            this.parkLawType.Location = new System.Drawing.Point(222, 4);
+            this.parkLawType.Name = "parkLawType";
+            this.parkLawType.Size = new System.Drawing.Size(134, 21);
+            this.parkLawType.TabIndex = 45;
+            this.parkLawType.SelectionChangeCommitted += new System.EventHandler(this.parkLawTypeSelection);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(15, 7);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(160, 13);
+            this.label14.TabIndex = 63;
+            this.label14.Text = "Выбор закона распределения";
             // 
             // exponentialParkPanel
             // 
@@ -604,6 +638,7 @@
             this.exponentialParkValue.TabIndex = 94;
             this.exponentialParkValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.exponentialParkValue.Value = 250;
+            this.exponentialParkValue.Scroll += new System.EventHandler(this.showTooltipDividedBy1000);
             // 
             // lambdaLabel2
             // 
@@ -614,19 +649,6 @@
             this.lambdaLabel2.Size = new System.Drawing.Size(19, 16);
             this.lambdaLabel2.TabIndex = 57;
             this.lambdaLabel2.Text = " λ";
-            // 
-            // parkLawType
-            // 
-            this.parkLawType.FormattingEnabled = true;
-            this.parkLawType.Items.AddRange(new object[] {
-            "Равномерный",
-            "Экспоненциальный",
-            "Нормальный"});
-            this.parkLawType.Location = new System.Drawing.Point(222, 4);
-            this.parkLawType.Name = "parkLawType";
-            this.parkLawType.Size = new System.Drawing.Size(134, 21);
-            this.parkLawType.TabIndex = 45;
-            this.parkLawType.SelectionChangeCommitted += new System.EventHandler(this.parkLawTypeSelection);
             // 
             // normalParkPanel
             // 
@@ -650,6 +672,7 @@
             this.parkDXValue.TabIndex = 93;
             this.parkDXValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.parkDXValue.Value = 125;
+            this.parkDXValue.Scroll += new System.EventHandler(this.showTooltipDividedBy10);
             // 
             // parkMXValue
             // 
@@ -661,6 +684,7 @@
             this.parkMXValue.TabIndex = 92;
             this.parkMXValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.parkMXValue.Value = 250;
+            this.parkMXValue.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // MXLabelPark
             // 
@@ -705,6 +729,7 @@
             this.parkBValue.TabIndex = 93;
             this.parkBValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.parkBValue.Value = 200;
+            this.parkBValue.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // parkAValue
             // 
@@ -716,6 +741,7 @@
             this.parkAValue.TabIndex = 92;
             this.parkAValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.parkAValue.Value = 50;
+            this.parkAValue.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // aLabel2
             // 
@@ -736,15 +762,6 @@
             this.bLabel2.Size = new System.Drawing.Size(16, 16);
             this.bLabel2.TabIndex = 56;
             this.bLabel2.Text = "b";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(15, 7);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(160, 13);
-            this.label14.TabIndex = 63;
-            this.label14.Text = "Выбор закона распределения";
             // 
             // flowRadioButtons
             // 
@@ -793,6 +810,7 @@
             this.dayTarifCost.TabIndex = 109;
             this.dayTarifCost.TickStyle = System.Windows.Forms.TickStyle.None;
             this.dayTarifCost.Value = 200;
+            this.dayTarifCost.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // dayTarifCostLabel
             // 
@@ -824,6 +842,7 @@
             this.nightTarifCost.TabIndex = 112;
             this.nightTarifCost.TickStyle = System.Windows.Forms.TickStyle.None;
             this.nightTarifCost.Value = 130;
+            this.nightTarifCost.Scroll += new System.EventHandler(this.showTooltip);
             // 
             // ConfigureModelingParamsForm
             // 
@@ -831,6 +850,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(446, 598);
+            this.Controls.Add(this.randomParkPanel);
             this.Controls.Add(this.nightTarifCost);
             this.Controls.Add(this.nightTarifCostLabel);
             this.Controls.Add(this.dayTarifCostLabel);
@@ -839,7 +859,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.parkRadioButtons);
             this.Controls.Add(this.flowRadioButtons);
-            this.Controls.Add(this.randomParkPanel);
             this.Controls.Add(this.deterministicParkPanel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
@@ -981,5 +1000,6 @@
         private System.Windows.Forms.Label dayTarifCostLabel;
         private System.Windows.Forms.Label nightTarifCostLabel;
         private System.Windows.Forms.TrackBar nightTarifCost;
+        private System.Windows.Forms.ToolTip trackBarTooltip;
     }
 }

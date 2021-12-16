@@ -19,23 +19,25 @@ namespace ParkingApp.Classes
         public PictureBox carPicBox { get; set; }
         public List<Point> outParking { get; set; }
         public List<Point> onParking { get; set; }
-        public TabloItem tabloItem { get; set; }
+        public TableItem tabloItem { get; set; }
 
         private Random random;
         public double probability { get; set; }
         public int parkingPlaceNumber { get; set; }
         public double timeStay { get; set; }
 
-        public System.Windows.Forms.Timer timer1;
+        public Timer timer1;
         public Car()
         {
             random = new Random();
 
             this.probability = random.NextDouble();
 
-            timer1 = new System.Windows.Forms.Timer();
-            timer1.Interval = Globals.INTERVAL;
-            timer1.Tick += new System.EventHandler(timer1_Tick_1);
+            timer1 = new Timer
+            {
+                Interval = Globals.INTERVAL
+            };
+            timer1.Tick += new EventHandler(timer1_Tick_1);
 
             onParking = new List<Point>();
             outParking = new List<Point>();

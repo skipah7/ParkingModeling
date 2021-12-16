@@ -31,7 +31,7 @@ namespace ParkingApp
 
         public static ModelingParams modelingParams;
 
-        public static List<TabloItem> tabloItems = new List<TabloItem>();
+        public static List<TableItem> tabloItems = new List<TableItem>();
 
         public static bool isNewParking = true;
 

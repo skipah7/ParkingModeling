@@ -111,13 +111,15 @@ namespace ParkingApp
         {
             parkingFieldClass.fillPatternsArray();
             VerifyParkingClass verifyParking = new VerifyParkingClass();
-            if (verifyParking.isCorrectNumberOfTerminals() && verifyParking.isTerminalsAtTheBorder())
+            if (verifyParking.isParkingLayoutCorrect())
             {
                 SaveForm saveForm = new SaveForm();
                 saveForm.Show();
                 return;
             }
-            MessageBox.Show("Убедитесь в правильности заполнения пространства парковки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Вы пытаетесь сохранить модель с нарушенной структурой парковки." +
+                "Возможные причины: отсутствует въезд, выезд/паркомат, парковочное место для грузового автомобиля, " +
+                "парковочное место для легкового автомобиля", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void refreshParking_Click(object sender, EventArgs e)

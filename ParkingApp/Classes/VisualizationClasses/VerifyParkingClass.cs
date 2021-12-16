@@ -1,78 +1,29 @@
-﻿namespace ParkingApp.Classes
+﻿using System;
+
+namespace ParkingApp.Classes
 {
     class VerifyParkingClass
     {
-        public bool isCorrectNumberOfTerminals()
+        public bool isParkingLayoutCorrect()
         {
-            int j;
-            int i = 0;
-            int count = 0;
-            int parkingPlaces = 0;
-            while (i < Globals.WIDTH)
-            {
-                j = 0;
-                while (j < Globals.HEIGHT)
+            bool isLightParkingPlaceExists = false;
+            int entraceCount = 0;
+            int exitCount = 0;
+            int heavyParkingMainCount = 0;
+            int heavyParkingSecondCount = 0;
+            for (int x = 0; x < Globals.patterns.GetLength(0); x++)
+                for (int y = 0; y < Globals.patterns.GetLength(1); y++)
                 {
-                    if (Globals.patterns[i, j].Equals(Globals.ENTRANCE))
-                    {
-                        count++;
-                    }
-                    if (Globals.patterns[i, j].Equals(Globals.EXIT))
-                    {
-                        count++;
-                    }
-                    if (Globals.patterns[i, j].Equals(Globals.HEAVY_PARKING_PLACE_MAIN))
-                    {
-                        count++;
-                    }
-                    if (Globals.patterns[i, j].Equals(Globals.LIGHT_PARKING_PLACE))
-                    {
-                        parkingPlaces++;
-                    }
-                    j++;
+                    if (Globals.patterns[x, y] == Globals.LIGHT_PARKING_PLACE) isLightParkingPlaceExists = true;
+                    if (Globals.patterns[x, y] == Globals.ENTRANCE) entraceCount++;
+                    if (Globals.patterns[x, y] == Globals.EXIT) exitCount++;
+                    if (Globals.patterns[x, y] == Globals.HEAVY_PARKING_PLACE_MAIN) heavyParkingMainCount++;
+                    if (Globals.patterns[x, y] == Globals.HEAVY_PARKING_PLACE_SECOND) heavyParkingSecondCount++;
                 }
-                i++;
-            }
-            if (count == 3 && parkingPlaces != 0) return true;
-            else return false;
-        }
 
-        public bool isTerminalsAtTheBorder()
-        {
-            int i = 0;
-            int j = 0;
-            int x = 0;
-            int y = 0;
-            int z = 0;
-            while (i < Globals.WIDTH)
-            {
-                j = 0;
-                while (j < Globals.HEIGHT)
-                {
-                    if (i == 0 || j == 0 || i == Globals.WIDTH - 1 || j == Globals.HEIGHT - 1)
-                    {
-                        if (Globals.patterns[i, j].Equals(Globals.ENTRANCE))
-                        {
-                            x++;
-                        }
-                        if (Globals.patterns[i, j].Equals(Globals.EXIT))
-                        {
-                            y++;
-                        }
-                        if (Globals.patterns[i, j].Equals(Globals.HEAVY_PARKING_PLACE_MAIN))
-                        {
-                            z++;
-                        }
-                    }
-                    j++;
-                }
-                i++;
-            }
-            if (x != 1 || y != 1 || z != 1)
-            {
-                return false;
-            }
-            else return true;
+            bool isHeavyParkingCorrect = (heavyParkingSecondCount != 0 && heavyParkingMainCount != 0) && (heavyParkingMainCount == heavyParkingSecondCount);
+            bool isEntranceAndExitCorrect = exitCount == 1 && entraceCount == 1;
+            return isLightParkingPlaceExists && isEntranceAndExitCorrect && isHeavyParkingCorrect;
         }
     }
 }
