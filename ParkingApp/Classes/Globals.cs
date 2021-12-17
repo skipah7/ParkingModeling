@@ -9,12 +9,12 @@ namespace ParkingApp
     public static class Globals
     {
         // roles
-        public static String ADMINISTRATOR = "Administrator";
-        public static String MANAGER = "Manager";
+        public static string ADMINISTRATOR = "Administrator";
+        public static string MANAGER = "Manager";
 
         // type of tarif
-        public static String DAILY_RATE = "Daily";
-        public static String HOURLY_RATE = "Hourly";
+        public static string DAILY_RATE = "Daily";
+        public static string HOURLY_RATE = "Hourly";
 
         // height and width
         public static int WIDTH = 0;
@@ -26,14 +26,12 @@ namespace ParkingApp
 
         public static double delta;
 
-        // tariff
+        // modelling params
         public static Tariff tariff;
 
         public static ModelingParams modelingParams;
 
         public static List<TableItem> tabloItems = new List<TableItem>();
-
-        public static bool isNewParking = true;
 
         // patterns names, saved at patterns
         // is matrix of parking
@@ -47,22 +45,22 @@ namespace ParkingApp
         public const string HIGHWAY = "HIGHWAY";
 
         // parking file name
-        public static String parkingFileName = "";
+        public static string parkingFileName = "";
         // parking file path
-        public static String parkingFilePath = "";
+        public static string parkingFilePath = "";
         // path to the site
         public static string pathToHtmlFile = "";
 
         // user directory based on project path
-        public static String directory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
+        public static string directory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
 
         // matrix pattern, is parking space
-        public static String[,] patterns = new String[WIDTH, HEIGHT];
+        public static string[,] patterns = new string[WIDTH, HEIGHT];
         //pictureboxes for parking painting
         public static List<PictureBox> pictureBoxes = new List<PictureBox>();
 
         // matrix pattern, is road
-        public static String[,] highwayPatterns = new String[WIDTH + 1, HEIGHT + 1];
+        public static string[,] highwayPatterns = new string[WIDTH + 1, HEIGHT + 1];
 
         // size of parking in pixels
         public static int SCREEN_SIZE = 500;
@@ -73,8 +71,6 @@ namespace ParkingApp
         public static int rightAdjacentRoadLength = 0;
         public static int downAdjacentRoadLength = 0;
         public static int upAdjacentRoadLength = 0;
-
-        public static bool IS_CORRECT_PARKING;
 
         public static void calculateDelta()
         {
@@ -100,28 +96,28 @@ namespace ParkingApp
             }
         }
 
-        public static void calculatePictureBoxSize()
+        public static void calculatePictureBoxSize(int height, int width)
         {
-            if (HEIGHT >= WIDTH)
+            if (height >= width)
             {
-                if ((SCREEN_SIZE / HEIGHT) % 5 != 0)
+                if ((SCREEN_SIZE / height) % 5 != 0)
                 {
-                    PICTURE_BOX_SIZE = (SCREEN_SIZE / HEIGHT) - (SCREEN_SIZE / HEIGHT) % 5;
+                    PICTURE_BOX_SIZE = (SCREEN_SIZE / height) - (SCREEN_SIZE / height) % 5;
                 }
                 else
                 {
-                    PICTURE_BOX_SIZE = SCREEN_SIZE / HEIGHT;
+                    PICTURE_BOX_SIZE = SCREEN_SIZE / height;
                 }
             }
             else
             {
-                if ((SCREEN_SIZE / WIDTH) % 5 != 0)
+                if ((SCREEN_SIZE / width) % 5 != 0)
                 {
-                    PICTURE_BOX_SIZE = (SCREEN_SIZE / WIDTH) - (SCREEN_SIZE / WIDTH) % 5;
+                    PICTURE_BOX_SIZE = (SCREEN_SIZE / width) - (SCREEN_SIZE / width) % 5;
                 }
                 else
                 {
-                    PICTURE_BOX_SIZE = SCREEN_SIZE / WIDTH;
+                    PICTURE_BOX_SIZE = SCREEN_SIZE / width;
                 }
             }
         }

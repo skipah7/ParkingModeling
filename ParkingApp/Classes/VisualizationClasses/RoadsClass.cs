@@ -6,14 +6,14 @@ namespace ParkingApp.Classes
 {
     class RoadsClass
     {
-        public static void createRoads(Panel panel)
+        public static void createRoads(Panel panel, int width, int height)
         {
-            for (int x = 0; x < Globals.WIDTH; x++)
+            for (int x = 0; x < width; x++)
             {
-                PictureBox pictureBox = createRoadPictureBox(x, Globals.HEIGHT);
+                PictureBox pictureBox = createRoadPictureBox(x, height);
                 panel.Controls.Add(pictureBox);
                 pictureBox.BringToFront();
-                Globals.highwayPatterns[x, Globals.HEIGHT] = Globals.HIGHWAY;
+                Globals.highwayPatterns[x, height] = Globals.HIGHWAY;
             }
         }
 

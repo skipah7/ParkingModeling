@@ -13,6 +13,8 @@ namespace ParkingApp
             InitializeComponent();            
         }
 
+        bool isParkingCorrect = false;
+
         private void loadParking()
         {            
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -21,7 +23,7 @@ namespace ParkingApp
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Globals.IS_CORRECT_PARKING = false;
+                this.isParkingCorrect = false;
                 Globals.parkingFilePath = openFileDialog1.FileName;
                 ParkingField parkingField = loadParkingFromFile();
                 if (parkingField != null)
@@ -30,13 +32,13 @@ namespace ParkingApp
                     Globals.tariff = parkingField.getTariff();
                     Globals.WIDTH = parkingField.getWidth();
                     Globals.HEIGHT = parkingField.getHeight();
-                    Globals.isNewParking = false;
+
                     Globals.leftAdjacentRoadLength = parkingField.getLeftRoadLength();
                     Globals.rightAdjacentRoadLength = parkingField.getRigthRoadLength();
                     Globals.upAdjacentRoadLength = parkingField.getUpRoadLength();
                     Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
-                    Globals.IS_CORRECT_PARKING = true;
 
+                    this.isParkingCorrect = true;
                     MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
                 }
                 else
@@ -66,31 +68,25 @@ namespace ParkingApp
             mainScreenForm.Show();
         }
 
-        // launch modelling
-        private void button1_Click(object sender, EventArgs e)
-        {            
-            if (Globals.IS_CORRECT_PARKING)
+        private void launchModelling(object sender, EventArgs e)
+        {
+            if (this.isParkingCorrect && Globals.modelingParams != null)
             {
-                if (Globals.modelingParams != null)
-                {
-                    this.Hide();
-                    ModelingSpaceForm modelingSpaceForm = new ModelingSpaceForm();
-                    modelingSpaceForm.Show();
-                }
-                else
-                {
-                    this.Hide();
-                    ConfigureModelingParamsForm configureModeling = new ConfigureModelingParamsForm();
-                    configureModeling.Show();
-                }                
+                this.Hide();
+                ModelingSpaceForm modelingSpaceForm = new ModelingSpaceForm();
+                modelingSpaceForm.Show();
             }
-            else
+
+            if (Globals.modelingParams == null)
             {
-                loadParking();
-            }                  
+                this.Hide();
+                ConfigureModelingParamsForm configureModeling = new ConfigureModelingParamsForm();
+                configureModeling.Show();
+            }
+
+            if (!this.isParkingCorrect) loadParking();
         }
 
-       
         private void loadparkingBtn_Click(object sender, EventArgs e)
         {
             loadParking();

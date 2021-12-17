@@ -17,7 +17,7 @@ namespace ParkingApp.Screens.Manager
 
             clearValues();
 
-            Globals.calculatePictureBoxSize();
+            Globals.calculatePictureBoxSize(Globals.HEIGHT, Globals.WIDTH);
 
             Globals.highwayPatterns = new String[Globals.WIDTH + 1, Globals.HEIGHT + 1];
 
@@ -25,14 +25,14 @@ namespace ParkingApp.Screens.Manager
 
             ParkingFieldClass parkingField = new ParkingFieldClass();
 
-            parkingField.fillPictureBoxesList();
+            parkingField.fillPictureBoxesList(5,5, Globals.patterns);
             parkingField.loadField(panel1);
 
             FindPaths.fillParkMatr();
 
             panel1.Invalidate();
 
-            RoadsClass.createRoads(panel1);
+            RoadsClass.createRoads(panel1, Globals.WIDTH, Globals.HEIGHT);
             FindPaths.fillRoadMatr();
 
             configureTimer();

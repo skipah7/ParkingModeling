@@ -12,35 +12,40 @@ namespace ParkingApp
     public partial class ParkingSpaceForm : Form
     {
         ParkingFieldClass parkingFieldClass;
-        public ParkingSpaceForm()
+        int width;
+        int height;
+        string[,] patterns;
+
+        public ParkingSpaceForm(int width, int height, string[,] patterns)
         {
             InitializeComponent();
-            heightBox.Value = Globals.HEIGHT;
-            widthBox.Value = Globals.WIDTH;
+
+            this.width = width;
+            this.height = height;
+            this.patterns = patterns;
+
+            heightBox.Value = height;
+            widthBox.Value = width;
             modelPanel.Location = new Point(1, 1);
 
-            Globals.calculatePictureBoxSize();
-            parkingFieldClass = new ParkingFieldClass();
+            Globals.highwayPatterns = new string[this.width, this.height + 1];
+            Globals.calculatePictureBoxSize(this.height, this.width);
 
-            if (Globals.isNewParking)
-            {
-                Globals.pictureBoxes = new List<PictureBox>();
-                Globals.patterns = new string[Globals.WIDTH, Globals.HEIGHT];
-                Globals.highwayPatterns = new string[Globals.WIDTH, Globals.HEIGHT + 1];
-                parkingFieldClass.createField(modelPanel);            
-            }
-            else
-            {
-                parkingFieldClass.fillPictureBoxesList();
-                parkingFieldClass.loadField(modelPanel);
-            }
+            // when new, might need it later
+            //Globals.pictureBoxes = new List<PictureBox>();
+            //this.patterns = new string[this.width, this.height];
+            //parkingFieldClass.createField(modelPanel, this.width, this.height);
+
+            parkingFieldClass = new ParkingFieldClass();
+            parkingFieldClass.fillPictureBoxesList(this.width, this.height, this.patterns);
+            parkingFieldClass.loadField(modelPanel);
 
             foreach (var control in modelPanel.Controls)
             {
                 ((PictureBox)control).DragEnter += dragValidationEntranceExit;
                 ((PictureBox)control).DragEnter += dragValidationHeavyParking;
             }
-            RoadsClass.createRoads(modelPanel);
+            RoadsClass.createRoads(modelPanel, width, height);
         }             
 
         private void dragValidationHeavyParking(object sender, DragEventArgs e)
@@ -99,7 +104,7 @@ namespace ParkingApp
                 return;
             }
 
-            bool isBottomRow = ((sender as PictureBox).Location.Y / (sender as PictureBox).Size.Height) == Globals.HEIGHT - 1;
+            bool isBottomRow = ((sender as PictureBox).Location.Y / (sender as PictureBox).Size.Height) == this.height - 1;
             if (!isBottomRow)
             {
                 e.Effect = DragDropEffects.None;
@@ -109,11 +114,11 @@ namespace ParkingApp
         #region button handlers
         private void saveToFile_Click(object sender, EventArgs e)
         {
-            parkingFieldClass.fillPatternsArray();
+            this.patterns = parkingFieldClass.fillPatternsArray(this.width, this.height);
             VerifyParkingClass verifyParking = new VerifyParkingClass();
-            if (verifyParking.isParkingLayoutCorrect())
+            if (verifyParking.isParkingLayoutCorrect(this.patterns))
             {
-                SaveForm saveForm = new SaveForm();
+                SaveForm saveForm = new SaveForm(this.width, this.height, this.patterns);
                 saveForm.Show();
                 return;
             }
@@ -124,26 +129,21 @@ namespace ParkingApp
 
         private void refreshParking_Click(object sender, EventArgs e)
         {
-            parkingFieldClass.fillPatternsArray();
+            this.patterns = parkingFieldClass.fillPatternsArray(this.width, this.height);
 
             int width = (int)widthBox.Value;
             int height = (int)heightBox.Value;
 
-            Globals.isNewParking = false;
-            Globals.HEIGHT = height;
-            Globals.WIDTH = width;
-
-            Globals.patterns = ResizeArray<string>(Globals.patterns, width, height);
-            Globals.highwayPatterns = new string[width, height + 1];
-
-            Globals.downAdjacentRoadLength = height + 1;
-            Globals.leftAdjacentRoadLength = width + 1;
-            Globals.rightAdjacentRoadLength = 0;
-            Globals.upAdjacentRoadLength = 0;
-
+            this.patterns = ResizeArray<string>(this.patterns, width, height);
             this.Hide();
-            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
+            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(width, height, this.patterns);
             parkingSpaceForm.Show();
+
+            // hope we can get over this
+            //Globals.downAdjacentRoadLength = height + 1;
+            //Globals.leftAdjacentRoadLength = width + 1;
+            //Globals.rightAdjacentRoadLength = 0;
+            //Globals.upAdjacentRoadLength = 0;
         }
 
         T[,] ResizeArray<T>(T[,] original, int rows, int cols)

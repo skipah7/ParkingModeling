@@ -13,38 +13,41 @@ namespace ParkingApp.Classes
             Globals.pictureBoxes.ForEach((pic) => panel.Controls.Add(pic));
         }
 
-        public void fillPatternsArray()
+        public string[,] fillPatternsArray(int width, int height)
         {
+            string[,] patterns = new string[width, height];
             int z = 0;
-            for (int x = 0; x < Globals.WIDTH; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < Globals.HEIGHT; y++)
+                for (int y = 0; y < height; y++)
                 {
-                    Globals.patterns[x, y] = ImagesHelper.getNameOfImage(Globals.pictureBoxes.ElementAt(z).Image);
+                    patterns[x, y] = ImagesHelper.getNameOfImage(Globals.pictureBoxes.ElementAt(z).Image);
                     z++;
                 }
             }
+
+            return patterns;
         }
 
-        public void fillPictureBoxesList()
+        public void fillPictureBoxesList(int width, int height, string[,] patterns)
         {
             Globals.pictureBoxes = new List<PictureBox>();
 
-            for (int x = 0; x < Globals.WIDTH; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < Globals.HEIGHT; y++)
+                for (int y = 0; y < height; y++)
                 {
-                    Image image = ImagesHelper.getImageByName(Globals.patterns[x, y]);
+                    Image image = ImagesHelper.getImageByName(patterns[x, y]);
                     Globals.pictureBoxes.Add(createPictureBox(image, x, y));
                 }
             }
         }        
 
-        public void createField(Panel panel)
+        public void createField(Panel panel, int width, int height)
         {
-            for (int x = 0; x < Globals.WIDTH; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < Globals.HEIGHT; y++)
+                for (int y = 0; y < height; y++)
                 {
                     Image image = ImagesHelper.getImageByName(Globals.ROAD);
                     PictureBox pictureBox = createPictureBox(image, x, y);

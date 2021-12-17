@@ -7,28 +7,51 @@ namespace ParkingApp.Screens.Administrator
     public partial class SaveForm : Form
     {
         FileWorkerWithParkingField fileWorker;
-        public SaveForm()
+        int width;
+        int height;
+        string[,] patterns;
+
+        public SaveForm(int width, int height, string[,] patterns)
         {
             InitializeComponent();
+
+            this.width = width;
+            this.height = height;
+            this.patterns = patterns;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (parkingFilePathTextBox.Text.Equals(""))
+            {
+                return;
+            }
+
+            Globals.parkingFileName = parkingFilePathTextBox.Text;
+            ParkingField parkingField = new ParkingField(
+                this.width, 
+                this.height, 
+                this.patterns, 
+                Globals.tariff, 
+                Globals.leftAdjacentRoadLength, 
+                Globals.rightAdjacentRoadLength,
+                Globals.upAdjacentRoadLength, 
+                Globals.downAdjacentRoadLength
+            );
+            fileWorker = new FileWorkerWithParkingField(parkingField, Globals.parkingFileName);
+            fileWorker.writeParkingField();
+
+            MessageBox.Show("Файл успешно сохранен по пути: " + Globals.parkingFilePath, "Успешное сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Hide();
+        }
+
+        #region helpers
 
         private void keyPress(object sender, KeyPressEventArgs e)
         {
             if (!(char.IsLetterOrDigit(e.KeyChar) || char.IsControl(e.KeyChar)))
             {
                 e.Handled = true;
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!parkingFilePathTextBox.Text.Equals(""))
-            {
-                Globals.parkingFileName = parkingFilePathTextBox.Text;
-                fileWorker = new FileWorkerWithParkingField(new ParkingField(Globals.WIDTH, Globals.HEIGHT, Globals.patterns, Globals.tariff, Globals.leftAdjacentRoadLength, Globals.rightAdjacentRoadLength, Globals.upAdjacentRoadLength, Globals.downAdjacentRoadLength), Globals.parkingFileName);
-                fileWorker.writeParkingField();
-                MessageBox.Show("Файл успешно сохранен по пути: " + Globals.parkingFilePath, "Успешное сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Hide();
             }
         }
 
@@ -41,5 +64,7 @@ namespace ParkingApp.Screens.Administrator
         {
             this.Hide();
         }
+
+        #endregion
     }
 }

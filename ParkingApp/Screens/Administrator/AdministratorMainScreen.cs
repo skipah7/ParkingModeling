@@ -14,14 +14,8 @@ namespace ParkingApp
 
         private void createModelButton_Click(object sender, EventArgs e)
         {
-            Globals.isNewParking = false;
-            Globals.WIDTH = 5;
-            Globals.HEIGHT = 5;
-            Globals.patterns = new DefaultParkings().getDefault_5_5();
-            Globals.highwayPatterns = new string[Globals.WIDTH, Globals.HEIGHT + 1];
-
             this.Hide();
-            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
+            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(5, 5, new DefaultParkings().getDefault_5_5());
             parkingSpaceForm.Show();
         }
 
@@ -32,35 +26,31 @@ namespace ParkingApp
             openFileDialog1.InitialDirectory = Globals.directory;
 
             DialogResult result = openFileDialog1.ShowDialog();
-            if (result == DialogResult.OK)
+            if (result != DialogResult.OK)
             {
-                Globals.IS_CORRECT_PARKING = false;
-                Globals.parkingFilePath = openFileDialog1.FileName;
-                ParkingField parkingField = loadParkingFromFile();
-                if (parkingField != null)
-                {
-                    Globals.patterns = parkingField.getPatterns();
-                    Globals.tariff = parkingField.getTariff();
-                    Globals.WIDTH = parkingField.getWidth();
-                    Globals.HEIGHT = parkingField.getHeight();
-                    Globals.isNewParking = false;
-                    Globals.leftAdjacentRoadLength = parkingField.getLeftRoadLength();
-                    Globals.rightAdjacentRoadLength = parkingField.getRigthRoadLength();
-                    Globals.upAdjacentRoadLength = parkingField.getUpRoadLength();
-                    Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
-                    Globals.IS_CORRECT_PARKING = true;
-                    Globals.highwayPatterns = new string[Globals.WIDTH, Globals.HEIGHT + 1];
+                return;
+            }
 
-                    MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Globals.parkingFilePath = openFileDialog1.FileName;
+            ParkingField parkingField = loadParkingFromFile();
+            if (parkingField != null)
+            {
+                //Globals.leftAdjacentRoadLength = parkingField.getLeftRoadLength();
+                //Globals.rightAdjacentRoadLength = parkingField.getRigthRoadLength();
+                //Globals.upAdjacentRoadLength = parkingField.getUpRoadLength();
+                //Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
+                int width = parkingField.getWidth();
+                int height = parkingField.getHeight();
+                string[,] patterns = parkingField.getPatterns();
+                MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    this.Hide();
-                    ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm();
-                    parkingSpaceForm.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Ошибка. Вероятно, файл был поврежден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                this.Hide();
+                ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(width, height, patterns);
+                parkingSpaceForm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Ошибка. Вероятно, файл был поврежден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

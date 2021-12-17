@@ -58,7 +58,7 @@
             this.startModelingBtn.TabIndex = 21;
             this.startModelingBtn.Text = "Запустить моделирование";
             this.startModelingBtn.UseVisualStyleBackColor = true;
-            this.startModelingBtn.Click += new System.EventHandler(this.button1_Click);
+            this.startModelingBtn.Click += new System.EventHandler(this.launchModelling);
             // 
             // configureModellingParamsBtn
             // 
