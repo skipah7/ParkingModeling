@@ -198,12 +198,6 @@
     <None Include="Resources\грузовушка.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\легковушка.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\пустое место.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\road.png" />
   </ItemGroup>
   <ItemGroup>
@@ -243,25 +237,25 @@
     <None Include="Resources\highwayCar2Pic.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\parkingCar2Pic.png" />
+    <Content Include="Resources\carPic1.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highwayCar3Pic.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\parkingCar3Pic.png" />
+    <None Include="Resources\carPic2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highwayCar4Pic.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\parkingCar4Pic.png" />
+    <None Include="Resources\carPic3.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highwayCar5Pic.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\parkingCar5Pic.png" />
+    <None Include="Resources\carPic4.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highwayCar6Pic.png" />
@@ -270,7 +264,7 @@
     <None Include="Resources\highwayCar7Pic.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\parkingCar7Pic.png" />
+    <None Include="Resources\carPic5.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sinyaya_mashinka.png" />
@@ -282,9 +276,6 @@
     <None Include="Resources\tree.jpg" />
     <None Include="Resources\entrance.jpg" />
     <None Include="Resources\exit.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\parkingPlace.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\lightParkingPlace.png" />

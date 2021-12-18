@@ -63,6 +63,56 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap carPic1 {
+            get {
+                object obj = ResourceManager.GetObject("carPic1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap carPic2 {
+            get {
+                object obj = ResourceManager.GetObject("carPic2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap carPic3 {
+            get {
+                object obj = ResourceManager.GetObject("carPic3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap carPic4 {
+            get {
+                object obj = ResourceManager.GetObject("carPic4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap carPic5 {
+            get {
+                object obj = ResourceManager.GetObject("carPic5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap entrance {
             get {
                 object obj = ResourceManager.GetObject("entrance", resourceCulture);
@@ -106,56 +156,6 @@ namespace ParkingApp.Properties {
         internal static System.Drawing.Bitmap lightParkingPlace {
             get {
                 object obj = ResourceManager.GetObject("lightParkingPlace", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingCar2Pic {
-            get {
-                object obj = ResourceManager.GetObject("parkingCar2Pic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingCar3Pic {
-            get {
-                object obj = ResourceManager.GetObject("parkingCar3Pic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingCar4Pic {
-            get {
-                object obj = ResourceManager.GetObject("parkingCar4Pic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingCar5Pic {
-            get {
-                object obj = ResourceManager.GetObject("parkingCar5Pic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap parkingCar7Pic {
-            get {
-                object obj = ResourceManager.GetObject("parkingCar7Pic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

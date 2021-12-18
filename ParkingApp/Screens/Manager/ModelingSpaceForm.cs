@@ -14,6 +14,7 @@ namespace ParkingApp.Screens.Manager
 
         private ModelingParams modelingParams;
         private int height;
+        double systemTimer = 0;
         public ModelingSpaceForm(int height, int width, string[,] patterns, ModelingParams modelingParams)
         {
             InitializeComponent();
@@ -34,86 +35,53 @@ namespace ParkingApp.Screens.Manager
             parkingField.fillPictureBoxesList(width, height, patterns);
             parkingField.applyPictureBoxes(mainPanel);
 
-            FindPaths.fillParkMatr(width, height, patterns);
+            FindPaths.fillParkingMatrix(width, height, patterns);
 
             mainPanel.Invalidate();
 
             RoadsClass.createRoads(mainPanel, width, height);
-            FindPaths.fillRoadMatr(width, height);
+            FindPaths.fillRoadMatrix(width, height);
 
-            configureTimer();
-            SystemTime.Start();
-            SystemTime.Interval = 50 * Globals.INTERVAL;
-            SystemTime.Tick += SystemTime_Tick1;
+            configureTimers();
         }
 
-        private void clearValues()
+        private Car moveToEntrance(Car car)
         {
-            FindPaths.parkingEntrance = null;
-            FindPaths.parkingExit = null;
-            FindPaths.startRoad = null;
-            FindPaths.endRoad = null;
-            FindPaths.roadBeforeEntrance = null;
-            FindPaths.roadBeforeExit = null;
-            FindPaths.parkPoints = new List<PathPoint>();
-            FindPaths.carPoints = new List<PathPoint>();
-            Globals.tabloItems = new List<TableItem>();
-            FindPaths.parkingMatrix = null;
-            FindPaths.roadMatr = null;
-        }
-
-        double systemTimer = 0;
-        private void SystemTime_Tick1(object sender, EventArgs e)
-        {
-            systemTimer+=0.5;
-            SystemTimeLabel.Text = "Системное время: " + systemTimer;
-        }
-
-        private void configureTimer()
-        {
-            VisualizationTimer = new System.Timers.Timer();
-
-            VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
-
-            VisualizationTimer.Elapsed += VisualizationTimer_Tick;
-            VisualizationTimer.Start();
-        }
-
-        private Car startRoad(Car car)
-        {
-            car.currPos = FindPaths.startRoad;
-            car.onParking.AddRange(car.getBetweenTwoPointRoad(FindPaths.startRoad, FindPaths.roadBeforeEntrance));
+            car.currPos = FindPaths.roadStart;
+            car.carPath.AddRange(car.getPathList(FindPaths.roadStart, FindPaths.roadBeforeEntrance, FindPaths.roadMatrix));
             Action action = () =>
             {
                 mainPanel.Controls.Add(car.carPicBox);
                 car.timer.Start();
                 car.currPos = FindPaths.roadBeforeEntrance;
             };
-            if (InvokeRequired)
-                Invoke(action);
-            else
-                action();
+
+            if (InvokeRequired) Invoke(action);
+            else action();
+
             return car;
         }
-        private void outRoadToPark(Car car)
+
+        private void moveFromRoadToEntrance(Car car)
         {
             car.currPos = FindPaths.roadBeforeEntrance;
-            car.onParking.AddRange(car.getBetweenTwoPointRoadPark(FindPaths.roadBeforeEntrance, FindPaths.parkingEntrance));
+            car.carPath.AddRange(car.getBetweenTwoPointRoadPark(FindPaths.roadBeforeEntrance, FindPaths.parkingEntrance));
             car.currPos = FindPaths.parkingEntrance;
-        }
-        private void preStartParkToEndRoad(Car car)
-        {
-            car.currPos = FindPaths.roadBeforeEntrance;
-            car.onParking.AddRange(car.getBetweenTwoPointRoad(FindPaths.roadBeforeEntrance, FindPaths.endRoad));
-            car.currPos = FindPaths.endRoad;
         }
 
-        private void preStartParkToParkPoint(Car car)
+        private void moveFromEntranceToParkingPlace(Car car)
         {
             PathPoint parkPoint = FindPaths.getParkPoint(car);
-            car.onParking.AddRange(car.getBetweenTwoPointPark(FindPaths.parkingEntrance, parkPoint));
             car.currPos = FindPaths.parkingEntrance;
+            car.carPath.AddRange(car.getPathList(FindPaths.parkingEntrance, parkPoint, FindPaths.parkingMatrix));
             car.currPos = parkPoint;
+        }
+
+        private void moveAwayFromEntrance(Car car)
+        {
+            car.currPos = FindPaths.roadBeforeEntrance;
+            car.carPath.AddRange(car.getPathList(FindPaths.roadBeforeEntrance, FindPaths.roadEnd, FindPaths.roadMatrix));
+            car.currPos = FindPaths.roadEnd;
         }
 
         private void addToTablo(Car car)
@@ -126,29 +94,29 @@ namespace ParkingApp.Screens.Manager
             Globals.tabloItems.Add(car.tabloItem);
         }
 
-        private Car stayOnParking(Car car)
+        private void stayOnParking(Car car)
         {
             car.timeStay = this.modelingParams.parkingInterval * 50 * Globals.INTERVAL;
-            return car;
         }
 
         private void VisualizationTimer_Tick(object sender, EventArgs e)
         {
-            timerIntervalStep();
-            Car car = new Car(this.height);
+            VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
+
+            var car = new Car(this.height);
             car.rotateCarBeforeStart();
-            startRoad(car);
+            moveToEntrance(car);
             if (car.probability <= this.modelingParams.lightCarProbability && FindPaths.parkPoints.Count != 0)
             {
-                outRoadToPark(car);
-                preStartParkToParkPoint(car);
+                moveFromRoadToEntrance(car);
+                moveFromEntranceToParkingPlace(car);
                 stayOnParking(car);
 
                 addToTablo(car);
             }
             else
             {
-                preStartParkToEndRoad(car);
+                moveAwayFromEntrance(car);
             }
             refreshTablo();
         }
@@ -167,9 +135,38 @@ namespace ParkingApp.Screens.Manager
                 action();
         }
 
-        private void timerIntervalStep()
+        private void SystemTime_Tick1(object sender, EventArgs e)
         {
+            systemTimer += 0.5;
+            SystemTimeLabel.Text = "Системное время: " + systemTimer;
+        }
+
+        private void configureTimers()
+        {
+            VisualizationTimer = new System.Timers.Timer();
+            // fixme :question_mark:
             VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
+            VisualizationTimer.Elapsed += VisualizationTimer_Tick;
+            VisualizationTimer.Start();
+
+            SystemTime.Start();
+            SystemTime.Interval = 50 * Globals.INTERVAL;
+            SystemTime.Tick += SystemTime_Tick1;
+        }
+
+        private void clearValues()
+        {
+            FindPaths.parkingEntrance = null;
+            FindPaths.parkingExit = null;
+            FindPaths.roadStart = null;
+            FindPaths.roadEnd = null;
+            FindPaths.roadBeforeEntrance = null;
+            FindPaths.roadBeforeExit = null;
+            FindPaths.parkPoints = new List<PathPoint>();
+            FindPaths.carPoints = new List<PathPoint>();
+            FindPaths.parkingMatrix = null;
+            FindPaths.roadMatrix = null;
+            Globals.tabloItems = new List<TableItem>();
         }
 
         private void setPlaySpeed()

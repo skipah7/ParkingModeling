@@ -59,12 +59,6 @@ namespace ParkingApp
 
         public static int PICTURE_BOX_SIZE = 50;
 
-        public static int leftAdjacentRoadLength = 0;
-        public static int rightAdjacentRoadLength = 0;
-        public static int downAdjacentRoadLength = 0;
-        public static int upAdjacentRoadLength = 0;
-
-
         // its useless, right?
         public static void calculateDelta()
         {

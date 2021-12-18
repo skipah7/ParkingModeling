@@ -8,40 +8,13 @@ namespace ParkingApp
         private int width;
         private int height;
         private string[,] patterns;        
-        private Tariff tariff;
-        private int leftRoadLength;
-        private int rightRoadLength;
-        private int upRoadLength;
-        private int downRoadLength;
 
-        public ParkingField(int width, int height, string[,] patterns, Tariff tariff, int leftRoadLength, int rightRoadLength, int upRoadLength, int downRoadLength)
+
+        public ParkingField(int width, int height, string[,] patterns)
         {
             this.width = width;
             this.height = height;
             this.patterns = patterns;
-            this.tariff = tariff;
-            this.leftRoadLength = leftRoadLength;
-            this.rightRoadLength = rightRoadLength;
-            this.upRoadLength = upRoadLength;
-            this.downRoadLength = downRoadLength;
-        }
-
-        public int getLeftRoadLength()
-        {
-            return this.leftRoadLength;
-        }
-
-        public int getRigthRoadLength()
-        {
-            return this.rightRoadLength;
-        }
-        public int getUpRoadLength()
-        {
-            return this.upRoadLength;
-        }
-        public int getDownRoadLength()
-        {
-            return this.downRoadLength;
         }
 
         public string[,] getPatterns()
@@ -57,11 +30,6 @@ namespace ParkingApp
         public int getHeight()
         {
             return this.height;
-        }
-
-        public Tariff getTariff()
-        {
-            return this.tariff;
         }
     }
 }

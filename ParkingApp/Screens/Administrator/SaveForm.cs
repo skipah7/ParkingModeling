@@ -31,12 +31,7 @@ namespace ParkingApp.Screens.Administrator
             ParkingField parkingField = new ParkingField(
                 this.width, 
                 this.height, 
-                this.patterns, 
-                Globals.tariff, 
-                Globals.leftAdjacentRoadLength, 
-                Globals.rightAdjacentRoadLength,
-                Globals.upAdjacentRoadLength, 
-                Globals.downAdjacentRoadLength
+                this.patterns
             );
             fileWorker = new FileWorkerWithParkingField(parkingField, Globals.parkingFileName);
             fileWorker.writeParkingField();
