@@ -160,9 +160,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Моделирование";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
-            this.Load += new System.EventHandler(this.ModelingSpaceForm_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.exit);
-            this.Resize += new System.EventHandler(this.preventResize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

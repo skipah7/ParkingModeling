@@ -86,11 +86,6 @@ namespace ParkingApp.Screens.Manager
             VisualizationTimer.Start();
         }
 
-        private void ModelingSpaceForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private Car startRoad(Car car)
         {
             car.currPos = FindPaths.startRoad;
@@ -134,9 +129,9 @@ namespace ParkingApp.Screens.Manager
             {
                 intervalNumber = 0;
             }
-            if (Globals.modelingParams.onParkingInterval != 0)
+            if (Globals.modelingParams.parkingInterval != 0)
             {
-                car.tabloItem = new TableItem(Globals.modelingParams.onParkingInterval, car.parkingPlaceNumber, Globals.tariff.carPrice * Globals.modelingParams.onParkingInterval);
+                car.tabloItem = new TableItem(Globals.modelingParams.parkingInterval, car.parkingPlaceNumber, Globals.tariff.carPrice * Globals.modelingParams.parkingInterval);
                 Globals.tabloItems.Add(car.tabloItem);
             }
             else
@@ -148,28 +143,15 @@ namespace ParkingApp.Screens.Manager
 
         private Car stayOnParking(Car car)
         {
-            if (Globals.modelingParams.onParkingInterval != 0)
+            if (Globals.modelingParams.parkingInterval != 0)
             {
-                car.timeStay = Globals.modelingParams.onParkingInterval * 50 * Globals.INTERVAL;
+                car.timeStay = Globals.modelingParams.parkingInterval * 50 * Globals.INTERVAL;
             }
             else
             {
                 car.timeStay = Globals.modelingParams.onParkingIntervals[intervalNumber] * 50 * Globals.INTERVAL;
             }
             return car;
-        }
-
-        private void preventResize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized)
-            {
-                WindowState = FormWindowState.Normal;
-            }
-        }
-
-        private void shutDownApplication(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
         }
 
         private void VisualizationTimer_Tick(object sender, EventArgs e)
@@ -228,18 +210,6 @@ namespace ParkingApp.Screens.Manager
             intervalNumber++;
         }
 
-        private void exit(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar))
-            {
-                this.Hide();
-                VisualizationTimer.Stop();
-                SystemTime.Stop();              
-                ConfigureModelingParamsForm configureModelingParams = new ConfigureModelingParamsForm();
-                configureModelingParams.Show();
-            }
-        }
-
         private void setPlaySpeed()
         {
             if (1 == 1)
@@ -273,5 +243,26 @@ namespace ParkingApp.Screens.Manager
                 Console.WriteLine(ex.Message);
             }*/
         }
+
+        #region helpers
+
+        private void exit(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar))
+            {
+                this.Hide();
+                VisualizationTimer.Stop();
+                SystemTime.Stop();
+                ConfigureModelingParamsForm configureModelingParams = new ConfigureModelingParamsForm();
+                configureModelingParams.Show();
+            }
+        }
+
+        private void shutDownApplication(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        #endregion
     }
 }

@@ -72,6 +72,8 @@ namespace ParkingApp
         public static int downAdjacentRoadLength = 0;
         public static int upAdjacentRoadLength = 0;
 
+
+        // its useless, right?
         public static void calculateDelta()
         {
             // second х1

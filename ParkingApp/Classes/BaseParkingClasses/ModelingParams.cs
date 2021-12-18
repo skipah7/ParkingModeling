@@ -1,34 +1,81 @@
-﻿using System.Collections.Generic;
+﻿using ParkingApp.Classes.ModelingClasses;
+using System.Collections.Generic;
 
 namespace ParkingApp.Classes.BaseParkingClasses
 {
+    public enum LawTypes
+    {
+        Uniform,
+        Exponential,
+        Normal,
+        Deterministic,
+    }
+
     public class ModelingParams
     {
-        public bool determFlow { get; set; }
-        public bool randomFlow { get; set; }
-        public double probability { get; set; }
-        public int appearanceInterval { get; set; }
-        public int onParkingInterval { get; set; }
+        private DistributionsClass distributions;
+        private LawTypes flowType;
+        private LawTypes parkingType;
+        private Dictionary<string, double> flowValues;
+        private Dictionary<string, double> parkingValues;
 
-        public List<double> appearanceIntervals { get; set; }
-        public List<double> onParkingIntervals { get; set; }
+        public double lightToHeavyRatio;
+        public double lightCarProbability;
+        public double heavyCarProbability;
 
-        // deterministic flow
-        public ModelingParams(bool determFlow, double probability, int appearanceInterval, int onParkingInterval)
+        public double appearanceInterval
         {
-            this.determFlow = determFlow;
-            this.probability = probability;
-            this.appearanceInterval = appearanceInterval;
-            this.onParkingInterval = onParkingInterval;
+            get => getInterval(this.flowType, this.flowValues);
+        }
+        public double parkingInterval
+        {
+            get => getInterval(this.parkingType, this.parkingValues);
         }
 
-        // random flow
-        public ModelingParams(bool randomFlow, double probability, List<double> appearanceIntervals, List<double> onParkingIntervals)
+
+        public ModelingParams(
+            LawTypes flowType, 
+            LawTypes parkingType, 
+            Dictionary<string, double> flowValues, 
+            Dictionary<string, double> parkingValues,
+            double lightToHeavyRatio,
+            double lightCarProbability,
+            double heavyCarProbability
+        )
         {
-            this.randomFlow = randomFlow;
-            this.probability = probability;
-            this.appearanceIntervals = appearanceIntervals;
-            this.onParkingIntervals = onParkingIntervals;
+            this.distributions = new DistributionsClass();
+
+            this.flowType = flowType;
+            this.parkingType = parkingType;
+
+            this.flowValues = flowValues;
+            this.parkingValues = parkingValues;
+
+            this.lightToHeavyRatio = lightToHeavyRatio;
+            this.lightCarProbability = lightCarProbability;
+            this.heavyCarProbability = heavyCarProbability;
         }
+
+        private double getInterval(LawTypes lawType, Dictionary<string, double> values)
+        {
+            if (lawType == LawTypes.Deterministic) {
+                return values["interval"];
+            }
+            if (lawType == LawTypes.Uniform)
+            {
+                return this.distributions.generateUniformValue(values["a"], values["b"]);
+            }
+            if (lawType == LawTypes.Exponential)
+            {
+                return this.distributions.generateExponentialValue(values["lambda"]);
+            }
+            if (lawType == LawTypes.Normal)
+            {
+                return this.distributions.generateNormalValue(values["MX"], values["DX"]);
+            }
+
+            return 0;
+        }
+
     }
 }

@@ -28,13 +28,15 @@ namespace ParkingApp
             widthBox.Value = width;
             modelPanel.Location = new Point(1, 1);
 
+            // do i need this?
             Globals.highwayPatterns = new string[this.width, this.height + 1];
-            Globals.calculatePictureBoxSize(this.height, this.width);
 
             // when new, might need it later
             //Globals.pictureBoxes = new List<PictureBox>();
             //this.patterns = new string[this.width, this.height];
             //parkingFieldClass.createField(modelPanel, this.width, this.height);
+
+            Globals.calculatePictureBoxSize(this.height, this.width);
 
             parkingFieldClass = new ParkingFieldClass();
             parkingFieldClass.fillPictureBoxesList(this.width, this.height, this.patterns);
@@ -46,7 +48,9 @@ namespace ParkingApp
                 ((PictureBox)control).DragEnter += dragValidationHeavyParking;
             }
             RoadsClass.createRoads(modelPanel, width, height);
-        }             
+        }
+
+        #region dragndrop validators
 
         private void dragValidationHeavyParking(object sender, DragEventArgs e)
         {
@@ -110,6 +114,8 @@ namespace ParkingApp
                 e.Effect = DragDropEffects.None;
             }
         }
+
+        #endregion
 
         #region button handlers
         private void saveToFile_Click(object sender, EventArgs e)

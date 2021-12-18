@@ -58,7 +58,7 @@ namespace ParkingApp.Classes
             }
         }
 
-        #region main picture box + DragNDrop handlers
+        #region main picture box creator + DragNDrop handlers
         public PictureBox createPictureBox(Image image, int x, int y)
         {
             PictureBox pictureBox = new PictureBox

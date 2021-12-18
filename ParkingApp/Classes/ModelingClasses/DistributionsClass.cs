@@ -1,71 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ParkingApp.Classes.ModelingClasses
 {
     class DistributionsClass
     {
         Random random;
-        public List<double> generateUniformValues(double a, double b)
+        public double generateUniformValue(double a, double b)
         {
             random = new Random();
-            List<double> uniformValues = new List<double>();
             double r_i;
-            double result_i;
+            double result_i = 0;
 
-            while (uniformValues.Count != 100)
+            while (result_i == 0)
             {
                 r_i = random.NextDouble();
                 result_i = a + (b - a) * r_i;
                 result_i = (Math.Round(result_i, 1));
-                if (result_i != 0)
-                {
-                    uniformValues.Add(result_i);
-                }
             }
-            return uniformValues;
+
+            return result_i;
         }
 
-        public List<double> generateExponentialValues(double lambda)
+        public double generateExponentialValue(double lambda)
         {
             random = new Random();
-            List<double> exponentialValues = new List<double>();
+            double r_i;
+            double x_i = 0;
 
-            double r_i, x_i;
-            while (exponentialValues.Count != 100)
+            while (x_i == 0)
             {
                 r_i = random.NextDouble();
                 x_i = (-1 / lambda) * Math.Log(r_i);
                 x_i = (Math.Round(x_i, 1));
-                if (x_i != 0)
-                {
-                    exponentialValues.Add(x_i);
-                }
             }
-            return exponentialValues;
+
+            return x_i;
         }
 
-        public List<double> generateNormalValues(double MX, double DX)
+        public double generateNormalValue(double MX, double DX)
         {
             random = new Random();
-            List<double> normalValues = new List<double>();
-            double dSumm, dRandValue, R;
-            Random ran = new Random();
-            while (normalValues.Count != 100)
+            double R;
+            double dSumm;
+            double dRandValue = 0;
+
+            while (dRandValue == 0)
             {
                 dSumm = 0;
                 for (int i = 0; i <= 12; i++)
                 {
-                    R = ran.NextDouble();
+                    R = random.NextDouble();
                     dSumm = dSumm + R;
                 }
                 dRandValue = Math.Round((MX + DX * (dSumm - 6)), 1);
-                if (dRandValue != 0)
-                {
-                    normalValues.Add(Math.Abs(dRandValue));
-                }
             }
-            return normalValues;
+
+            return Math.Abs(dRandValue);
         }
     }
 }

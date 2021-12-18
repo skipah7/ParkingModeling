@@ -13,6 +13,7 @@ namespace ParkingApp.Classes
                 PictureBox pictureBox = createRoadPictureBox(x, height);
                 panel.Controls.Add(pictureBox);
                 pictureBox.BringToFront();
+                // do i need this?
                 Globals.highwayPatterns[x, height] = Globals.HIGHWAY;
             }
         }

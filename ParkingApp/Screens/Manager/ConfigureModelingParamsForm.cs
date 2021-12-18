@@ -21,69 +21,62 @@ namespace ParkingApp.Screens.Manager
             parkLawType.SelectedIndex = 0;
         }
 
-        List<double> onParkingIntervals;
-        List<double> appearanceIntervals;
-        private void button1_Click(object sender, EventArgs e)
+        private void saveModellingParams(object sender, EventArgs e)
         {
-            if (determinisicFlowButton.Checked)
-            {
-                Globals.modelingParams = new ModelingParams(
-                    true,
-                    lightCarProbability.Value / 100d,
-                    deterministicAppearanceFlow.Value,
-                    deterministicParkInterval.Value
-                );
-                Globals.calculateDelta();
-                ManagerMainScreen managerMainScreen = new ManagerMainScreen();
-                managerMainScreen.Show();
-                this.Hide();
-            }
-            else
-            {
-                DistributionsClass distributions = new DistributionsClass();
-                onParkingIntervals = new List<double>();
-                appearanceIntervals = new List<double>();
-                if (flowLawType.SelectedIndex == 0 && checkABValues(flowAValue.Value, flowBValue.Value))
-                {
-                    appearanceIntervals = distributions.generateUniformValues(flowAValue.Value, flowBValue.Value);
-                }
-                else if (flowLawType.SelectedIndex == 1)
-                {
-                    appearanceIntervals = distributions.generateExponentialValues(exponentialFlowValue.Value / 100d);
-                }
-                else if (flowLawType.SelectedIndex == 2)
-                {
-                    appearanceIntervals = distributions.generateNormalValues(flowMXValue.Value, flowDXValue.Value / 100d);
-                }
+            var flowLawType = determinisicFlowButton.Checked ? LawTypes.Deterministic : (LawTypes)this.flowLawType.SelectedIndex;
+            var parkLawType = deterministicParkButton.Checked ? LawTypes.Deterministic : (LawTypes)this.parkLawType.SelectedIndex;
 
-                if (parkLawType.SelectedIndex == 0 && checkABValues(parkAValue.Value, parkBValue.Value))
-                {
-                    onParkingIntervals = distributions.generateUniformValues(parkAValue.Value, parkBValue.Value);
-                }
-                else if (parkLawType.SelectedIndex == 1)
-                {
-                    onParkingIntervals = distributions.generateExponentialValues(exponentialParkValue.Value / 1000d);
-                }
-                else if (parkLawType.SelectedIndex == 2)
-                {
-                    onParkingIntervals = distributions.generateNormalValues(parkMXValue.Value, parkDXValue.Value / 100d);
-                }
-
-                if (appearanceIntervals.Count != 0 && onParkingIntervals.Count != 0)
-                {
-                    Globals.modelingParams = new ModelingParams(
-                        true,
-                        lightCarProbability.Value / 100d,
-                        appearanceIntervals,
-                        onParkingIntervals
-                    );
-                    Globals.calculateDelta();
-                    Globals.tariff = createTariff();
-                    ManagerMainScreen managerMainScreen = new ManagerMainScreen();
-                    managerMainScreen.Show();
-                    this.Hide();
-                }
+            var flowValues = new Dictionary<string, double>();
+            if (flowLawType == LawTypes.Deterministic) {
+                flowValues.Add("interval", deterministicFlowInterval.Value); 
             }
+            if (flowLawType == LawTypes.Uniform && checkABValues(flowAValue.Value, flowBValue.Value)) {
+                flowValues.Add("a", flowAValue.Value);
+                flowValues.Add("b", flowBValue.Value);
+            }
+            if (flowLawType == LawTypes.Exponential)
+            {
+                flowValues.Add("lambda", exponentialFlowValue.Value / 100d);
+            }
+            if (flowLawType == LawTypes.Normal)
+            {
+                flowValues.Add("MX", flowMXValue.Value);
+                flowValues.Add("DX", flowDXValue.Value / 100d);
+            }
+
+            var parkValues = new Dictionary<string, double>();
+            if (parkLawType == LawTypes.Deterministic)
+            {
+                parkValues.Add("interval", deterministicParkInterval.Value);
+            }
+            if (parkLawType == LawTypes.Uniform && checkABValues(parkAValue.Value, parkBValue.Value))
+            {
+                parkValues.Add("a", parkAValue.Value);
+                parkValues.Add("b", parkBValue.Value);
+            }
+            if (parkLawType == LawTypes.Exponential)
+            {
+                parkValues.Add("lambda", exponentialParkValue.Value / 1000d);
+            }
+            if (parkLawType == LawTypes.Normal)
+            {
+                parkValues.Add("MX", parkMXValue.Value);
+                parkValues.Add("DX", parkDXValue.Value / 100d);
+            }
+
+            if ((flowValues.Count == 0) || (parkValues.Count == 0)) return;
+
+            var lightToHeavyRatio = this.lightToHeavyRatio.Value / 100d;
+            var lightCarProbability = this.lightCarProbability.Value / 100d;
+            var heavyCarProbability = this.heavyCarProbability.Value / 100d;
+
+            Globals.modelingParams = new ModelingParams(flowLawType, parkLawType, flowValues, parkValues, lightToHeavyRatio, lightCarProbability, heavyCarProbability);
+            Globals.tariff = createTariff();
+
+            ManagerMainScreen managerMainScreen = new ManagerMainScreen();
+            managerMainScreen.Show();
+            this.Hide();
+            //Globals.calculateDelta();
         }
 
         private Tariff createTariff()
@@ -104,13 +97,11 @@ namespace ParkingApp.Screens.Manager
         private void showTooltipDividedBy10(object sender, EventArgs e)
         {
             trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 10d).ToString());
-
         }
 
         private void showTooltipDividedBy100(object sender, EventArgs e)
         {
             trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 100d).ToString());
-
         }
 
         private void showTooltipDividedBy1000(object sender, EventArgs e)
@@ -130,7 +121,7 @@ namespace ParkingApp.Screens.Manager
 
         private void validation(object sender, EventArgs e)
         {
-            startTimeHours.Value = startTimeHours.Value;
+            (sender as NumericUpDown).Value = (sender as NumericUpDown).Value;
         }
 
         private void flawLawTypeSelection(object sender, EventArgs e)

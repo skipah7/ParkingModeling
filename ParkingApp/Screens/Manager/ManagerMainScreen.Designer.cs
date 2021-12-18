@@ -51,6 +51,7 @@
             // 
             // startModelingBtn
             // 
+            this.startModelingBtn.Enabled = false;
             this.startModelingBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.startModelingBtn.Location = new System.Drawing.Point(34, 28);
             this.startModelingBtn.Name = "startModelingBtn";
@@ -80,7 +81,7 @@
             this.loadparkingBtn.TabIndex = 23;
             this.loadparkingBtn.Text = "Загрузить топологию";
             this.loadparkingBtn.UseVisualStyleBackColor = true;
-            this.loadparkingBtn.Click += new System.EventHandler(this.loadparkingBtn_Click);
+            this.loadparkingBtn.Click += new System.EventHandler(this.loadTopologyClick);
             // 
             // loginLabel
             // 
@@ -104,6 +105,7 @@
             this.aboutSystemButton.TabIndex = 26;
             this.aboutSystemButton.Text = "О системе";
             this.aboutSystemButton.UseVisualStyleBackColor = true;
+            this.aboutSystemButton.Click += new System.EventHandler(this.aboutSystemClick);
             // 
             // aboutDevelopersButton
             // 
@@ -137,7 +139,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
-            this.Resize += new System.EventHandler(this.preventResize);
             this.ResumeLayout(false);
             this.PerformLayout();
 
