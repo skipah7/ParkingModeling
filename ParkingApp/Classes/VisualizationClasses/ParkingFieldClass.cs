@@ -8,7 +8,7 @@ namespace ParkingApp.Classes
 {
     class ParkingFieldClass
     {
-        public void loadField(Panel panel)
+        public void applyPictureBoxes(Panel panel)
         {
             Globals.pictureBoxes.ForEach((pic) => panel.Controls.Add(pic));
         }

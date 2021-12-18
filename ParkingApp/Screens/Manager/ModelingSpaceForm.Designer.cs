@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.leftAdjacentRoad = new System.Windows.Forms.Panel();
             this.rightAdjacentRoad = new System.Windows.Forms.Panel();
             this.upAdjacentRoad = new System.Windows.Forms.Panel();
@@ -43,13 +43,13 @@
             // 
             // deterministicParkPanel
             // 
-            this.panel1.AutoSize = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "deterministicParkPanel";
-            this.panel1.Size = new System.Drawing.Size(0, 0);
-            this.panel1.TabIndex = 0;
+            this.mainPanel.AutoSize = true;
+            this.mainPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.mainPanel.Name = "deterministicParkPanel";
+            this.mainPanel.Size = new System.Drawing.Size(0, 0);
+            this.mainPanel.TabIndex = 0;
             // 
             // leftAdjacentRoad
             // 
@@ -152,7 +152,7 @@
             this.Controls.Add(this.upAdjacentRoad);
             this.Controls.Add(this.rightAdjacentRoad);
             this.Controls.Add(this.leftAdjacentRoad);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.mainPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -169,7 +169,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Panel leftAdjacentRoad;
         private System.Windows.Forms.Panel rightAdjacentRoad;
         private System.Windows.Forms.Panel upAdjacentRoad;

@@ -884,7 +884,6 @@
             this.Name = "ConfigureModelingParamsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройка параметров моделирования";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
             ((System.ComponentModel.ISupportInitialize)(this.lightCarProbability)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heavyCarProbability)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lightToHeavyRatio)).EndInit();

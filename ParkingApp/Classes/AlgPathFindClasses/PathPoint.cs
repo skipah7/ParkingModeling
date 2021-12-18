@@ -9,5 +9,11 @@
             this.X = x;
             this.Y = y;
         }
+
+        public void set(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
     }
 }

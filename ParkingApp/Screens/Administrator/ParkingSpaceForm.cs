@@ -40,7 +40,7 @@ namespace ParkingApp
 
             parkingFieldClass = new ParkingFieldClass();
             parkingFieldClass.fillPictureBoxesList(this.width, this.height, this.patterns);
-            parkingFieldClass.loadField(modelPanel);
+            parkingFieldClass.applyPictureBoxes(modelPanel);
 
             foreach (var control in modelPanel.Controls)
             {

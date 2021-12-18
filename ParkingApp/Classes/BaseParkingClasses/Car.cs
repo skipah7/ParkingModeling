@@ -13,6 +13,7 @@ namespace ParkingApp.Classes
     class Car
     {
         private static int OFFSET = 5;
+        private int height;
 
         public int rotate { get; set; }
         public PathPoint currPos { get; set; }
@@ -26,28 +27,27 @@ namespace ParkingApp.Classes
         public int parkingPlaceNumber { get; set; }
         public double timeStay { get; set; }
 
-        public Timer timer1;
-        public Car()
+        public Timer timer;
+        public Car(int height)
         {
             random = new Random();
-
-            this.probability = random.NextDouble();
-
-            timer1 = new Timer
-            {
-                Interval = Globals.INTERVAL
-            };
-            timer1.Tick += new EventHandler(timer1_Tick_1);
-
             onParking = new List<Point>();
             outParking = new List<Point>();
 
-            carPicBox = new PictureBox();
-            carPicBox.Location = Modeling.getLocPointRoad(FindPaths.startRoad);
-            carPicBox.Image = getRandomCarImage();
-            carPicBox.Name = "car";
-            carPicBox.Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE);
-            carPicBox.SizeMode = PictureBoxSizeMode.Zoom;
+            this.height = height;
+            this.probability = random.NextDouble();
+
+            timer = new Timer { Interval = Globals.INTERVAL };
+            timer.Tick += timer1_Tick_1;
+
+            carPicBox = new PictureBox
+            {
+                Location = Modeling.getLocPointRoad(FindPaths.startRoad),
+                Image = getRandomCarImage(),
+                Name = "car",
+                Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE),
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
             carPicBox.MouseEnter += CarPicBox_MouseEnter;
         }
 
@@ -213,11 +213,11 @@ namespace ParkingApp.Classes
         public List<Point> getBetweenTwoPointPark(PathPoint start, PathPoint end)
         {
             List<Point> points = new List<Point>();
-            var pathPoints = FindPaths.FindPath(FindPaths.parkMatr, start, end);
+            var pathPoints = FindPaths.FindPath(FindPaths.parkingMatrix, start, end);
             for (int i = 0; i < pathPoints.Count - 1; i++)
             {
-                var firstPoint = Globals.pictureBoxes.ElementAt(pathPoints.ElementAt(i).X * Globals.HEIGHT + pathPoints.ElementAt(i).Y).Location;
-                var secondPoint = Globals.pictureBoxes.ElementAt(pathPoints.ElementAt(i + 1).X * Globals.HEIGHT + pathPoints.ElementAt(i + 1).Y).Location;
+                var firstPoint = Globals.pictureBoxes.ElementAt(pathPoints.ElementAt(i).X * this.height + pathPoints.ElementAt(i).Y).Location;
+                var secondPoint = Globals.pictureBoxes.ElementAt(pathPoints.ElementAt(i + 1).X * this.height + pathPoints.ElementAt(i + 1).Y).Location;
                 secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
                 addPoints(points, secondPoint);
             }
@@ -225,7 +225,6 @@ namespace ParkingApp.Classes
         }
         public async void timer1_Tick_1(object sender, EventArgs e)
         {
-
             carPicBox.BringToFront();
             carPicBox.Location = new Point(carPicBox.Location.X + onParking.ElementAt(0).X, carPicBox.Location.Y + onParking.ElementAt(0).Y);
             if (0 < onParking.Count - 1)
@@ -237,7 +236,7 @@ namespace ParkingApp.Classes
 
             if (0 == onParking.Count)
             {
-                timer1.Stop();
+                timer.Stop();
                 if (currPos == FindPaths.endRoad)
                 {
                     carPicBox.Dispose();
@@ -249,7 +248,7 @@ namespace ParkingApp.Classes
                     await Task.Run(() => outParkToRoad(this));
                     await Task.Run(() => outRoad(this));
                     this.carPicBox.Refresh();
-                    timer1.Start();
+                    timer.Start();
                 }
             }
         }
@@ -332,15 +331,15 @@ namespace ParkingApp.Classes
 
         private Car outParkToRoad(Car car)
         {
-            car.currPos = FindPaths.endPark;
-            car.onParking.AddRange(car.getBetweenTwoPointParkRoad(FindPaths.endPark, FindPaths.preEndPark));
-            car.currPos = FindPaths.preEndPark;
+            car.currPos = FindPaths.parkingExit;
+            car.onParking.AddRange(car.getBetweenTwoPointParkRoad(FindPaths.parkingExit, FindPaths.roadBeforeExit));
+            car.currPos = FindPaths.roadBeforeExit;
             return car;
         }
         private Car outRoad(Car car)
         {
-            car.currPos = FindPaths.preEndPark;
-            car.onParking.AddRange(car.getBetweenTwoPointRoad(FindPaths.preEndPark, FindPaths.endRoad));
+            car.currPos = FindPaths.roadBeforeExit;
+            car.onParking.AddRange(car.getBetweenTwoPointRoad(FindPaths.roadBeforeExit, FindPaths.endRoad));
             car.currPos = FindPaths.endRoad;
             return car;
         }
@@ -351,14 +350,14 @@ namespace ParkingApp.Classes
             if (carPoint != null)
             {
                 car.currPos = carPoint;
-                car.onParking.AddRange(car.getBetweenTwoPointPark(car.currPos, FindPaths.endPark));
-                FindPaths.parkMatr[currPos.X, currPos.Y] = 5;
+                car.onParking.AddRange(car.getBetweenTwoPointPark(car.currPos, FindPaths.parkingExit));
+                FindPaths.parkingMatrix[currPos.X, currPos.Y] = 5;
 
                 rotateCarBeforeExit(car);
 
-               // car.timer1.Start();
+               // car.timer.Start();
               //  car.carPicBox.Refresh();
-                car.currPos = FindPaths.endPark;
+                car.currPos = FindPaths.parkingExit;
 
                 Globals.tabloItems.Remove(tabloItem);
             }
@@ -367,45 +366,45 @@ namespace ParkingApp.Classes
         private void rotateCarBeforeExit(Car car)
         {
             //полицейский разворот
-            if (car.rotate == 0 && (FindPaths.endPark.X >= car.currPos.X))
+            if (car.rotate == 0 && (FindPaths.parkingExit.X >= car.currPos.X))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
             }
-            else if (car.rotate == 1 && (FindPaths.endPark.Y == car.currPos.Y) && (FindPaths.parkMatr[car.currPos.X + 1, car.currPos.Y] == 0))
+            else if (car.rotate == 1 && (FindPaths.parkingExit.Y == car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X + 1, car.currPos.Y] == 0))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
             }
-            else if (car.rotate == 1 && (FindPaths.endPark.Y <= car.currPos.Y))
+            else if (car.rotate == 1 && (FindPaths.parkingExit.Y <= car.currPos.Y))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
             }
-            else if (car.rotate == 2 && (FindPaths.endPark.X >= car.currPos.X) && (FindPaths.parkMatr[car.currPos.X, car.currPos.Y - 1] == 0))
+            else if (car.rotate == 2 && (FindPaths.parkingExit.X >= car.currPos.X) && (FindPaths.parkingMatrix[car.currPos.X, car.currPos.Y - 1] == 0))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
             }
-            else if (car.rotate == 2 && (FindPaths.endPark.X <= car.currPos.X))
+            else if (car.rotate == 2 && (FindPaths.parkingExit.X <= car.currPos.X))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
             }
-            else if (car.rotate == 2 && (FindPaths.endPark.X > car.currPos.X))
+            else if (car.rotate == 2 && (FindPaths.parkingExit.X > car.currPos.X))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
             }
             // если машина повернута влево и находится слева от выезда с праковки, то поворачиваем
 
-            else if (car.rotate == 3 && (FindPaths.endPark.Y <= car.currPos.Y) && (FindPaths.parkMatr[car.currPos.X + 1, car.currPos.Y] == 0))
+            else if (car.rotate == 3 && (FindPaths.parkingExit.Y <= car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X + 1, car.currPos.Y] == 0))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
             }
-            else if (car.rotate == 3 && (FindPaths.endPark.Y <= car.currPos.Y) && (FindPaths.parkMatr[car.currPos.X, car.currPos.Y - 1] == 0))
+            else if (car.rotate == 3 && (FindPaths.parkingExit.Y <= car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X, car.currPos.Y - 1] == 0))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.RotateNoneFlipNone);
             }
-            else if (car.rotate == 3 && (FindPaths.endPark.Y <= car.currPos.Y) && (FindPaths.parkMatr[car.currPos.X - 1, car.currPos.Y] == 0))
+            else if (car.rotate == 3 && (FindPaths.parkingExit.Y <= car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X - 1, car.currPos.Y] == 0))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
             }
-            else if (car.rotate == 3 && (FindPaths.endPark.Y > car.currPos.Y) && (FindPaths.parkMatr[car.currPos.X + 1, car.currPos.Y] == 0))
+            else if (car.rotate == 3 && (FindPaths.parkingExit.Y > car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X + 1, car.currPos.Y] == 0))
             {
                 car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
             }

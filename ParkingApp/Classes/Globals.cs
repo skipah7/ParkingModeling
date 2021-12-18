@@ -16,10 +16,6 @@ namespace ParkingApp
         public static string DAILY_RATE = "Daily";
         public static string HOURLY_RATE = "Hourly";
 
-        // height and width
-        public static int WIDTH = 0;
-        public static int HEIGHT = 0;
-
         public static int INTERVAL = 20;
 
         public static int z = 0;
@@ -28,8 +24,6 @@ namespace ParkingApp
 
         // modelling params
         public static Tariff tariff;
-
-        public static ModelingParams modelingParams;
 
         public static List<TableItem> tabloItems = new List<TableItem>();
 
@@ -54,13 +48,11 @@ namespace ParkingApp
         // user directory based on project path
         public static string directory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
 
-        // matrix pattern, is parking space
-        public static string[,] patterns = new string[WIDTH, HEIGHT];
         //pictureboxes for parking painting
         public static List<PictureBox> pictureBoxes = new List<PictureBox>();
 
         // matrix pattern, is road
-        public static string[,] highwayPatterns = new string[WIDTH + 1, HEIGHT + 1];
+        public static string[,] highwayPatterns;
 
         // size of parking in pixels
         public static int SCREEN_SIZE = 500;

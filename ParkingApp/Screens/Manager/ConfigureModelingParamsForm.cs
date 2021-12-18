@@ -1,5 +1,4 @@
 ﻿using ParkingApp.Classes.BaseParkingClasses;
-using ParkingApp.Classes.ModelingClasses;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -11,6 +10,7 @@ namespace ParkingApp.Screens.Manager
         Panel[] flowPanels;
         Panel[] parkPanels;
 
+        public ModelingParams modelingParams;
         public ConfigureModelingParamsForm()
         {
             InitializeComponent();
@@ -70,12 +70,10 @@ namespace ParkingApp.Screens.Manager
             var lightCarProbability = this.lightCarProbability.Value / 100d;
             var heavyCarProbability = this.heavyCarProbability.Value / 100d;
 
-            Globals.modelingParams = new ModelingParams(flowLawType, parkLawType, flowValues, parkValues, lightToHeavyRatio, lightCarProbability, heavyCarProbability);
+            this.modelingParams = new ModelingParams(flowLawType, parkLawType, flowValues, parkValues, lightToHeavyRatio, lightCarProbability, heavyCarProbability);
             Globals.tariff = createTariff();
 
-            ManagerMainScreen managerMainScreen = new ManagerMainScreen();
-            managerMainScreen.Show();
-            this.Hide();
+            this.Close();
             //Globals.calculateDelta();
         }
 
@@ -176,10 +174,6 @@ namespace ParkingApp.Screens.Manager
         #endregion
 
         #region helpers
-        private void shutDownApplication(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
 
         private void backToAdminMainScreen_Click(object sender, EventArgs e)
         {

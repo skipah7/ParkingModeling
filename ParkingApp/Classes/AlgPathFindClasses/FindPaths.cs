@@ -6,139 +6,105 @@ namespace ParkingApp.Classes.AlgPathFind
 {
     class FindPaths
     {
-        public static PathPoint startPark;
-        public static PathPoint endPark;
+        public static PathPoint parkingEntrance;
+        public static PathPoint parkingExit;
         public static PathPoint startRoad;
         public static PathPoint endRoad;
-        public static PathPoint preStartPark;
-        public static PathPoint preEndPark;
+        public static PathPoint roadBeforeEntrance;
+        public static PathPoint roadBeforeExit;
 
         public static List<PathPoint> parkPoints = new List<PathPoint>();
         public static List<PathPoint> carPoints = new List<PathPoint>();
         // public static List<PathPoint> freeParkPoints = new List<PathPoint>();
-        public static int[,] parkMatr;
+        public static int[,] parkingMatrix;
         public static int[,] roadMatr;
         // public static bool startEnd;
         //  public static List<PathPoint> PointsPath = new List<PathPoint>();
 
-        public static void fillParkMatr()
+        public static void fillParkMatr(int width, int height, string[,] patterns)
         {
-            parkMatr = new int[Globals.WIDTH, Globals.HEIGHT];
-            startPark = new PathPoint(0, 0);
-            endPark = new PathPoint(0, 0);
-            preStartPark = new PathPoint(0, 0);
-            preEndPark = new PathPoint(0, 0);
+            parkingMatrix = new int[width, height];
+            parkingEntrance = new PathPoint(0, 0);
+            parkingExit = new PathPoint(0, 0);
+            roadBeforeEntrance = new PathPoint(0, 0);
+            roadBeforeExit = new PathPoint(0, 0);
 
-            for (int i = 0; i < Globals.WIDTH; i++)
+            for (int x = 0; x < width; x++)
             {
-                for (int j = 0; j < Globals.HEIGHT; j++)
+                for (int y = 0; y < height; y++)
                 {
-                    if (Globals.patterns[i, j] == Globals.ROAD)
+                    if (patterns[x, y] == Globals.ROAD)
                     {
-                        parkMatr[i, j] = 0;
+                        parkingMatrix[x, y] = 0;
                     }
-                    else if (Globals.patterns[i, j] == Globals.LIGHT_PARKING_PLACE)
+                    else if (patterns[x, y] == Globals.LIGHT_PARKING_PLACE)
                     {
-                        parkMatr[i, j] = 5;
-                        parkPoints.Add(new PathPoint(i, j));
-                       
+                        parkingMatrix[x, y] = 5;
+                        parkPoints.Add(new PathPoint(x, y));
                     }
-                    else if (Globals.patterns[i, j] == Globals.ENTRANCE)
+                    else if (patterns[x, y] == Globals.ENTRANCE)
                     {
-                        parkMatr[i, j] = 1;
-                        startPark.X = i;
-                        startPark.Y = j;
-                        preStartPark = getPosStartEnd(startPark,preStartPark);
+                        parkingMatrix[x, y] = 1;
+                        parkingEntrance.set(x, y);
+                        roadBeforeEntrance = getRoadPathPoint(parkingEntrance, roadBeforeEntrance);
                     }
-                    else if (Globals.patterns[i, j] == Globals.EXIT)
+                    else if (patterns[x, y] == Globals.EXIT)
                     {
-                        parkMatr[i, j] = 1;
-                        endPark.X = i;
-                        endPark.Y = j;
-                        preEndPark = getPosStartEnd(endPark, preEndPark);
-                     //   preEndPark.X = i;
-                     //   preEndPark.Y = j;
+                        parkingMatrix[x, y] = 1;
+                        parkingExit.set(x, y);
+                        roadBeforeExit = getRoadPathPoint(parkingExit, roadBeforeExit);
+                     //   roadBeforeExit.X = x;
+                     //   roadBeforeExit.Y = y;
                     }
                     else
                     {
-                        parkMatr[i, j] = 2;
+                        parkingMatrix[x, y] = 2;
                     }
                 }
             }
         }
+
         //Функция вычисления направления
-        public static PathPoint getPosStartEnd(PathPoint pointPark, PathPoint pointRoad)
+        public static PathPoint getRoadPathPoint(PathPoint pointPark, PathPoint pointRoad)
         {
-            if (pointPark.Y == 0 && Globals.leftAdjacentRoadLength !=0 && Globals.upAdjacentRoadLength!= 0)
-            {
-                pointRoad = new PathPoint(pointPark.X+1, pointPark.Y);
-            }
-            if (pointPark.Y == 0 && Globals.leftAdjacentRoadLength != 0 && Globals.downAdjacentRoadLength != 0)
-            {
-                pointRoad = new PathPoint(pointPark.X, pointPark.Y);
-            }
-            else if (pointPark.X == 0 && Globals.leftAdjacentRoadLength != 0 && Globals.upAdjacentRoadLength != 0)
-            {
-                pointRoad = new PathPoint(pointPark.X, pointPark.Y+1);
-            }
-            else if (pointPark.X == 0 && Globals.rightAdjacentRoadLength != 0 && Globals.upAdjacentRoadLength != 0)
-            {
-                pointRoad = new PathPoint(pointPark.X, pointPark.Y);
-            }
-            else if (pointPark.Y == Globals.HEIGHT-1 && Globals.rightAdjacentRoadLength != 0 && Globals.upAdjacentRoadLength != 0)
-            {
-                pointRoad = new PathPoint(pointPark.X+1, pointPark.Y+1);
-            }
-            else if (pointPark.Y == Globals.HEIGHT-1 && Globals.rightAdjacentRoadLength != 0 && Globals.downAdjacentRoadLength != 0)
-            {
-                pointRoad = new PathPoint(pointPark.X, pointPark.Y+1);
-            }
-            else if (pointPark.X == Globals.WIDTH-1 && Globals.rightAdjacentRoadLength != 0 && Globals.downAdjacentRoadLength != 0)
-            {
-                pointRoad = new PathPoint(pointPark.X + 1, pointPark.Y);
-            }
-            else if (pointPark.X == Globals.WIDTH-1 && Globals.leftAdjacentRoadLength != 0 && Globals.downAdjacentRoadLength != 0)
-            {
-                pointRoad = new PathPoint(pointPark.X+1, pointPark.Y + 1);
-            }
-            return pointRoad;
+            return new PathPoint(pointPark.X, pointPark.Y + 1);
         }
         
-        public static void fillRoadMatr()
+        public static void fillRoadMatr(int width, int height)
         {
             startRoad = new PathPoint(0, 0);
             endRoad = new PathPoint(0, 0);
-            roadMatr = new int[Globals.WIDTH + 1, Globals.HEIGHT + 1];
+            roadMatr = new int[width + 1, height + 1];
             if (Globals.leftAdjacentRoadLength != 0 && Globals.downAdjacentRoadLength !=0)
             {
                 endRoad = new PathPoint(0, 0);
-                startRoad = new PathPoint(Globals.WIDTH, Globals.HEIGHT);
+                startRoad = new PathPoint(width, height);
             }
             else if (Globals.leftAdjacentRoadLength != 0 && Globals.upAdjacentRoadLength != 0)
             {
-                endRoad = new PathPoint(0, Globals.HEIGHT);
-                startRoad = new PathPoint(Globals.WIDTH, 0);
+                endRoad = new PathPoint(0, height);
+                startRoad = new PathPoint(width, 0);
             }
             else if (Globals.rightAdjacentRoadLength != 0 && Globals.downAdjacentRoadLength != 0)
             {
-                endRoad = new PathPoint(Globals.WIDTH, 0);
-                startRoad = new PathPoint(0, Globals.HEIGHT);
+                endRoad = new PathPoint(width, 0);
+                startRoad = new PathPoint(0, height);
             }
             else if (Globals.rightAdjacentRoadLength != 0 && Globals.upAdjacentRoadLength != 0)
             {
-                endRoad = new PathPoint(Globals.WIDTH, Globals.HEIGHT);
+                endRoad = new PathPoint(width, height);
                 startRoad = new PathPoint(0, 0);
             }
 
-            for (int i = 0; i < Globals.WIDTH + 1; i++)
+            for (int x = 0; x < width; x++)
             {
-                for (int j = 0; j < Globals.HEIGHT + 1; j++)
+                for (int y = 0; y < height + 1; y++)
                 {
-                    if (Globals.highwayPatterns[i, j] == Globals.HIGHWAY)
+                    if (Globals.highwayPatterns[x, y] == Globals.HIGHWAY)
                     {
-                        roadMatr[i, j] = 7;
+                        roadMatr[x, y] = 7;
                     }
-                    else { roadMatr[i, j] = 2; }
+                    else { roadMatr[x, y] = 2; }
                 }
             }
         }
@@ -152,7 +118,7 @@ namespace ParkingApp.Classes.AlgPathFind
                 {
                     var t = carPoints.First(car2 => ((car2.X == car.currPos.X) && (car2.Y == car.currPos.Y)));
                     carPoints.Remove(t);
-                    parkMatr[t.X, t.Y] = 3;// рассматриваемая машина
+                    parkingMatrix[t.X, t.Y] = 3;// рассматриваемая машина
                     parkPoints.Add(t);
                     return t;
                 } catch (Exception e)
@@ -176,7 +142,7 @@ namespace ParkingApp.Classes.AlgPathFind
             string placeNumber = t.X + "" + t.Y;
             car.parkingPlaceNumber = int.Parse(placeNumber);
             parkPoints.Remove(t);
-            parkMatr[t.X, t.Y] = 3;// рассматриваемое парковочное место
+            parkingMatrix[t.X, t.Y] = 3;// рассматриваемое парковочное место
             carPoints.Add(t);// добавляем машину в список          
             return t;
         }

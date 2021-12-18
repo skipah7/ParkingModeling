@@ -3,11 +3,14 @@ using ParkingApp.Screens.Manager;
 using System;
 using System.Windows.Forms;
 using ParkingApp.Screens;
+using ParkingApp.Classes.BaseParkingClasses;
 
 namespace ParkingApp
 {
     public partial class ManagerMainScreen : Form
     {
+        ModelingParams modelingParams;
+
         bool isParkingCorrect = false;
 
         int width;
@@ -67,23 +70,28 @@ namespace ParkingApp
 
         private void recheckLaunchingButton()
         {
-            startModelingBtn.Enabled = this.isParkingCorrect && (Globals.modelingParams != null);
+            startModelingBtn.Enabled = this.isParkingCorrect && (this.modelingParams != null);
+        }
+        private void recheckLaunchingButton(object sender, EventArgs e)
+        {
+            this.modelingParams = (sender as ConfigureModelingParamsForm).modelingParams;
+            this.recheckLaunchingButton();
         }
 
         #region button handlers
 
         private void launchModelling(object sender, EventArgs e)
         {
-            this.Hide();
-            ModelingSpaceForm modelingSpaceForm = new ModelingSpaceForm();
+            ModelingSpaceForm modelingSpaceForm = new ModelingSpaceForm(this.height, this.width, this.patterns, this.modelingParams);
             modelingSpaceForm.Show();
+            this.Hide();
         }
 
         private void configureModellingParamsBtn_Click(object sender, EventArgs e)
         {
             ConfigureModelingParamsForm paramsForm = new ConfigureModelingParamsForm();
+            paramsForm.Closed += recheckLaunchingButton;
             paramsForm.Show();
-            this.Hide();
         }
 
         private void loadTopologyClick(object sender, EventArgs e)
@@ -106,9 +114,9 @@ namespace ParkingApp
 
         private void backToMainScreenBtn_Click(object sender, EventArgs e)
         {
-            this.Hide();
             MainMenu mainScreenForm = new MainMenu();
             mainScreenForm.Show();
+            this.Hide();
         }
 
         private void shutDownApplication(object sender, FormClosingEventArgs e)
