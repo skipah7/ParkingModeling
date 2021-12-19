@@ -22,8 +22,7 @@ namespace ParkingApp.Classes
     {
         private static int OFFSET = 5;
 
-        public int rotate { get; set; }
-        public PathPoint currPos { get; set; }
+        public PathPoint currentPosition { get; set; }
         public PictureBox carPicBox { get; set; }
         public List<Point> carPath { get; set; }
         public TableItem tabloItem { get; set; }
@@ -34,14 +33,12 @@ namespace ParkingApp.Classes
         public double timeStay { get; set; }
 
         public Timer timer;
-        private int height;
         private CarDirection currentCarDirection = CarDirection.Top;
-        public Car(int height)
+        public Car()
         {
             random = new Random();
             carPath = new List<Point>();
 
-            this.height = height;
             this.probability = random.NextDouble();
 
             timer = new Timer { Interval = Globals.INTERVAL };
@@ -49,7 +46,7 @@ namespace ParkingApp.Classes
 
             carPicBox = new PictureBox
             {
-                Location = Modeling.getLocationFromPathPoint(FindPaths.roadStart),
+                Location = Modeling.getLocationFromPathPoint(Paths.roadStart),
                 Image = getRandomCarImage(),
                 Name = "car",
                 Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE),
@@ -58,61 +55,40 @@ namespace ParkingApp.Classes
             carPicBox.MouseEnter += CarPicBox_MouseEnter;
         }
 
-        private void CarPicBox_MouseEnter(object sender, EventArgs e)
+        public async void timerTick(object sender, EventArgs e)
         {
-            ToolTip t = new ToolTip();
-            t.SetToolTip((PictureBox)sender, "Вероятность заезда: " + Math.Round((1 - this.probability), 2));
-        }
+            carPicBox.BringToFront();
+            var newX = carPicBox.Location.X + carPath.ElementAt(0).X;
+            var newY = carPicBox.Location.Y + carPath.ElementAt(0).Y;
+            if (carPath.Count > 1) rotateCar(newX, newY);
+            carPicBox.Location = new Point(newX, newY);
 
-        public Image getRandomCarImage()
-        {
-            random = new Random();
-            int value = random.Next(0, 5);
+            carPath.RemoveAt(0);
+            if (carPath.Count != 0) return;
 
-            if (value == 0) return Resources.carPic1;
-            if (value == 1) return Resources.carPic2;
-            if (value == 2) return Resources.carPic3;
-            if (value == 3) return Resources.carPic4;
-            if (value == 4) return Resources.carPic5;
-            return Resources.carPic5;
-        }
-
-        public void rotateCarBeforeStart()
-        {
-            rotate = 3;
-            carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            this.currentCarDirection = CarDirection.Left;
-            carPicBox.Refresh();
-        }
-
-        public List<Point> getStayPoint(int k)
-        {
-            List<Point> points = new List<Point>();
-            while (k >= 0)
+            timer.Stop();
+            if (currentPosition == Paths.roadEnd)
             {
-                points.Add(new Point(0, 0));
-                k--;
+                carPicBox.Dispose();
             }
-            return points;
+            else
+            {
+                await Task.Delay(Convert.ToInt32(timeStay));
+                await Task.Run(() => moveFromParkingPlaceToExit(this));
+                await Task.Run(() => moveFromExitToRoad(this));
+                await Task.Run(() => moveAwayFromExit(this));
+                this.carPicBox.Refresh();
+                timer.Start();
+            }
         }
 
-        public List<Point> getBetweenTwoPointRoadPark(PathPoint start, PathPoint end)
+        public List<Point> setPathBetweenTwoPoints(PathPoint start, PathPoint end)
         {
             List<Point> points = new List<Point>();
             var firstPoint = Modeling.getLocationFromPathPoint(start);
             var secondPoint = Modeling.getLocationFromPathPoint(end);
             secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
             addPoints(points, secondPoint);
-            return points;
-        }
-
-        public List<Point> getBetweenTwoPointParkRoad(PathPoint start, PathPoint end)
-        {
-            List<Point> points = new List<Point>();
-            var firstPoint = Modeling.getLocationFromPathPoint(start);
-            var secondPoint = Modeling.getLocationFromPathPoint(end);
-            secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
-            addPoints(points,secondPoint);
             return points;
         }
 
@@ -144,7 +120,7 @@ namespace ParkingApp.Classes
         public List<Point> getPathList(PathPoint start, PathPoint end, int[,] matrix)
         {
             List<Point> points = new List<Point>();
-            var pathPoints = FindPaths.FindPath(matrix, start, end);
+            var pathPoints = Paths.FindPath(matrix, start, end);
             for (int i = 0; i < pathPoints.Count - 1; i++)
             {
                 var firstPoint = Modeling.getLocationFromPathPoint(pathPoints.ElementAt(i));
@@ -153,33 +129,6 @@ namespace ParkingApp.Classes
                 addPoints(points, secondPoint);
             }
             return points;
-        }
-
-        public async void timerTick(object sender, EventArgs e)
-        {
-            carPicBox.BringToFront();
-            var newX = carPicBox.Location.X + carPath.ElementAt(0).X;
-            var newY = carPicBox.Location.Y + carPath.ElementAt(0).Y;
-            if (carPath.Count > 1) rotateCar(newX, newY);
-            carPicBox.Location = new Point(newX, newY);
-
-            carPath.RemoveAt(0);
-            if (carPath.Count != 0) return;
-
-            timer.Stop();
-            if (currPos == FindPaths.roadEnd)
-            {
-                carPicBox.Dispose();
-            }
-            else
-            {
-                await Task.Delay(Convert.ToInt32(timeStay));
-                await Task.Run(() => moveFromParkingPlaceToExit(this));
-                await Task.Run(() => moveFromExitToRoad(this));
-                await Task.Run(() => outRoad(this));
-                this.carPicBox.Refresh();
-                timer.Start();
-            }
         }
 
         private void rotateCar(int newX, int newY)
@@ -197,93 +146,68 @@ namespace ParkingApp.Classes
         {
             if (this.currentCarDirection == carDirection) return;
 
-            var amountOfTurns = 4 - (int)this.currentCarDirection + (int)carDirection;
+            int FULL_TURN = 4;
+            var amountOfTurns = FULL_TURN - (int)this.currentCarDirection + (int)carDirection;
             for (var i = 0; i < amountOfTurns; i++) this.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
-            this.carPicBox.Refresh();
             this.currentCarDirection = carDirection;
-        }
-
-        private Car moveFromExitToRoad(Car car)
-        {
-            car.currPos = FindPaths.parkingExit;
-            car.carPath.AddRange(car.getBetweenTwoPointParkRoad(FindPaths.parkingExit, FindPaths.roadBeforeExit));
-            car.currPos = FindPaths.roadBeforeExit;
-            return car;
-        }
-        private Car outRoad(Car car)
-        {
-            car.currPos = FindPaths.roadBeforeExit;
-            car.carPath.AddRange(car.getPathList(FindPaths.roadBeforeExit, FindPaths.roadEnd, FindPaths.roadMatrix));
-            car.currPos = FindPaths.roadEnd;
-            return car;
+            this.carPicBox.Refresh();
         }
 
         private void moveFromParkingPlaceToExit(Car car)
         {
-            PathPoint carPoint = FindPaths.getCarPoint(car);
-            if (carPoint == null) return;
+            PathPoint carParkingPosition = Paths.getCarParkingPosition(car);
+            if (carParkingPosition == null) return;
 
-            car.currPos = carPoint;
-            car.carPath.AddRange(car.getPathList(car.currPos, FindPaths.parkingExit, FindPaths.parkingMatrix));
-            FindPaths.parkingMatrix[currPos.X, currPos.Y] = 5;
+            car.currentPosition = carParkingPosition;
+            car.carPath.AddRange(car.getPathList(car.currentPosition, Paths.parkingExit, Paths.parkingMatrix));
+            Paths.parkingMatrix[currentPosition.X, currentPosition.Y] = 5;
 
-            //rotateCarBeforeExit(car);
-            car.currPos = FindPaths.parkingExit;
+            car.currentPosition = Paths.parkingExit;
 
             Globals.tabloItems.Remove(tabloItem);
         }
 
-        private void rotateCarBeforeExit(Car car)
+        private Car moveFromExitToRoad(Car car)
         {
-            //полицейский разворот
-            if (car.rotate == 0 && (FindPaths.parkingExit.X >= car.currPos.X))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            }
-            else if (car.rotate == 1 && (FindPaths.parkingExit.Y == car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X + 1, car.currPos.Y] == 0))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            }
-            else if (car.rotate == 1 && (FindPaths.parkingExit.Y <= car.currPos.Y))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            }
-            else if (car.rotate == 2 && (FindPaths.parkingExit.X >= car.currPos.X) && (FindPaths.parkingMatrix[car.currPos.X, car.currPos.Y - 1] == 0))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            }
-            else if (car.rotate == 2 && (FindPaths.parkingExit.X <= car.currPos.X))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            }
-            else if (car.rotate == 2 && (FindPaths.parkingExit.X > car.currPos.X))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            }
-            // если машина повернута влево и находится слева от выезда с праковки, то поворачиваем
-
-            else if (car.rotate == 3 && (FindPaths.parkingExit.Y <= car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X + 1, car.currPos.Y] == 0))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            }
-            else if (car.rotate == 3 && (FindPaths.parkingExit.Y <= car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X, car.currPos.Y - 1] == 0))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-            }
-            else if (car.rotate == 3 && (FindPaths.parkingExit.Y <= car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X - 1, car.currPos.Y] == 0))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            }
-            else if (car.rotate == 3 && (FindPaths.parkingExit.Y > car.currPos.Y) && (FindPaths.parkingMatrix[car.currPos.X + 1, car.currPos.Y] == 0))
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            }
-            else
-            {
-                car.carPicBox.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            }
+            car.currentPosition = Paths.parkingExit;
+            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.parkingExit, Paths.roadBeforeExit));
+            car.currentPosition = Paths.roadBeforeExit;
+            return car;
         }
 
+        private Car moveAwayFromExit(Car car)
+        {
+            car.currentPosition = Paths.roadBeforeExit;
+            car.carPath.AddRange(car.getPathList(Paths.roadBeforeExit, Paths.roadEnd, Paths.roadMatrix));
+            car.currentPosition = Paths.roadEnd;
+            return car;
+        }
+
+        public Image getRandomCarImage()
+        {
+            random = new Random();
+            int value = random.Next(0, 5);
+
+            if (value == 0) return Resources.carPic1;
+            if (value == 1) return Resources.carPic2;
+            if (value == 2) return Resources.carPic3;
+            if (value == 3) return Resources.carPic4;
+            if (value == 4) return Resources.carPic5;
+            return Resources.carPic5;
+        }
+
+        public void rotateCarBeforeStart()
+        {
+            carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            this.currentCarDirection = CarDirection.Left;
+            carPicBox.Refresh();
+        }
+
+        private void CarPicBox_MouseEnter(object sender, EventArgs e)
+        {
+            ToolTip t = new ToolTip();
+            t.SetToolTip((PictureBox)sender, "Вероятность заезда: " + Math.Round((1 - this.probability), 2));
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ParkingApp.Classes.AlgPathFind
 {
-    class FindPaths
+    class Paths
     {
         public static PathPoint parkingEntrance;
         public static PathPoint parkingExit;
@@ -13,8 +13,7 @@ namespace ParkingApp.Classes.AlgPathFind
         public static PathPoint roadBeforeEntrance;
         public static PathPoint roadBeforeExit;
 
-        public static List<PathPoint> parkPoints = new List<PathPoint>();
-        public static List<PathPoint> carPoints = new List<PathPoint>();
+        public static List<PathPoint> parkingPlaces = new List<PathPoint>();
 
         public static int[,] parkingMatrix;
         public static int[,] roadMatrix;
@@ -39,7 +38,7 @@ namespace ParkingApp.Classes.AlgPathFind
                     else if (patterns[x, y] == Globals.LIGHT_PARKING_PLACE)
                     {
                         parkingMatrix[x, y] = 5;
-                        parkPoints.Add(new PathPoint(x, y));
+                        parkingPlaces.Add(new PathPoint(x, y));
                     }
                     else if (patterns[x, y] == Globals.ENTRANCE)
                     {
@@ -52,8 +51,6 @@ namespace ParkingApp.Classes.AlgPathFind
                         parkingMatrix[x, y] = 1;
                         parkingExit.set(x, y);
                         roadBeforeExit = getRoadPathPoint(parkingExit);
-                     //   roadBeforeExit.X = x;
-                     //   roadBeforeExit.Y = y;
                     }
                     else
                     {
@@ -72,7 +69,7 @@ namespace ParkingApp.Classes.AlgPathFind
         {
             roadMatrix = new int[width, height + 1];
 
-            roadStart = new PathPoint(width, height);
+            roadStart = new PathPoint(width - 1, height);
             roadEnd = new PathPoint(0, height);
 
             for (int x = 0; x < width; x++)
@@ -88,17 +85,14 @@ namespace ParkingApp.Classes.AlgPathFind
             }
         }
 
-        // выезжающая машины
-        public static PathPoint getCarPoint(Car car)
+        // car going out
+        public static PathPoint getCarParkingPosition(Car car)
         {
-            if (carPoints.Count == 0) return null;
             try
             {
-                var t = carPoints.First(car2 => ((car2.X == car.currPos.X) && (car2.Y == car.currPos.Y)));
-                carPoints.Remove(t);
-                parkingMatrix[t.X, t.Y] = 3;// рассматриваемая машина
-                parkPoints.Add(t);
-                return t;
+                parkingMatrix[car.currentPosition.X, car.currentPosition.Y] = 3;// рассматриваемая машина
+                parkingPlaces.Add(car.currentPosition);
+                return car.currentPosition;
             }
             catch (Exception e)
             {
@@ -107,20 +101,21 @@ namespace ParkingApp.Classes.AlgPathFind
             }
         }
 
-        //Поиск свободного места для легковых авто
-        public static PathPoint getParkPoint(Car car)
+        // find free parking place
+        public static PathPoint getFreeParkingPlace(Car car)
         {          
             Random rnd = new Random();
-            int value = rnd.Next(parkPoints.Count);
-            
-            var parkingPlace = parkPoints.ElementAt(value);
+            int value = rnd.Next(parkingPlaces.Count);
+            var parkingPlace = parkingPlaces.ElementAt(value);
 
             car.parkingPlaceNumber = int.Parse(parkingPlace.X + "" + parkingPlace.Y);
-            parkPoints.Remove(parkingPlace);
+            parkingPlaces.Remove(parkingPlace);
             parkingMatrix[parkingPlace.X, parkingPlace.Y] = 3;// рассматриваемое парковочное место
-            carPoints.Add(parkingPlace);// добавляем машину в список          
+     
             return parkingPlace;
         }
+
+        #region A* algoritm
 
         public static List<PathPoint> FindPath(int[,] field, PathPoint start, PathPoint goal)
         {
@@ -224,6 +219,7 @@ namespace ParkingApp.Classes.AlgPathFind
             }
             return result;
         }
+
         //Получения маршрута. Маршрут представлен в виде списка координат точек
         private static List<PathPoint> GetPathForNode(PathNode pathNode)
         {
@@ -237,5 +233,7 @@ namespace ParkingApp.Classes.AlgPathFind
             //result.Reverse();
             return result;
         }
+
+        #endregion
     }
 }

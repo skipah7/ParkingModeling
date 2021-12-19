@@ -13,14 +13,12 @@ namespace ParkingApp.Screens.Manager
         private static System.Timers.Timer VisualizationTimer;
 
         private ModelingParams modelingParams;
-        private int height;
         double systemTimer = 0;
         public ModelingSpaceForm(int height, int width, string[,] patterns, ModelingParams modelingParams)
         {
             InitializeComponent();
             this.clearValues();
 
-            this.height = height;
             this.modelingParams = modelingParams;
 
             Globals.calculatePictureBoxSize(height, width);
@@ -35,53 +33,52 @@ namespace ParkingApp.Screens.Manager
             parkingField.fillPictureBoxesList(width, height, patterns);
             parkingField.applyPictureBoxes(mainPanel);
 
-            FindPaths.fillParkingMatrix(width, height, patterns);
+            Paths.fillParkingMatrix(width, height, patterns);
 
             mainPanel.Invalidate();
 
             RoadsClass.createRoads(mainPanel, width, height);
-            FindPaths.fillRoadMatrix(width, height);
+            Paths.fillRoadMatrix(width, height);
 
             configureTimers();
         }
 
-        private Car moveToEntrance(Car car)
+        private void moveToEntrance(Car car)
         {
-            car.currPos = FindPaths.roadStart;
-            car.carPath.AddRange(car.getPathList(FindPaths.roadStart, FindPaths.roadBeforeEntrance, FindPaths.roadMatrix));
+            car.currentPosition = Paths.roadStart;
+            car.carPath.AddRange(car.getPathList(Paths.roadStart, Paths.roadBeforeEntrance, Paths.roadMatrix));
             Action action = () =>
             {
                 mainPanel.Controls.Add(car.carPicBox);
                 car.timer.Start();
-                car.currPos = FindPaths.roadBeforeEntrance;
+                car.currentPosition = Paths.roadBeforeEntrance;
             };
 
             if (InvokeRequired) Invoke(action);
             else action();
-
-            return car;
         }
 
         private void moveFromRoadToEntrance(Car car)
         {
-            car.currPos = FindPaths.roadBeforeEntrance;
-            car.carPath.AddRange(car.getBetweenTwoPointRoadPark(FindPaths.roadBeforeEntrance, FindPaths.parkingEntrance));
-            car.currPos = FindPaths.parkingEntrance;
+            car.currentPosition = Paths.roadBeforeEntrance;
+            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.roadBeforeEntrance, Paths.parkingEntrance));
+            car.currentPosition = Paths.parkingEntrance;
         }
 
         private void moveFromEntranceToParkingPlace(Car car)
         {
-            PathPoint parkPoint = FindPaths.getParkPoint(car);
-            car.currPos = FindPaths.parkingEntrance;
-            car.carPath.AddRange(car.getPathList(FindPaths.parkingEntrance, parkPoint, FindPaths.parkingMatrix));
-            car.currPos = parkPoint;
+            PathPoint parkPoint = Paths.getFreeParkingPlace(car);
+
+            car.currentPosition = Paths.parkingEntrance;
+            car.carPath.AddRange(car.getPathList(Paths.parkingEntrance, parkPoint, Paths.parkingMatrix));
+            car.currentPosition = parkPoint;
         }
 
         private void moveAwayFromEntrance(Car car)
         {
-            car.currPos = FindPaths.roadBeforeEntrance;
-            car.carPath.AddRange(car.getPathList(FindPaths.roadBeforeEntrance, FindPaths.roadEnd, FindPaths.roadMatrix));
-            car.currPos = FindPaths.roadEnd;
+            car.currentPosition = Paths.roadBeforeEntrance;
+            car.carPath.AddRange(car.getPathList(Paths.roadBeforeEntrance, Paths.roadEnd, Paths.roadMatrix));
+            car.currentPosition = Paths.roadEnd;
         }
 
         private void addToTablo(Car car)
@@ -94,7 +91,7 @@ namespace ParkingApp.Screens.Manager
             Globals.tabloItems.Add(car.tabloItem);
         }
 
-        private void stayOnParking(Car car)
+        private void setParkingTime(Car car)
         {
             car.timeStay = this.modelingParams.parkingInterval * 50 * Globals.INTERVAL;
         }
@@ -103,14 +100,14 @@ namespace ParkingApp.Screens.Manager
         {
             VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
 
-            var car = new Car(this.height);
+            var car = new Car();
             car.rotateCarBeforeStart();
             moveToEntrance(car);
-            if (car.probability <= this.modelingParams.lightCarProbability && FindPaths.parkPoints.Count != 0)
+            if (car.probability <= this.modelingParams.lightCarProbability && Paths.parkingPlaces.Count != 0)
             {
                 moveFromRoadToEntrance(car);
                 moveFromEntranceToParkingPlace(car);
-                stayOnParking(car);
+                setParkingTime(car);
 
                 addToTablo(car);
             }
@@ -125,14 +122,12 @@ namespace ParkingApp.Screens.Manager
         {
             Action action = () =>
             {
-                freePlacesCounter.Text = "Свободных парковочных мест: " + FindPaths.parkPoints.Count;
+                freePlacesCounter.Text = "Свободных парковочных мест: " + Paths.parkingPlaces.Count;
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = Globals.tabloItems;
             };
-            if (InvokeRequired)
-                Invoke(action);
-            else
-                action();
+            if (InvokeRequired) Invoke(action);
+            else action();
         }
 
         private void SystemTime_Tick1(object sender, EventArgs e)
@@ -156,16 +151,15 @@ namespace ParkingApp.Screens.Manager
 
         private void clearValues()
         {
-            FindPaths.parkingEntrance = null;
-            FindPaths.parkingExit = null;
-            FindPaths.roadStart = null;
-            FindPaths.roadEnd = null;
-            FindPaths.roadBeforeEntrance = null;
-            FindPaths.roadBeforeExit = null;
-            FindPaths.parkPoints = new List<PathPoint>();
-            FindPaths.carPoints = new List<PathPoint>();
-            FindPaths.parkingMatrix = null;
-            FindPaths.roadMatrix = null;
+            Paths.parkingEntrance = null;
+            Paths.parkingExit = null;
+            Paths.roadStart = null;
+            Paths.roadEnd = null;
+            Paths.roadBeforeEntrance = null;
+            Paths.roadBeforeExit = null;
+            Paths.parkingPlaces = new List<PathPoint>();
+            Paths.parkingMatrix = null;
+            Paths.roadMatrix = null;
             Globals.tabloItems = new List<TableItem>();
         }
 
