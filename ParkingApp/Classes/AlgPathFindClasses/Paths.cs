@@ -13,11 +13,13 @@ namespace ParkingApp.Classes.AlgPathFind
         public static PathPoint roadBeforeEntrance;
         public static PathPoint roadBeforeExit;
 
-        public static List<PathPoint> parkingPlaces = new List<PathPoint>();
+        public static List<PathPoint> ligthParkingPlaces = new List<PathPoint>();
+        public static List<PathPoint> heavyParkingPlaces = new List<PathPoint>();
 
         public static int[,] parkingMatrix;
         public static int[,] roadMatrix;
 
+        public static int totalParkingPlaces;
 
         public static void fillParkingMatrix(int width, int height, string[,] patterns)
         {
@@ -38,16 +40,23 @@ namespace ParkingApp.Classes.AlgPathFind
                     else if (patterns[x, y] == Globals.LIGHT_PARKING_PLACE)
                     {
                         parkingMatrix[x, y] = 5;
-                        parkingPlaces.Add(new PathPoint(x, y));
+                        ligthParkingPlaces.Add(new PathPoint(x, y));
+                    }
+                    else if (patterns[x, y] == Globals.HEAVY_PARKING_PLACE_MAIN)
+                    {
+                        parkingMatrix[x, y] = 5;
+                        heavyParkingPlaces.Add(new PathPoint(x, y));
                     }
                     else if (patterns[x, y] == Globals.ENTRANCE)
                     {
+                        // fixme
                         parkingMatrix[x, y] = 1;
                         parkingEntrance.set(x, y);
                         roadBeforeEntrance = getRoadPathPoint(parkingEntrance);
                     }
                     else if (patterns[x, y] == Globals.EXIT)
                     {
+                        // fixme
                         parkingMatrix[x, y] = 1;
                         parkingExit.set(x, y);
                         roadBeforeExit = getRoadPathPoint(parkingExit);
@@ -58,6 +67,8 @@ namespace ParkingApp.Classes.AlgPathFind
                     }
                 }
             }
+
+            totalParkingPlaces = heavyParkingPlaces.Count + ligthParkingPlaces.Count;
         }
 
         public static PathPoint getRoadPathPoint(PathPoint pointPark)
@@ -85,34 +96,32 @@ namespace ParkingApp.Classes.AlgPathFind
             }
         }
 
-        // car going out
-        public static PathPoint getCarParkingPosition(Car car)
-        {
-            try
-            {
-                parkingMatrix[car.currentPosition.X, car.currentPosition.Y] = 3;// рассматриваемая машина
-                parkingPlaces.Add(car.currentPosition);
-                return car.currentPosition;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        // find free parking place
         public static PathPoint getFreeParkingPlace(Car car)
-        {          
+        {
+            var parkingPlacesList = car.carType == CarType.Ligth ? ligthParkingPlaces : heavyParkingPlaces;
+
             Random rnd = new Random();
-            int value = rnd.Next(parkingPlaces.Count);
-            var parkingPlace = parkingPlaces.ElementAt(value);
+            int value = rnd.Next(parkingPlacesList.Count);
+            var parkingPlace = parkingPlacesList.ElementAt(value);
 
             car.parkingPlaceNumber = int.Parse(parkingPlace.X + "" + parkingPlace.Y);
-            parkingPlaces.Remove(parkingPlace);
-            parkingMatrix[parkingPlace.X, parkingPlace.Y] = 3;// рассматриваемое парковочное место
+            parkingPlacesList.Remove(parkingPlace);
+            parkingMatrix[parkingPlace.X, parkingPlace.Y] = 3;
      
             return parkingPlace;
+        }
+
+        public static void reset()
+        {
+            parkingEntrance = null;
+            parkingExit = null;
+            roadStart = null;
+            roadEnd = null;
+            roadBeforeEntrance = null;
+            roadBeforeExit = null;
+            ligthParkingPlaces = new List<PathPoint>();
+            parkingMatrix = null;
+            roadMatrix = null;
         }
 
         #region A* algoritm

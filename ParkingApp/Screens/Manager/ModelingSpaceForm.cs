@@ -13,21 +13,27 @@ namespace ParkingApp.Screens.Manager
         private static System.Timers.Timer VisualizationTimer;
 
         private ModelingParams modelingParams;
-        double systemTimer = 0;
+        private Random random;
+        private double systemTimer = 0;
+        private string[,] patterns;
         public ModelingSpaceForm(int height, int width, string[,] patterns, ModelingParams modelingParams)
         {
             InitializeComponent();
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.UpdateStyles();
             this.clearValues();
 
+            this.random = new Random();
             this.modelingParams = modelingParams;
+            this.patterns = patterns;
 
             Globals.calculatePictureBoxSize(height, width);
             Globals.highwayPatterns = new string[width, height + 1];
             mainPanel.Location = new Point(0, 0);
-            SystemTimeLabel.Location = new Point(height * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 0);
-            freePlacesCounter.Location = new Point(height * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 20);
-            dataGridView1.Location = new Point(height * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 40);
-            dataGridView1.Size = new Size(300, width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE - 40);
+            SystemTimeLabel.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 0);
+            freePlacesCounter.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 20);
+            dataGridView1.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 40);
+            dataGridView1.Size = new Size(300, height * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE - 40);
 
             var parkingField = new ParkingFieldClass();
             parkingField.fillPictureBoxesList(width, height, patterns);
@@ -41,6 +47,29 @@ namespace ParkingApp.Screens.Manager
             Paths.fillRoadMatrix(width, height);
 
             configureTimers();
+        }
+
+        private void VisualizationTimer_Tick(object sender, EventArgs e)
+        {
+            VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
+
+            var car = new Car(this.modelingParams, random.NextDouble());
+            car.rotateCarBeforeStart();
+            moveToEntrance(car);
+            if (car.shouldEnterParking(random.NextDouble()))
+            {
+                this.moveFromRoadToEntrance(car);
+                this.moveFromEntranceToParkingPlace(car);
+                this.setParkingTime(car);
+
+                this.moveFromParkingPlaceToExit(car);
+                this.moveFromExitToRoad(car);
+                this.moveAwayFromExit(car);
+            }
+            else
+            {
+                moveAwayFromEntrance(car);
+            }
         }
 
         private void moveToEntrance(Car car)
@@ -72,6 +101,52 @@ namespace ParkingApp.Screens.Manager
             car.currentPosition = Paths.parkingEntrance;
             car.carPath.AddRange(car.getPathList(Paths.parkingEntrance, parkPoint, Paths.parkingMatrix));
             car.currentPosition = parkPoint;
+
+            if (car.carType == CarType.Heavy)
+            {
+                var x = parkPoint.X;
+                var y = parkPoint.Y;
+                var nearbyElements = new[] { new PathPoint(x + 1, y), new PathPoint(x - 1, y), new PathPoint(x, y + 1), new PathPoint(x, y - 1) };
+                foreach (var element in nearbyElements)
+                {
+                    if (this.patterns.GetLength(0) < element.X || this.patterns.GetLength(1) < element.Y || element.Y < 0 || element.X < 0) continue;
+                    if (this.patterns[element.X, element.Y] != Globals.HEAVY_PARKING_PLACE_SECOND) continue;
+                    var mainParkingPlace = Modeling.getLocationFromPathPoint(parkPoint);
+                    var secondHeavyParkingPartPosition = Modeling.getLocationFromPathPoint(new PathPoint(element.X, element.Y));
+                    var newX = mainParkingPlace.X + ((secondHeavyParkingPartPosition.X - mainParkingPlace.X) / 2);
+                    var newY = mainParkingPlace.Y + ((secondHeavyParkingPartPosition.Y - mainParkingPlace.Y) / 2);
+
+                    //car.setPathBetweenTwoPoints(car.carPath[car.carPath.Count - 1], new PathPoint(element.X, element.Y), true);
+                    var realParkingPlace = new Point(newX, newY);
+                    realParkingPlace.Offset(-mainParkingPlace.X, -mainParkingPlace.Y);
+                    car.addPoints(car.carPath, realParkingPlace);
+
+                    realParkingPlace = new Point(newX, newY);
+                    mainParkingPlace.Offset(-realParkingPlace.X, -realParkingPlace.Y);
+                    car.addPoints(car.carPath, mainParkingPlace);
+
+                    car.parkingPlace = realParkingPlace;
+                }
+            }
+            if (car.carType == CarType.Ligth)
+            {
+                car.parkingPlace = Modeling.getLocationFromPathPoint(parkPoint);
+            }
+        }
+
+        private void moveFromParkingPlaceToExit(Car car)
+        {
+            car.carPath.AddRange(car.getPathList(car.currentPosition, Paths.parkingExit, Paths.parkingMatrix));
+            Paths.parkingMatrix[car.currentPosition.X, car.currentPosition.Y] = 5;
+            car.currentPosition = Paths.parkingExit;
+        }
+
+        private Car moveFromExitToRoad(Car car)
+        {
+            car.currentPosition = Paths.parkingExit;
+            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.parkingExit, Paths.roadBeforeExit));
+            car.currentPosition = Paths.roadBeforeExit;
+            return car;
         }
 
         private void moveAwayFromEntrance(Car car)
@@ -81,14 +156,11 @@ namespace ParkingApp.Screens.Manager
             car.currentPosition = Paths.roadEnd;
         }
 
-        private void addToTablo(Car car)
+        private void moveAwayFromExit(Car car)
         {
-            car.tabloItem = new TableItem(
-                this.modelingParams.parkingInterval, 
-                car.parkingPlaceNumber, 
-                Convert.ToInt32(Globals.tariff.carPrice * this.modelingParams.parkingInterval)
-            );
-            Globals.tabloItems.Add(car.tabloItem);
+            car.currentPosition = Paths.roadBeforeExit;
+            car.carPath.AddRange(car.getPathList(Paths.roadBeforeExit, Paths.roadEnd, Paths.roadMatrix));
+            car.currentPosition = Paths.roadEnd;
         }
 
         private void setParkingTime(Car car)
@@ -96,35 +168,14 @@ namespace ParkingApp.Screens.Manager
             car.timeStay = this.modelingParams.parkingInterval * 50 * Globals.INTERVAL;
         }
 
-        private void VisualizationTimer_Tick(object sender, EventArgs e)
-        {
-            VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
-
-            var car = new Car();
-            car.rotateCarBeforeStart();
-            moveToEntrance(car);
-            if (car.probability <= this.modelingParams.lightCarProbability && Paths.parkingPlaces.Count != 0)
-            {
-                moveFromRoadToEntrance(car);
-                moveFromEntranceToParkingPlace(car);
-                setParkingTime(car);
-
-                addToTablo(car);
-            }
-            else
-            {
-                moveAwayFromEntrance(car);
-            }
-            refreshTablo();
-        }
-
         private void refreshTablo()
         {
             Action action = () =>
             {
-                freePlacesCounter.Text = "Свободных парковочных мест: " + Paths.parkingPlaces.Count;
+                var freeParkingPlaces = Paths.ligthParkingPlaces.Count + Paths.heavyParkingPlaces.Count;
+                freePlacesCounter.Text = "Свободных парковочных мест: " + freeParkingPlaces + "/" + Paths.totalParkingPlaces;
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = Globals.tabloItems;
+                dataGridView1.DataSource = Globals.tableItem;
             };
             if (InvokeRequired) Invoke(action);
             else action();
@@ -134,6 +185,7 @@ namespace ParkingApp.Screens.Manager
         {
             systemTimer += 0.5;
             SystemTimeLabel.Text = "Системное время: " + systemTimer;
+            this.refreshTablo();
         }
 
         private void configureTimers()
@@ -151,16 +203,8 @@ namespace ParkingApp.Screens.Manager
 
         private void clearValues()
         {
-            Paths.parkingEntrance = null;
-            Paths.parkingExit = null;
-            Paths.roadStart = null;
-            Paths.roadEnd = null;
-            Paths.roadBeforeEntrance = null;
-            Paths.roadBeforeExit = null;
-            Paths.parkingPlaces = new List<PathPoint>();
-            Paths.parkingMatrix = null;
-            Paths.roadMatrix = null;
-            Globals.tabloItems = new List<TableItem>();
+            Paths.reset();
+            Globals.tableItem = new List<TableItem>();
         }
 
         private void setPlaySpeed()

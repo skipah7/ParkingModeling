@@ -18,41 +18,47 @@ namespace ParkingApp.Classes
         Left,
     }
 
+    public enum CarType
+    {
+        Ligth,
+        Heavy,
+    }
+
     class Car
     {
         private static int OFFSET = 5;
 
         public PathPoint currentPosition { get; set; }
+        public Point parkingPlace { get; set; }
         public PictureBox carPicBox { get; set; }
         public List<Point> carPath { get; set; }
-        public TableItem tabloItem { get; set; }
+        public TableItem tableItem { get; set; }
 
-        private Random random;
-        public double probability { get; set; }
         public int parkingPlaceNumber { get; set; }
         public double timeStay { get; set; }
 
+        public CarType carType;
         public Timer timer;
         private CarDirection currentCarDirection = CarDirection.Top;
-        public Car()
+        private ModelingParams modelingParams;
+        public Car(ModelingParams modelingParams, double probability)
         {
-            random = new Random();
+            this.modelingParams = modelingParams;
             carPath = new List<Point>();
 
-            this.probability = random.NextDouble();
-
-            timer = new Timer { Interval = Globals.INTERVAL };
-            timer.Tick += timerTick;
+            this.carType = probability <= modelingParams.lightToHeavyRatio ? CarType.Ligth : CarType.Heavy;
 
             carPicBox = new PictureBox
             {
                 Location = Modeling.getLocationFromPathPoint(Paths.roadStart),
                 Image = getRandomCarImage(),
-                Name = "car",
+                Name = "Car",
                 Size = new Size(Globals.PICTURE_BOX_SIZE, Globals.PICTURE_BOX_SIZE),
-                SizeMode = PictureBoxSizeMode.StretchImage
+                SizeMode = PictureBoxSizeMode.StretchImage,
             };
-            carPicBox.MouseEnter += CarPicBox_MouseEnter;
+
+            timer = new Timer { Interval = Globals.INTERVAL };
+            timer.Tick += timerTick;
         }
 
         public async void timerTick(object sender, EventArgs e)
@@ -64,35 +70,78 @@ namespace ParkingApp.Classes
             carPicBox.Location = new Point(newX, newY);
 
             carPath.RemoveAt(0);
-            if (carPath.Count != 0) return;
-
-            timer.Stop();
-            if (currentPosition == Paths.roadEnd)
+            if (carPath.Count == 0 && currentPosition == Paths.roadEnd) 
             {
                 carPicBox.Dispose();
+                timer.Stop();
+                return;
             }
-            else
+
+            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingEntrance)) this.addCarToDataGrid(this);
+            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) Globals.tableItem.Remove(this.tableItem);
+            if (this.parkingPlace != null && this.carPicBox.Location == this.parkingPlace)
             {
+                timer.Stop();
                 await Task.Delay(Convert.ToInt32(timeStay));
-                await Task.Run(() => moveFromParkingPlaceToExit(this));
-                await Task.Run(() => moveFromExitToRoad(this));
-                await Task.Run(() => moveAwayFromExit(this));
                 this.carPicBox.Refresh();
                 timer.Start();
+                if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
+                if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
             }
         }
 
-        public List<Point> setPathBetweenTwoPoints(PathPoint start, PathPoint end)
+        public bool shouldEnterParking(double probability)
+        {
+            bool result = false;
+            if (this.carType == CarType.Heavy)
+            {
+                result = (probability <= this.modelingParams.heavyCarProbability) && (Paths.heavyParkingPlaces.Count != 0);
+            }
+            if (this.carType == CarType.Ligth)
+            {
+                result = (probability <= this.modelingParams.lightCarProbability) && (Paths.ligthParkingPlaces.Count != 0);
+            }
+            return result;
+        }
+
+        private void addCarToDataGrid(Car car)
+        {
+            car.tableItem = new TableItem(
+                this.modelingParams.parkingInterval,
+                car.parkingPlaceNumber,
+                Convert.ToInt32(Globals.tariff.carPrice * this.modelingParams.parkingInterval)
+            );
+            Globals.tableItem.Add(car.tableItem);
+        }
+
+        public List<Point> getPathList(PathPoint start, PathPoint end, int[,] matrix)
+        {
+            List<Point> points = new List<Point>();
+            var pathPoints = Paths.FindPath(matrix, start, end);
+            for (int i = 0; i < pathPoints.Count - 1; i++)
+            {
+                var firstPoint = Modeling.getLocationFromPathPoint(pathPoints.ElementAt(i));
+                var secondPoint = Modeling.getLocationFromPathPoint(pathPoints.ElementAt(i + 1));
+                secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
+                addPoints(points, secondPoint);
+            }
+            return points;
+        }
+
+        public List<Point> setPathBetweenTwoPoints(PathPoint start, PathPoint end, bool isForHeavy = false)
         {
             List<Point> points = new List<Point>();
             var firstPoint = Modeling.getLocationFromPathPoint(start);
             var secondPoint = Modeling.getLocationFromPathPoint(end);
+
+
+
             secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
-            addPoints(points, secondPoint);
+            this.addPoints(points, secondPoint);
             return points;
         }
 
-        private void addPoints(List<Point> points, Point secondPoint)
+        public void addPoints(List<Point> points, Point secondPoint)
         {
             if (secondPoint.X != 0)
             {
@@ -115,20 +164,6 @@ namespace ParkingApp.Classes
                     temp += Math.Sign(secondPoint.Y) * OFFSET;
                 }
             }
-        }
-
-        public List<Point> getPathList(PathPoint start, PathPoint end, int[,] matrix)
-        {
-            List<Point> points = new List<Point>();
-            var pathPoints = Paths.FindPath(matrix, start, end);
-            for (int i = 0; i < pathPoints.Count - 1; i++)
-            {
-                var firstPoint = Modeling.getLocationFromPathPoint(pathPoints.ElementAt(i));
-                var secondPoint = Modeling.getLocationFromPathPoint(pathPoints.ElementAt(i + 1));
-                secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
-                addPoints(points, secondPoint);
-            }
-            return points;
         }
 
         private void rotateCar(int newX, int newY)
@@ -154,46 +189,24 @@ namespace ParkingApp.Classes
             this.carPicBox.Refresh();
         }
 
-        private void moveFromParkingPlaceToExit(Car car)
-        {
-            PathPoint carParkingPosition = Paths.getCarParkingPosition(car);
-            if (carParkingPosition == null) return;
-
-            car.currentPosition = carParkingPosition;
-            car.carPath.AddRange(car.getPathList(car.currentPosition, Paths.parkingExit, Paths.parkingMatrix));
-            Paths.parkingMatrix[currentPosition.X, currentPosition.Y] = 5;
-
-            car.currentPosition = Paths.parkingExit;
-
-            Globals.tabloItems.Remove(tabloItem);
-        }
-
-        private Car moveFromExitToRoad(Car car)
-        {
-            car.currentPosition = Paths.parkingExit;
-            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.parkingExit, Paths.roadBeforeExit));
-            car.currentPosition = Paths.roadBeforeExit;
-            return car;
-        }
-
-        private Car moveAwayFromExit(Car car)
-        {
-            car.currentPosition = Paths.roadBeforeExit;
-            car.carPath.AddRange(car.getPathList(Paths.roadBeforeExit, Paths.roadEnd, Paths.roadMatrix));
-            car.currentPosition = Paths.roadEnd;
-            return car;
-        }
-
         public Image getRandomCarImage()
         {
-            random = new Random();
-            int value = random.Next(0, 5);
+            var random = new Random();
 
-            if (value == 0) return Resources.carPic1;
-            if (value == 1) return Resources.carPic2;
-            if (value == 2) return Resources.carPic3;
-            if (value == 3) return Resources.carPic4;
-            if (value == 4) return Resources.carPic5;
+            if (this.carType == CarType.Ligth)
+            {
+                int value = random.Next(0, 5);
+                if (value == 0) return Resources.carPic1;
+                if (value == 1) return Resources.carPic2;
+                if (value == 2) return Resources.carPic3;
+                if (value == 3) return Resources.carPic4;
+                if (value == 4) return Resources.carPic5;
+            }
+            if (this.carType == CarType.Heavy)
+            {
+                int value = random.Next(0, 1);
+                if (value == 0) return Resources.heavyCarPic1;
+            }
             return Resources.carPic5;
         }
 
@@ -202,12 +215,6 @@ namespace ParkingApp.Classes
             carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
             this.currentCarDirection = CarDirection.Left;
             carPicBox.Refresh();
-        }
-
-        private void CarPicBox_MouseEnter(object sender, EventArgs e)
-        {
-            ToolTip t = new ToolTip();
-            t.SetToolTip((PictureBox)sender, "Вероятность заезда: " + Math.Round((1 - this.probability), 2));
         }
     }
 }

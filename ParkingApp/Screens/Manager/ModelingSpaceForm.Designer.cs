@@ -41,13 +41,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // deterministicParkPanel
+            // mainPanel
             // 
             this.mainPanel.AutoSize = true;
             this.mainPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.mainPanel.Location = new System.Drawing.Point(0, 0);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.mainPanel.Name = "deterministicParkPanel";
+            this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(0, 0);
             this.mainPanel.TabIndex = 0;
             // 
@@ -95,9 +95,10 @@
             // freePlacesCounter
             // 
             this.freePlacesCounter.AutoSize = true;
-            this.freePlacesCounter.Location = new System.Drawing.Point(333, 23);
+            this.freePlacesCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.freePlacesCounter.Location = new System.Drawing.Point(308, 23);
             this.freePlacesCounter.Name = "freePlacesCounter";
-            this.freePlacesCounter.Size = new System.Drawing.Size(166, 13);
+            this.freePlacesCounter.Size = new System.Drawing.Size(209, 16);
             this.freePlacesCounter.TabIndex = 19;
             this.freePlacesCounter.Text = "Свободных парковочных мест: ";
             // 
@@ -109,9 +110,10 @@
             // SystemTimeLabel
             // 
             this.SystemTimeLabel.AutoSize = true;
+            this.SystemTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SystemTimeLabel.Location = new System.Drawing.Point(59, 23);
             this.SystemTimeLabel.Name = "SystemTimeLabel";
-            this.SystemTimeLabel.Size = new System.Drawing.Size(104, 13);
+            this.SystemTimeLabel.Size = new System.Drawing.Size(129, 16);
             this.SystemTimeLabel.TabIndex = 20;
             this.SystemTimeLabel.Text = "Системное время: ";
             // 

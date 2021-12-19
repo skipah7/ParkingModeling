@@ -40,13 +40,6 @@ namespace ParkingApp
                 this.width = parkingField.getWidth();
                 this.height = parkingField.getHeight();
 
-                // hope we can get over it x2
-                //Globals.tariff = parkingField.getTariff();
-                //Globals.leftAdjacentRoadLength = parkingField.getLeftRoadLength();
-                //Globals.rightAdjacentRoadLength = parkingField.getRigthRoadLength();
-                //Globals.upAdjacentRoadLength = parkingField.getUpRoadLength();
-                //Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
-
                 this.isParkingCorrect = true;
                 MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -60,12 +53,9 @@ namespace ParkingApp
 
         private ParkingField loadParkingFromFile()
         {
-            FileWorkerWithParkingField fileWorker = new FileWorkerWithParkingField();
-            if (fileWorker.readParkingField() != null)
-            {
-                return fileWorker.readParkingField();
-            }
-            else return null;
+            var fileWorker = new FileWorkerWithParkingField();
+            if (fileWorker.readParkingField() == null) return null;
+            return fileWorker.readParkingField();
         }
 
         private void recheckLaunchingButton()

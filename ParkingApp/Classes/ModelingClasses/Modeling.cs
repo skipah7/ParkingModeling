@@ -11,5 +11,10 @@ namespace ParkingApp.Classes
         {
             return new Point(pathPoint.X * Globals.PICTURE_BOX_SIZE, pathPoint.Y * Globals.PICTURE_BOX_SIZE);
         }
+
+        public static PathPoint getPathPointFromLocation(Point point)
+        {
+            return new PathPoint(point.X / Globals.PICTURE_BOX_SIZE, point.Y / Globals.PICTURE_BOX_SIZE);
+        }
     }
 }

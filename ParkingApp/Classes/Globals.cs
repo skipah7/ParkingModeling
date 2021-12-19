@@ -18,14 +18,10 @@ namespace ParkingApp
 
         public static int INTERVAL = 20;
 
-        public static int z = 0;
-
-        public static double delta;
-
         // modelling params
         public static Tariff tariff;
 
-        public static List<TableItem> tabloItems = new List<TableItem>();
+        public static List<TableItem> tableItem = new List<TableItem>();
 
         // patterns names, saved at patterns
         // is matrix of parking
@@ -58,31 +54,6 @@ namespace ParkingApp
         public static int SCREEN_SIZE = 500;
 
         public static int PICTURE_BOX_SIZE = 50;
-
-        // its useless, right?
-        public static void calculateDelta()
-        {
-            // second х1
-            if(INTERVAL == 20)
-            {
-                delta = 1.65;
-            } 
-            // half a second х2
-            else if(INTERVAL == 10)
-            {
-                delta = 3.2;
-            }
-            // quarter second х4
-            else if (INTERVAL == 5)
-            {
-                delta = 3.7;
-            }
-            // two seconds х1/2
-            else
-            {
-                delta = 1.05;
-            }
-        }
 
         public static void calculatePictureBoxSize(int height, int width)
         {

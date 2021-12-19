@@ -7,7 +7,7 @@ namespace ParkingApp.Classes
     {
         private ParkingField parkingField = null;
 
-        public FileWorkerWithParkingField(ParkingField parkingField, String fileName)
+        public FileWorkerWithParkingField(ParkingField parkingField, string fileName)
         {
             // parking object for serializing
             this.parkingField = parkingField;
@@ -24,25 +24,22 @@ namespace ParkingApp.Classes
            
         }
 
-        // desirialize parking
+        // deserialize parking
         public ParkingField readParkingField()
         {
             SerializeClass ser = new SerializeClass(Globals.parkingFilePath, parkingField);
-            if (ser.isCorrectFile())
+            if (!ser.isCorrectFile()) return null;
+            try
             {
-                try
-                {
-                    parkingField = (ParkingField)ser.Deserialize();
-                    ser.Close();
-                    return parkingField;
-                } catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return null;
-                }
-                
+                parkingField = (ParkingField)ser.Deserialize();
+                ser.Close();
+                return parkingField;
             }
-            return null;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         // serialize parking

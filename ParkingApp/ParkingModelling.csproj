@@ -238,6 +238,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\carPic1.png" />
+    <Content Include="Resources\entrance.png" />
+    <Content Include="Resources\exit.png" />
+    <Content Include="Resources\heavyCarPic1.png" />
+    <None Include="Resources\heavyParkingPlaceMain.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\highwayCar3Pic.png" />
@@ -274,14 +278,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tree.jpg" />
-    <None Include="Resources\entrance.jpg" />
-    <None Include="Resources\exit.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\lightParkingPlace.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\heavyParkingPlaceMain.png" />
+    <None Include="Resources\heavyParkingPlaceMainOld.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\heavyParkingPlaceSecond.png" />
