@@ -15,11 +15,10 @@ namespace ParkingApp.Classes.AlgPathFind
 
         public static List<PathPoint> parkPoints = new List<PathPoint>();
         public static List<PathPoint> carPoints = new List<PathPoint>();
-        // public static List<PathPoint> freeParkPoints = new List<PathPoint>();
+
         public static int[,] parkingMatrix;
         public static int[,] roadMatrix;
-        // public static bool startEnd;
-        //  public static List<PathPoint> PointsPath = new List<PathPoint>();
+
 
         public static void fillParkingMatrix(int width, int height, string[,] patterns)
         {
@@ -113,16 +112,14 @@ namespace ParkingApp.Classes.AlgPathFind
         {          
             Random rnd = new Random();
             int value = rnd.Next(parkPoints.Count);
-            //var f = freeParkPoints.ElementAt(value);
             
-            var t = parkPoints.ElementAt(value);
+            var parkingPlace = parkPoints.ElementAt(value);
 
-            string placeNumber = t.X + "" + t.Y;
-            car.parkingPlaceNumber = int.Parse(placeNumber);
-            parkPoints.Remove(t);
-            parkingMatrix[t.X, t.Y] = 3;// рассматриваемое парковочное место
-            carPoints.Add(t);// добавляем машину в список          
-            return t;
+            car.parkingPlaceNumber = int.Parse(parkingPlace.X + "" + parkingPlace.Y);
+            parkPoints.Remove(parkingPlace);
+            parkingMatrix[parkingPlace.X, parkingPlace.Y] = 3;// рассматриваемое парковочное место
+            carPoints.Add(parkingPlace);// добавляем машину в список          
+            return parkingPlace;
         }
 
         public static List<PathPoint> FindPath(int[,] field, PathPoint start, PathPoint goal)

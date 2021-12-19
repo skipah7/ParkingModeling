@@ -1,19 +1,26 @@
 ﻿using ParkingApp.Classes.AlgPathFind;
+using ParkingApp.Classes.BaseParkingClasses;
 using ParkingApp.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
-using ParkingApp.Classes.BaseParkingClasses;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ParkingApp.Classes
 {
+    public enum CarDirection
+    {
+        Top,
+        Right,
+        Bottom,
+        Left,
+    }
+
     class Car
     {
         private static int OFFSET = 5;
-        private int height;
 
         public int rotate { get; set; }
         public PathPoint currPos { get; set; }
@@ -27,6 +34,8 @@ namespace ParkingApp.Classes
         public double timeStay { get; set; }
 
         public Timer timer;
+        private int height;
+        private CarDirection currentCarDirection = CarDirection.Top;
         public Car(int height)
         {
             random = new Random();
@@ -72,6 +81,7 @@ namespace ParkingApp.Classes
         {
             rotate = 3;
             carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            this.currentCarDirection = CarDirection.Left;
             carPicBox.Refresh();
         }
 
@@ -148,8 +158,10 @@ namespace ParkingApp.Classes
         public async void timerTick(object sender, EventArgs e)
         {
             carPicBox.BringToFront();
-            carPicBox.Location = new Point(carPicBox.Location.X + carPath.ElementAt(0).X, carPicBox.Location.Y + carPath.ElementAt(0).Y);
-            rotateCar();
+            var newX = carPicBox.Location.X + carPath.ElementAt(0).X;
+            var newY = carPicBox.Location.Y + carPath.ElementAt(0).Y;
+            if (carPath.Count > 1) rotateCar(newX, newY);
+            carPicBox.Location = new Point(newX, newY);
 
             carPath.RemoveAt(0);
             if (carPath.Count != 0) return;
@@ -162,96 +174,37 @@ namespace ParkingApp.Classes
             else
             {
                 await Task.Delay(Convert.ToInt32(timeStay));
-                await Task.Run(() => outParkToEndPark(this));
-                await Task.Run(() => outParkToRoad(this));
+                await Task.Run(() => moveFromParkingPlaceToExit(this));
+                await Task.Run(() => moveFromExitToRoad(this));
                 await Task.Run(() => outRoad(this));
                 this.carPicBox.Refresh();
                 timer.Start();
             }
         }
 
-        private void rotateCar()
+        private void rotateCar(int newX, int newY)
         {
-            if (carPath.Count < 2) return;
+            var xDifference = newX - carPicBox.Location.X;
+            var yDifference = newY - carPicBox.Location.Y;
 
-            var xDifference = carPath.ElementAt(1).X - carPath.ElementAt(0).X;
-            var yDifference = carPath.ElementAt(1).Y - carPath.ElementAt(0).Y;
-
-            //ехали вверх
-            if ((carPath.ElementAt(0 + 1).Y == 0) && (carPath.ElementAt(0).Y < 0))
-            {
-                if (carPath.ElementAt(0 + 1).X > 0)
-                {//поворот вправо
-                 // машина смотрит вправо относительно начального положения въезда
-                    rotate = 1;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    carPicBox.Refresh();
-                }
-                else if (carPath.ElementAt(0 + 1).X < 0)
-                {//поворот влево
-                 //машина смотрит влево относительно начального положения въезда
-                    rotate = 3;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    carPicBox.Refresh();
-                }
-            }
-            //ехали вниз
-            if ((carPath.ElementAt(0 + 1).Y == 0) && (carPath.ElementAt(0).Y > 0))
-            {
-                if (carPath.ElementAt(0 + 1).X > 0)
-                {//поворот вправо
-                 //машина смотрит вправо относительно начального положения въезда
-                    rotate = 1;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    carPicBox.Refresh();
-                }
-                else if (carPath.ElementAt(0 + 1).X < 0)
-                {//поворот влево
-                 //машина смотрит влево относительно начального положения въезда
-                    rotate = 3;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    carPicBox.Refresh();
-                }
-            }
-            //ехали вправо
-            if ((carPath.ElementAt(0 + 1).X == 0) && (carPath.ElementAt(0).X > 0))
-            {
-                if (carPath.ElementAt(0 + 1).Y > 0)
-                {//поворот вниз
-                 //машина смотрит вниз относительно начального положения въезда
-                    rotate = 2;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    carPicBox.Refresh();
-                }
-                else if (carPath.ElementAt(0 + 1).Y < 0)
-                {//поворот вверх
-                 //машина смотрит вверх относительно начального положения въезда
-                    rotate = 0;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    carPicBox.Refresh();
-                }
-            }
-            //ехали влево
-            if ((carPath.ElementAt(0 + 1).X == 0) && (carPath.ElementAt(0).X < 0))
-            {
-                if (carPath.ElementAt(0 + 1).Y > 0)
-                {//поворот вниз
-                 //машина смотрит вниз относительно начального положения въезда
-                    rotate = 2;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    carPicBox.Refresh();
-                }
-                else if (carPath.ElementAt(0 + 1).Y < 0)
-                {//поворот вверх
-                 //машина смотрит вверх относительно начального положения въезда
-                    rotate = 0;
-                    carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    carPicBox.Refresh();
-                }
-            }
+            if (xDifference < 0) this.changeCarDirection(CarDirection.Left);
+            if (yDifference < 0) this.changeCarDirection(CarDirection.Top);
+            if (xDifference > 0) this.changeCarDirection(CarDirection.Right);
+            if (yDifference > 0) this.changeCarDirection(CarDirection.Bottom);
         }
 
-        private Car outParkToRoad(Car car)
+        private void changeCarDirection(CarDirection carDirection)
+        {
+            if (this.currentCarDirection == carDirection) return;
+
+            var amountOfTurns = 4 - (int)this.currentCarDirection + (int)carDirection;
+            for (var i = 0; i < amountOfTurns; i++) this.carPicBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+            this.carPicBox.Refresh();
+            this.currentCarDirection = carDirection;
+        }
+
+        private Car moveFromExitToRoad(Car car)
         {
             car.currPos = FindPaths.parkingExit;
             car.carPath.AddRange(car.getBetweenTwoPointParkRoad(FindPaths.parkingExit, FindPaths.roadBeforeExit));
@@ -266,7 +219,7 @@ namespace ParkingApp.Classes
             return car;
         }
 
-        private void outParkToEndPark(Car car)
+        private void moveFromParkingPlaceToExit(Car car)
         {
             PathPoint carPoint = FindPaths.getCarPoint(car);
             if (carPoint == null) return;
@@ -275,10 +228,7 @@ namespace ParkingApp.Classes
             car.carPath.AddRange(car.getPathList(car.currPos, FindPaths.parkingExit, FindPaths.parkingMatrix));
             FindPaths.parkingMatrix[currPos.X, currPos.Y] = 5;
 
-            rotateCarBeforeExit(car);
-
-            // car.timer.Start();
-            //  car.carPicBox.Refresh();
+            //rotateCarBeforeExit(car);
             car.currPos = FindPaths.parkingExit;
 
             Globals.tabloItems.Remove(tabloItem);
