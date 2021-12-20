@@ -109,7 +109,7 @@ namespace ParkingApp.Screens.Manager
                 var nearbyElements = new[] { new PathPoint(x + 1, y), new PathPoint(x - 1, y), new PathPoint(x, y + 1), new PathPoint(x, y - 1) };
                 foreach (var element in nearbyElements)
                 {
-                    if (this.patterns.GetLength(0) < element.X || this.patterns.GetLength(1) < element.Y || element.Y < 0 || element.X < 0) continue;
+                    if (this.patterns.GetLength(0) <= element.X || this.patterns.GetLength(1) <= element.Y || element.Y < 0 || element.X < 0) continue;
                     if (this.patterns[element.X, element.Y] != Globals.HEAVY_PARKING_PLACE_SECOND) continue;
                     var mainParkingPlace = Modeling.getLocationFromPathPoint(parkPoint);
                     var secondHeavyParkingPartPosition = Modeling.getLocationFromPathPoint(new PathPoint(element.X, element.Y));
