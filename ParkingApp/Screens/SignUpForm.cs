@@ -42,7 +42,7 @@ namespace ParkingApp
         }
 
         // creates new user
-        private User createNewUser(String login, String password, String type)
+        private User createNewUser(string login, string password, string type)
         {
             User newUser = new User(login, password, type);
             return newUser;
@@ -55,9 +55,9 @@ namespace ParkingApp
         }
 
         // validation, lenght etc?
-        private bool isCorrectData(String login, String password, String repeatPassword)
+        private bool isCorrectData(string login, string password, string repeatPassword)
         {
-            if (login.Length > 2 && password.Length > 2)
+            if (login.Length >= 4 && password.Length >= 4 && login.Length <= 10 && password.Length <= 10)
             {
                 if (password.Equals(repeatPassword))
                 {
@@ -71,7 +71,7 @@ namespace ParkingApp
             }
             else
             {
-                MessageBox.Show("Минимальная длина логина и пароля - 3 символа", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Минимальная длина логина и пароля - 4 символа, максимальная - 10", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -105,10 +105,8 @@ namespace ParkingApp
         // only letters available for login and password
         private void keyPress(object sender, KeyPressEventArgs e)
         {
-            if (!(char.IsLetterOrDigit(e.KeyChar) || char.IsControl(e.KeyChar)))
-            {
-                e.Handled = true;
-            }
+            if (e.KeyChar >= 'a' && e.KeyChar <= 'z' || char.IsDigit(e.KeyChar)) return;
+            e.Handled = true;
         }
 
         private void backToMainScreenBtn_Click(object sender, EventArgs e)

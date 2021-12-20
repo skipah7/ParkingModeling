@@ -69,7 +69,7 @@
             this.passwordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.passwordTextBox.Location = new System.Drawing.Point(57, 103);
             this.passwordTextBox.Margin = new System.Windows.Forms.Padding(2);
-            this.passwordTextBox.MaxLength = 8;
+            this.passwordTextBox.MaxLength = 10;
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(150, 22);
@@ -81,7 +81,7 @@
             this.loginTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.loginTextBox.Location = new System.Drawing.Point(57, 46);
             this.loginTextBox.Margin = new System.Windows.Forms.Padding(2);
-            this.loginTextBox.MaxLength = 8;
+            this.loginTextBox.MaxLength = 10;
             this.loginTextBox.Name = "loginTextBox";
             this.loginTextBox.Size = new System.Drawing.Size(150, 22);
             this.loginTextBox.TabIndex = 10;
@@ -104,7 +104,7 @@
             this.repeatPasswordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.repeatPasswordTextBox.Location = new System.Drawing.Point(57, 155);
             this.repeatPasswordTextBox.Margin = new System.Windows.Forms.Padding(2);
-            this.repeatPasswordTextBox.MaxLength = 8;
+            this.repeatPasswordTextBox.MaxLength = 10;
             this.repeatPasswordTextBox.Name = "repeatPasswordTextBox";
             this.repeatPasswordTextBox.PasswordChar = '*';
             this.repeatPasswordTextBox.Size = new System.Drawing.Size(150, 22);

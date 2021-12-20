@@ -13,6 +13,7 @@ namespace ParkingApp
             {
                 loginTextBox.Text = "admin";
                 passwordTextBox.Text = "admin";
+                this.registrationPanel.Visible = false;
             }
             if (currentUserType == Globals.MANAGER)
             {
