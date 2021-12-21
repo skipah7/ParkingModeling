@@ -44,7 +44,7 @@ namespace ParkingApp.Screens.Manager
             dataGridView.Location = new Point((width + 3) * Globals.PICTURE_BOX_SIZE, 40);
             dataGridView.Size = new Size(300, (height - 1) * Globals.PICTURE_BOX_SIZE);
             dataGridView.DataSource = tableDataSource;
-            exitButton.Location = new Point(dataGridView.Location.X + dataGridView.Size.Width - 100, height * Globals.PICTURE_BOX_SIZE);
+            controlPanel.Location = new Point(dataGridView.Location.X, dataGridView.Location.Y + dataGridView.Size.Height);
 
             var parkingField = new ParkingFieldClass();
             parkingField.fillPictureBoxesList(width, height, patterns);

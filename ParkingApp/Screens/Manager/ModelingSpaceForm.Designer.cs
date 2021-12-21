@@ -43,7 +43,12 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exitButton = new System.Windows.Forms.Button();
+            this.controlPanel = new System.Windows.Forms.Panel();
+            this.speedUp = new System.Windows.Forms.Button();
+            this.Pause = new System.Windows.Forms.Button();
+            this.speedDown = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.controlPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainPanel
@@ -179,13 +184,54 @@
             // exitButton
             // 
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.exitButton.Location = new System.Drawing.Point(701, 23);
+            this.exitButton.Location = new System.Drawing.Point(210, 15);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(87, 28);
             this.exitButton.TabIndex = 22;
             this.exitButton.Text = "Выход";
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
+            // controlPanel
+            // 
+            this.controlPanel.Controls.Add(this.speedDown);
+            this.controlPanel.Controls.Add(this.Pause);
+            this.controlPanel.Controls.Add(this.speedUp);
+            this.controlPanel.Controls.Add(this.exitButton);
+            this.controlPanel.Location = new System.Drawing.Point(387, 98);
+            this.controlPanel.Name = "controlPanel";
+            this.controlPanel.Size = new System.Drawing.Size(300, 100);
+            this.controlPanel.TabIndex = 23;
+            // 
+            // speedUp
+            // 
+            this.speedUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.speedUp.Location = new System.Drawing.Point(108, 15);
+            this.speedUp.Name = "speedUp";
+            this.speedUp.Size = new System.Drawing.Size(22, 23);
+            this.speedUp.TabIndex = 23;
+            this.speedUp.Text = ">";
+            this.speedUp.UseVisualStyleBackColor = true;
+            // 
+            // Pause
+            // 
+            this.Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Pause.Location = new System.Drawing.Point(80, 15);
+            this.Pause.Name = "Pause";
+            this.Pause.Size = new System.Drawing.Size(22, 23);
+            this.Pause.TabIndex = 24;
+            this.Pause.Text = "||";
+            this.Pause.UseVisualStyleBackColor = true;
+            // 
+            // speedDown
+            // 
+            this.speedDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.speedDown.Location = new System.Drawing.Point(52, 15);
+            this.speedDown.Name = "speedDown";
+            this.speedDown.Size = new System.Drawing.Size(22, 23);
+            this.speedDown.TabIndex = 25;
+            this.speedDown.Text = "<";
+            this.speedDown.UseVisualStyleBackColor = true;
             // 
             // ModelingSpaceForm
             // 
@@ -195,7 +241,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(931, 539);
-            this.Controls.Add(this.exitButton);
+            this.Controls.Add(this.controlPanel);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.SystemTimeLabel);
             this.Controls.Add(this.freePlacesCounter);
@@ -211,6 +257,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Моделирование";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.controlPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,5 +279,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Panel controlPanel;
+        private System.Windows.Forms.Button speedUp;
+        private System.Windows.Forms.Button speedDown;
+        private System.Windows.Forms.Button Pause;
     }
 }

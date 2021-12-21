@@ -66,7 +66,7 @@ namespace ParkingApp.Classes
             timer.Tick += timerTick;
         }
 
-        public async void timerTick(object sender, EventArgs e)
+        public void timerTick(object sender, EventArgs e)
         {
             if (carPath.Count == 0) return;
 
@@ -88,13 +88,18 @@ namespace ParkingApp.Classes
             if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) this.removeFromDataTable.Invoke(this, EventArgs.Empty);
             if (this.parkingPlace != null && this.carPicBox.Location == this.parkingPlace)
             {
-                timer.Stop();
-                await Task.Delay(Convert.ToInt32(timeOnParking));
-                this.carPicBox.Refresh();
-                timer.Start();
-                if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
-                if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.heavyParkingPlace));
+                timer.Interval = (int)timeOnParking;
+                timer.Tick += timerReset;
             }
+        }
+
+        private void timerReset(object sender, EventArgs e)
+        {
+            this.carPicBox.Refresh();
+            if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
+            if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.heavyParkingPlace));
+            timer.Interval = Globals.INTERVAL;
+            timer.Tick -= timerReset;
         }
 
         public bool shouldEnterParking(double probability)
