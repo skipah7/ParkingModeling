@@ -133,6 +133,17 @@ namespace ParkingApp
                 "парковочное место для легкового автомобиля", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            int width = (int)widthBox.Value;
+            int height = (int)heightBox.Value;
+            var newPatterns = parkingFieldClass.createFreshPatterns(width, height);
+
+            this.Hide();
+            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(width, height, newPatterns);
+            parkingSpaceForm.Show();
+        }
+
         private void refreshParking_Click(object sender, EventArgs e)
         {
             this.patterns = parkingFieldClass.fillPatternsArray(this.width, this.height);

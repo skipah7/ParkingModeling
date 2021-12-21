@@ -51,6 +51,7 @@
             this.heightBox = new System.Windows.Forms.NumericUpDown();
             this.widthBox = new System.Windows.Forms.NumericUpDown();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.clearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.heavyParkingPlaceSecond)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.entrance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).BeginInit();
@@ -342,6 +343,18 @@
             this.panel4.Size = new System.Drawing.Size(300, 144);
             this.panel4.TabIndex = 94;
             // 
+            // clearButton
+            // 
+            this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.clearButton.Location = new System.Drawing.Point(533, 333);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(89, 30);
+            this.clearButton.TabIndex = 95;
+            this.clearButton.Text = "Очистить";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
             // ParkingSpaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -350,6 +363,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(824, 548);
+            this.Controls.Add(this.clearButton);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.widthBox);
             this.Controls.Add(this.heightBox);
@@ -411,5 +425,6 @@
         private System.Windows.Forms.NumericUpDown heightBox;
         private System.Windows.Forms.NumericUpDown widthBox;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button clearButton;
     }
 }
