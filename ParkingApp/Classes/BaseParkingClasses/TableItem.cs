@@ -2,15 +2,17 @@
 {
     public class TableItem
     {
-        public double onParkingTime { get; set; }
         public int placeNumber { get; set; }
+        public string arrivalTime { get; set; }
+        public double parkingTime { get; set; }
         public int totalPrice { get; set; }
 
 
-        public TableItem(double onParkingTime, int placeNumber, int totalPrice)
+        public TableItem(int placeNumber, string arrivalTime, double parkingTime,  int totalPrice)
         {
-            this.onParkingTime = onParkingTime;
             this.placeNumber = placeNumber;
+            this.arrivalTime = arrivalTime;
+            this.parkingTime = parkingTime;
             this.totalPrice = totalPrice;
         }
     }

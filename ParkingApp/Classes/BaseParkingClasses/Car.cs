@@ -3,6 +3,7 @@ using ParkingApp.Classes.BaseParkingClasses;
 using ParkingApp.Properties;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,10 +43,12 @@ namespace ParkingApp.Classes
         public Timer timer;
         private CarDirection currentCarDirection = CarDirection.Top;
         private ModelingParams modelingParams;
+        private BindingList<TableItem> tableDataSource;
 
-        public Car(ModelingParams modelingParams, double probability)
+        public Car(ModelingParams modelingParams, double probability, BindingList<TableItem> tableDataSource)
         {
             this.modelingParams = modelingParams;
+            this.tableDataSource = tableDataSource;
             carPath = new List<Point>();
 
             this.carType = probability <= modelingParams.lightToHeavyRatio ? CarType.Ligth : CarType.Heavy;
@@ -80,7 +83,7 @@ namespace ParkingApp.Classes
             }
 
             if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingEntrance)) this.addCarToDataGrid(this);
-            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) Globals.tableItem.Remove(this.tableItem);
+            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) this.tableDataSource.Remove(this.tableItem);
             if (this.parkingPlace != null && this.carPicBox.Location == this.parkingPlace)
             {
                 timer.Stop();
@@ -109,11 +112,12 @@ namespace ParkingApp.Classes
         private void addCarToDataGrid(Car car)
         {
             car.tableItem = new TableItem(
-                this.modelingParams.parkingInterval,
-                car.parkingPlaceNumber,
-                Convert.ToInt32(Globals.tariff.carPrice * this.modelingParams.parkingInterval)
+                car.parkingPlaceNumber, 
+                "10:20",
+                this.modelingParams.parkingInterval, 
+                100
             );
-            Globals.tableItem.Add(car.tableItem);
+            tableDataSource.Add(car.tableItem);
         }
 
         public List<Point> getPathList(PathPoint start, PathPoint end, int[,] matrix)
@@ -135,8 +139,6 @@ namespace ParkingApp.Classes
             List<Point> points = new List<Point>();
             var firstPoint = Modeling.getLocationFromPathPoint(start);
             var secondPoint = Modeling.getLocationFromPathPoint(end);
-
-
 
             secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
             this.addPoints(points, secondPoint);

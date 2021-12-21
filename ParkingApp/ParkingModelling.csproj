@@ -137,7 +137,6 @@
     <Compile Include="Screens\SignUpForm.Designer.cs">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\BaseParkingClasses\Tariff.cs" />
     <Compile Include="Classes\BaseParkingClasses\User.cs" />
     <Compile Include="Classes\SerializationClasses\UserValidator.cs" />
     <EmbeddedResource Include="Screens\AboutDevelopers.resx">

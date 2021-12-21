@@ -23,6 +23,9 @@ namespace ParkingApp.Classes.BaseParkingClasses
         public double lightCarProbability;
         public double heavyCarProbability;
 
+        public int nightTariffRate;
+        public int dayTariffRate;
+
         public double appearanceInterval
         {
             get => getInterval(this.flowType, this.flowValues);
@@ -40,7 +43,9 @@ namespace ParkingApp.Classes.BaseParkingClasses
             Dictionary<string, double> parkingValues,
             double lightToHeavyRatio,
             double lightCarProbability,
-            double heavyCarProbability
+            double heavyCarProbability,
+            int nightTariffRate,
+            int dayTariffRate
         )
         {
             this.distributions = new DistributionsClass();
@@ -54,6 +59,9 @@ namespace ParkingApp.Classes.BaseParkingClasses
             this.lightToHeavyRatio = lightToHeavyRatio;
             this.lightCarProbability = lightCarProbability;
             this.heavyCarProbability = heavyCarProbability;
+
+            this.nightTariffRate = nightTariffRate;
+            this.dayTariffRate = dayTariffRate;
         }
 
         private double getInterval(LawTypes lawType, Dictionary<string, double> values)

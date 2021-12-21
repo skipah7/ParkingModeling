@@ -1,5 +1,4 @@
-﻿using ParkingApp.Classes.BaseParkingClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -17,11 +16,6 @@ namespace ParkingApp
         public static string HOURLY_RATE = "Hourly";
 
         public static int INTERVAL = 20;
-
-        // modelling params
-        public static Tariff tariff;
-
-        public static List<TableItem> tableItem = new List<TableItem>();
 
         // patterns names, saved at patterns
         // is matrix of parking

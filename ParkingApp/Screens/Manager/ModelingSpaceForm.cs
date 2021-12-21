@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ParkingApp.Classes.BaseParkingClasses;
+using System.ComponentModel;
 
 namespace ParkingApp.Screens.Manager
 {
@@ -12,15 +13,15 @@ namespace ParkingApp.Screens.Manager
     {
         private static System.Timers.Timer VisualizationTimer;
 
+        private BindingList<TableItem> tableDataSource;
         private ModelingParams modelingParams;
         private Random random;
         private double systemTimer = 0;
         private string[,] patterns;
+
         public ModelingSpaceForm(int height, int width, string[,] patterns, ModelingParams modelingParams)
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.UpdateStyles();
             this.clearValues();
 
             this.random = new Random();
@@ -32,8 +33,9 @@ namespace ParkingApp.Screens.Manager
             mainPanel.Location = new Point(0, 0);
             SystemTimeLabel.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 0);
             freePlacesCounter.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 20);
-            dataGridView1.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 40);
-            dataGridView1.Size = new Size(300, height * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE - 40);
+            dataGridView.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 40);
+            dataGridView.Size = new Size(300, height * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE - 40);
+            dataGridView.DataSource = tableDataSource;
 
             var parkingField = new ParkingFieldClass();
             parkingField.fillPictureBoxesList(width, height, patterns);
@@ -53,7 +55,7 @@ namespace ParkingApp.Screens.Manager
         {
             VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
 
-            var car = new Car(this.modelingParams, random.NextDouble());
+            var car = new Car(this.modelingParams, random.NextDouble(), this.tableDataSource);
             car.rotateCarBeforeStart();
             moveToEntrance(car);
             if (car.shouldEnterParking(random.NextDouble()))
@@ -167,24 +169,13 @@ namespace ParkingApp.Screens.Manager
             car.timeStay = this.modelingParams.parkingInterval * 50 * Globals.INTERVAL;
         }
 
-        private void refreshTablo()
-        {
-            Action action = () =>
-            {
-                var freeParkingPlaces = Paths.ligthParkingPlaces.Count + Paths.heavyParkingPlaces.Count;
-                freePlacesCounter.Text = "Свободных парковочных мест: " + freeParkingPlaces + "/" + Paths.totalParkingPlaces;
-                dataGridView1.DataSource = null;
-                dataGridView1.DataSource = Globals.tableItem;
-            };
-            if (InvokeRequired) Invoke(action);
-            else action();
-        }
-
         private void SystemTime_Tick1(object sender, EventArgs e)
         {
-            systemTimer += 0.5;
+            systemTimer += 1;
             SystemTimeLabel.Text = "Системное время: " + systemTimer;
-            this.refreshTablo();
+
+            var freeParkingPlaces = Paths.ligthParkingPlaces.Count + Paths.heavyParkingPlaces.Count;
+            freePlacesCounter.Text = "Свободных парковочных мест: " + freeParkingPlaces + "/" + Paths.totalParkingPlaces;
         }
 
         private void configureTimers()
@@ -197,13 +188,12 @@ namespace ParkingApp.Screens.Manager
 
             SystemTime.Start();
             SystemTime.Interval = 50 * Globals.INTERVAL;
-            SystemTime.Tick += SystemTime_Tick1;
         }
 
         private void clearValues()
         {
             Paths.reset();
-            Globals.tableItem = new List<TableItem>();
+            this.tableDataSource = new BindingList<TableItem>();
         }
 
         private void setPlaySpeed()

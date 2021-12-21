@@ -70,20 +70,20 @@ namespace ParkingApp.Screens.Manager
             var lightCarProbability = this.lightCarProbability.Value / 100d;
             var heavyCarProbability = this.heavyCarProbability.Value / 100d;
 
-            this.modelingParams = new ModelingParams(flowLawType, parkLawType, flowValues, parkValues, lightToHeavyRatio, lightCarProbability, heavyCarProbability);
-            Globals.tariff = createTariff();
+            this.modelingParams = new ModelingParams(
+                flowLawType, 
+                parkLawType,
+                flowValues, 
+                parkValues, 
+                lightToHeavyRatio, 
+                lightCarProbability, 
+                heavyCarProbability,
+                nightTarifCost.Value,
+                dayTarifCost.Value
+            );
 
             this.Close();
             //Globals.calculateDelta();
-        }
-
-        private Tariff createTariff()
-        {
-            int carPrice = 100;
-            Tariff tariff;
-            tariff = new Tariff(Globals.HOURLY_RATE, carPrice);
-            tariff = new Tariff(Globals.DAILY_RATE, carPrice);
-            return tariff;
         }
 
         #region UIHelpers
