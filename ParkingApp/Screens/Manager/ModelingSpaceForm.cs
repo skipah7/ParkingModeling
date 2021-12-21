@@ -62,8 +62,8 @@ namespace ParkingApp.Screens.Manager
                 this.moveFromEntranceToParkingPlace(car);
                 this.setParkingTime(car);
 
-                this.moveFromParkingPlaceToExit(car);
-                this.moveFromExitToRoad(car);
+                this.moveFromParkingPlaceToTileBeforeExit(car);
+                this.moveFromTileBeforeExitToExit(car);
                 this.moveAwayFromExit(car);
             }
             else
@@ -116,7 +116,6 @@ namespace ParkingApp.Screens.Manager
                     var newX = mainParkingPlace.X + ((secondHeavyParkingPartPosition.X - mainParkingPlace.X) / 2);
                     var newY = mainParkingPlace.Y + ((secondHeavyParkingPartPosition.Y - mainParkingPlace.Y) / 2);
 
-                    //car.setPathBetweenTwoPoints(car.carPath[car.carPath.Count - 1], new PathPoint(element.X, element.Y), true);
                     var realParkingPlace = new Point(newX, newY);
                     realParkingPlace.Offset(-mainParkingPlace.X, -mainParkingPlace.Y);
                     car.addPoints(car.carPath, realParkingPlace);
@@ -125,6 +124,7 @@ namespace ParkingApp.Screens.Manager
                     mainParkingPlace.Offset(-realParkingPlace.X, -realParkingPlace.Y);
                     car.addPoints(car.carPath, mainParkingPlace);
 
+                    car.heavyParkingPlace = Modeling.getLocationFromPathPoint(parkPoint);
                     car.parkingPlace = realParkingPlace;
                 }
             }
@@ -134,32 +134,31 @@ namespace ParkingApp.Screens.Manager
             }
         }
 
-        private void moveFromParkingPlaceToExit(Car car)
+        private void moveFromParkingPlaceToTileBeforeExit(Car car)
         {
-            car.carPath.AddRange(car.getPathList(car.currentPosition, Paths.parkingExit, Paths.parkingMatrix));
+            car.carPath.AddRange(car.getPathList(car.currentPosition, Paths.tileBeforeExit, Paths.parkingMatrix));
             Paths.parkingMatrix[car.currentPosition.X, car.currentPosition.Y] = 5;
+            car.currentPosition = Paths.tileBeforeExit;
+        }
+
+        private void moveFromTileBeforeExitToExit(Car car)
+        {
+            car.currentPosition = Paths.tileBeforeExit;
+            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.tileBeforeExit, Paths.parkingExit));
             car.currentPosition = Paths.parkingExit;
         }
 
-        private Car moveFromExitToRoad(Car car)
+        private void moveAwayFromExit(Car car)
         {
             car.currentPosition = Paths.parkingExit;
-            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.parkingExit, Paths.roadBeforeExit));
-            car.currentPosition = Paths.roadBeforeExit;
-            return car;
+            car.carPath.AddRange(car.getPathList(Paths.parkingExit, Paths.roadEnd, Paths.roadMatrix));
+            car.currentPosition = Paths.roadEnd;
         }
 
         private void moveAwayFromEntrance(Car car)
         {
             car.currentPosition = Paths.roadBeforeEntrance;
             car.carPath.AddRange(car.getPathList(Paths.roadBeforeEntrance, Paths.roadEnd, Paths.roadMatrix));
-            car.currentPosition = Paths.roadEnd;
-        }
-
-        private void moveAwayFromExit(Car car)
-        {
-            car.currentPosition = Paths.roadBeforeExit;
-            car.carPath.AddRange(car.getPathList(Paths.roadBeforeExit, Paths.roadEnd, Paths.roadMatrix));
             car.currentPosition = Paths.roadEnd;
         }
 

@@ -144,12 +144,6 @@ namespace ParkingApp
             this.Hide();
             ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(width, height, this.patterns);
             parkingSpaceForm.Show();
-
-            // hope we can get over this
-            //Globals.downAdjacentRoadLength = height + 1;
-            //Globals.leftAdjacentRoadLength = width + 1;
-            //Globals.rightAdjacentRoadLength = 0;
-            //Globals.upAdjacentRoadLength = 0;
         }
 
         T[,] ResizeArray<T>(T[,] original, int rows, int cols)

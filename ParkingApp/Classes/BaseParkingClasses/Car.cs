@@ -30,6 +30,7 @@ namespace ParkingApp.Classes
 
         public PathPoint currentPosition { get; set; }
         public Point parkingPlace { get; set; }
+        public Point heavyParkingPlace { get; set; }
         public PictureBox carPicBox { get; set; }
         public List<Point> carPath { get; set; }
         public TableItem tableItem { get; set; }
@@ -41,6 +42,7 @@ namespace ParkingApp.Classes
         public Timer timer;
         private CarDirection currentCarDirection = CarDirection.Top;
         private ModelingParams modelingParams;
+
         public Car(ModelingParams modelingParams, double probability)
         {
             this.modelingParams = modelingParams;
@@ -86,7 +88,7 @@ namespace ParkingApp.Classes
                 this.carPicBox.Refresh();
                 timer.Start();
                 if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
-                if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
+                if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.heavyParkingPlace));
             }
         }
 
