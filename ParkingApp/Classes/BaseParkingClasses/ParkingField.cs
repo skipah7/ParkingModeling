@@ -9,7 +9,6 @@ namespace ParkingApp
         private int height;
         private string[,] patterns;        
 
-
         public ParkingField(int width, int height, string[,] patterns)
         {
             this.width = width;

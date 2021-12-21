@@ -37,18 +37,18 @@ namespace ParkingApp.Classes
         public TableItem tableItem { get; set; }
 
         public int parkingPlaceNumber { get; set; }
-        public double timeStay { get; set; }
+        public double timeOnParking { get; set; }
 
         public CarType carType;
         public Timer timer;
         private CarDirection currentCarDirection = CarDirection.Top;
         private ModelingParams modelingParams;
-        private BindingList<TableItem> tableDataSource;
+        public event EventHandler addToDataTable;
+        public event EventHandler removeFromDataTable;
 
-        public Car(ModelingParams modelingParams, double probability, BindingList<TableItem> tableDataSource)
+        public Car(ModelingParams modelingParams, double probability)
         {
             this.modelingParams = modelingParams;
-            this.tableDataSource = tableDataSource;
             carPath = new List<Point>();
 
             this.carType = probability <= modelingParams.lightToHeavyRatio ? CarType.Ligth : CarType.Heavy;
@@ -68,6 +68,8 @@ namespace ParkingApp.Classes
 
         public async void timerTick(object sender, EventArgs e)
         {
+            if (carPath.Count == 0) return;
+
             carPicBox.BringToFront();
             var newX = carPicBox.Location.X + carPath.ElementAt(0).X;
             var newY = carPicBox.Location.Y + carPath.ElementAt(0).Y;
@@ -82,12 +84,12 @@ namespace ParkingApp.Classes
                 return;
             }
 
-            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingEntrance)) this.addCarToDataGrid(this);
-            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) this.tableDataSource.Remove(this.tableItem);
+            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingEntrance)) this.addToDataTable.Invoke(this, EventArgs.Empty);
+            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) this.removeFromDataTable.Invoke(this, EventArgs.Empty);
             if (this.parkingPlace != null && this.carPicBox.Location == this.parkingPlace)
             {
                 timer.Stop();
-                await Task.Delay(Convert.ToInt32(timeStay));
+                await Task.Delay(Convert.ToInt32(timeOnParking));
                 this.carPicBox.Refresh();
                 timer.Start();
                 if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
@@ -107,17 +109,6 @@ namespace ParkingApp.Classes
                 result = (probability <= this.modelingParams.lightCarProbability) && (Paths.ligthParkingPlaces.Count != 0);
             }
             return result;
-        }
-
-        private void addCarToDataGrid(Car car)
-        {
-            car.tableItem = new TableItem(
-                car.parkingPlaceNumber, 
-                "10:20",
-                this.modelingParams.parkingInterval, 
-                100
-            );
-            tableDataSource.Add(car.tableItem);
         }
 
         public List<Point> getPathList(PathPoint start, PathPoint end, int[,] matrix)
@@ -208,8 +199,11 @@ namespace ParkingApp.Classes
             }
             if (this.carType == CarType.Heavy)
             {
-                int value = random.Next(0, 1);
+                int value = random.Next(0, 4);
                 if (value == 0) return Resources.heavyCarPic1;
+                if (value == 1) return Resources.heavyCarPic2;
+                if (value == 2) return Resources.heavyCarPic3;
+                if (value == 3) return Resources.heavyCarPic4;
             }
             return Resources.carPic5;
         }

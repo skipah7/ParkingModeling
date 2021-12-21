@@ -143,6 +143,36 @@ namespace ParkingApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap heavyCarPic2 {
+            get {
+                object obj = ResourceManager.GetObject("heavyCarPic2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap heavyCarPic3 {
+            get {
+                object obj = ResourceManager.GetObject("heavyCarPic3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap heavyCarPic4 {
+            get {
+                object obj = ResourceManager.GetObject("heavyCarPic4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap heavyParkingPlaceMain {
             get {
                 object obj = ResourceManager.GetObject("heavyParkingPlaceMain", resourceCulture);

@@ -47,8 +47,8 @@ namespace ParkingApp
 
         private void aboutSystemButton_Click(object sender, EventArgs e)
         {
-            //string pathToHtmlFile = Globals.directory + '\\' + "aboutParking" + '.' + "html";
-            //System.Diagnostics.Process.Start(pathToHtmlFile);
+            string pathToHtmlFile = Globals.directory + '\\' + "help" + '.' + "html";
+            System.Diagnostics.Process.Start(pathToHtmlFile);
         }
 
         private void exitButton_Click(object sender, EventArgs e)

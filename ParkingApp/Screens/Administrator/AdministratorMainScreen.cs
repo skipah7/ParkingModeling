@@ -35,14 +35,9 @@ namespace ParkingApp
             ParkingField parkingField = loadParkingFromFile();
             if (parkingField != null)
             {
-                //Globals.leftAdjacentRoadLength = parkingField.getLeftRoadLength();
-                //Globals.rightAdjacentRoadLength = parkingField.getRigthRoadLength();
-                //Globals.upAdjacentRoadLength = parkingField.getUpRoadLength();
-                //Globals.downAdjacentRoadLength = parkingField.getDownRoadLength();
                 int width = parkingField.getWidth();
                 int height = parkingField.getHeight();
                 string[,] patterns = parkingField.getPatterns();
-                MessageBox.Show("Парковка загружена", "Статус загрузки", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.Hide();
                 ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(width, height, patterns);

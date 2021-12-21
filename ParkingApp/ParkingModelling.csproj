@@ -240,6 +240,9 @@
     <Content Include="Resources\entrance.png" />
     <Content Include="Resources\exit.png" />
     <Content Include="Resources\heavyCarPic1.png" />
+    <Content Include="Resources\heavyCarPic2.png" />
+    <Content Include="Resources\heavyCarPic3.png" />
+    <Content Include="Resources\heavyCarPic4.png" />
     <None Include="Resources\heavyParkingPlaceMain.png" />
   </ItemGroup>
   <ItemGroup>

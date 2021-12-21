@@ -62,6 +62,7 @@ namespace ParkingApp
         {
             startModelingBtn.Enabled = this.isParkingCorrect && (this.modelingParams != null);
         }
+
         private void recheckLaunchingButton(object sender, EventArgs e)
         {
             this.modelingParams = (sender as ConfigureModelingParamsForm).modelingParams;
@@ -95,7 +96,6 @@ namespace ParkingApp
             AboutDevelopers aboutDevelopersForm = new AboutDevelopers("manager");
             aboutDevelopersForm.Show();
         }
-
 
         private void aboutSystemClick(object sender, EventArgs e)
         {

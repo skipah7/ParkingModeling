@@ -42,6 +42,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.exitButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,9 +118,9 @@
             this.SystemTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SystemTimeLabel.Location = new System.Drawing.Point(59, 23);
             this.SystemTimeLabel.Name = "SystemTimeLabel";
-            this.SystemTimeLabel.Size = new System.Drawing.Size(129, 16);
+            this.SystemTimeLabel.Size = new System.Drawing.Size(45, 16);
             this.SystemTimeLabel.TabIndex = 20;
-            this.SystemTimeLabel.Text = "Системное время: ";
+            this.SystemTimeLabel.Text = "00 : 00";
             // 
             // dataGridView
             // 
@@ -146,8 +147,6 @@
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView.Size = new System.Drawing.Size(300, 550);
             this.dataGridView.TabIndex = 21;
-            this.dataGridView.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridView1_RowStateChanged);
-            this.dataGridView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.exit);
             // 
             // Column1
             // 
@@ -177,6 +176,17 @@
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
             // 
+            // exitButton
+            // 
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.exitButton.Location = new System.Drawing.Point(701, 23);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(87, 28);
+            this.exitButton.TabIndex = 22;
+            this.exitButton.Text = "Выход";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
             // ModelingSpaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,6 +195,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(931, 539);
+            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.SystemTimeLabel);
             this.Controls.Add(this.freePlacesCounter);
@@ -199,8 +210,6 @@
             this.Name = "ModelingSpaceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Моделирование";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.exit);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -222,5 +231,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Button exitButton;
     }
 }

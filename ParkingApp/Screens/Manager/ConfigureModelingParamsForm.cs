@@ -78,12 +78,13 @@ namespace ParkingApp.Screens.Manager
                 lightToHeavyRatio, 
                 lightCarProbability, 
                 heavyCarProbability,
-                nightTarifCost.Value,
-                dayTarifCost.Value
+                this.nightTarifCost.Value,
+                this.dayTarifCost.Value,
+                (int)this.startTimeHours.Value,
+                (int)this.startTimeMinutes.Value
             );
 
             this.Close();
-            //Globals.calculateDelta();
         }
 
         #region UIHelpers

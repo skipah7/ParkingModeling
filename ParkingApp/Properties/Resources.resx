@@ -142,6 +142,15 @@
   <data name="heavyCarPic1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\heavycarpic1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="heavyCarPic2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\heavycarpic2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="heavyCarPic3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\heavycarpic3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="heavyCarPic4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\heavycarpic4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="heavyParkingPlaceMain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\heavyparkingplacemain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
