@@ -105,7 +105,12 @@ namespace ParkingApp.Screens.Manager
 
         private void showTooltipDividedBy1000(object sender, EventArgs e)
         {
-            trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 1000d).ToString());
+
+        }
+
+        private void showToolTipDividedBy20000(object sender, EventArgs e)
+        {
+            trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 20000d).ToString());
         }
 
         private bool checkABValues(int a, int b)

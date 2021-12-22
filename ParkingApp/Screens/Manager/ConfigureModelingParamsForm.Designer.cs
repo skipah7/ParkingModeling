@@ -751,7 +751,7 @@
             this.exponentialParkValue.TabIndex = 94;
             this.exponentialParkValue.TickStyle = System.Windows.Forms.TickStyle.None;
             this.exponentialParkValue.Value = 250;
-            this.exponentialParkValue.Scroll += new System.EventHandler(this.showTooltipDividedBy1000);
+            this.exponentialParkValue.Scroll += new System.EventHandler(this.showToolTipDividedBy20000);
             // 
             // lambdaLabel2
             // 
