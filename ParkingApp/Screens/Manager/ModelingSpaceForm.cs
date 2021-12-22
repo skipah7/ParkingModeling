@@ -271,28 +271,6 @@ namespace ParkingApp.Screens.Manager
             SystemTime.Start();
         }
 
-        #region helpers
-
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            VisualizationTimer.Stop();
-            SystemTime.Stop();
-            foreach (Control control in this.Controls) control.Dispose();
-            this.cars.ForEach((car) => {
-                car.timer.Stop();
-                car = null;
-                }
-            ); 
-            this.cars = null;
-            this.Close();
-            this.Dispose();
-            GC.Collect();
-            ManagerMainScreen managerMainScreen = new ManagerMainScreen();
-            managerMainScreen.Show();
-        }
-
-        #endregion
-
         #region play/pause, speed up/down
 
         private void playPause_Click(object sender, EventArgs e)
@@ -310,8 +288,10 @@ namespace ParkingApp.Screens.Manager
             }
             if (!this.SystemTime.Enabled)
             {
-                this.SystemTime.Interval = this.remainingIntervalSystem;
-                VisualizationTimer.Interval = this.remainingIntervalVisualization;
+                this.SystemTime.Interval = this.remainingIntervalSystem > 0 ? this.remainingIntervalSystem : 50 * Globals.INTERVAL;
+                VisualizationTimer.Interval = this.remainingIntervalVisualization > 0 ? 
+                    this.remainingIntervalVisualization : 
+                    this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
 
                 this.SystemTime.Start();
                 VisualizationTimer.Start();
@@ -368,6 +348,28 @@ namespace ParkingApp.Screens.Manager
             this.systemTimerStart = DateTime.Now;
             this.SystemTime.Interval = 50 * Globals.INTERVAL;
             this.SystemTime.Tick -= intervalAdjust;
+        }
+
+        #endregion
+
+        #region helpers
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            VisualizationTimer.Stop();
+            SystemTime.Stop();
+            foreach (Control control in this.Controls) control.Dispose();
+            this.cars.ForEach((car) => {
+                car.timer.Stop();
+                car = null;
+                }
+            ); 
+            this.cars = null;
+            this.Close();
+            this.Dispose();
+            GC.Collect();
+            ManagerMainScreen managerMainScreen = new ManagerMainScreen();
+            managerMainScreen.Show();
         }
 
         #endregion

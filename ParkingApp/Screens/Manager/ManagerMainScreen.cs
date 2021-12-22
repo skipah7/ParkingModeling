@@ -4,6 +4,7 @@ using System;
 using System.Windows.Forms;
 using ParkingApp.Screens;
 using ParkingApp.Classes.BaseParkingClasses;
+using System.IO;
 
 namespace ParkingApp
 {
@@ -99,7 +100,13 @@ namespace ParkingApp
 
         private void aboutSystemClick(object sender, EventArgs e)
         {
-
+            string pathToHtmlFile = Globals.directory + '\\' + "help" + '.' + "html";
+            if (File.Exists(pathToHtmlFile))
+            {
+                System.Diagnostics.Process.Start(pathToHtmlFile);
+                return;
+            }
+            MessageBox.Show("Отсутствует файл справки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void backToMainScreenBtn_Click(object sender, EventArgs e)
