@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using ParkingApp.Classes.BaseParkingClasses;
 using System.ComponentModel;
 
+
 namespace ParkingApp.Screens.Manager
 {
     public partial class ModelingSpaceForm : Form
@@ -21,6 +22,13 @@ namespace ParkingApp.Screens.Manager
         private int timeHours;
         private int timeMinutes;
         private List<Car> cars;
+        private DateTime visualizationTimerStart;
+        private DateTime systemTimerStart;
+        private int[] playSpeeds;
+
+        private int remainingIntervalSystem;
+        private int remainingIntervalVisualization;
+
 
         public ModelingSpaceForm(int height, int width, string[,] patterns, ModelingParams modelingParams)
         {
@@ -35,6 +43,8 @@ namespace ParkingApp.Screens.Manager
 
             this.timeHours = modelingParams.timeHours;
             this.timeMinutes = modelingParams.timeMinutes;
+
+            this.playSpeeds = new int[] { 20, 10, 5 };
 
             Globals.calculatePictureBoxSize(height, width);
             Globals.highwayPatterns = new string[width, height + 1];
@@ -62,11 +72,13 @@ namespace ParkingApp.Screens.Manager
 
         private void VisualizationTimer_Tick(object sender, EventArgs e)
         {
+            this.visualizationTimerStart = DateTime.Now;
             VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
 
             var car = new Car(this.modelingParams, random.NextDouble());
             car.addToDataTable += Car_addToDataTable;
             car.removeFromDataTable += Car_removeFromDataTable;
+            car.disposeCar += Car_disposeCar;
             this.cars.Add(car);
             car.rotateCarBeforeStart();
             moveToEntrance(car);
@@ -84,6 +96,14 @@ namespace ParkingApp.Screens.Manager
             {
                 moveAwayFromEntrance(car);
             }
+        }
+
+        private void Car_disposeCar(object sender, EventArgs e)
+        {
+            var car = sender as Car;
+            this.cars.Remove(car);
+            car.disposeCar -= Car_disposeCar;
+            car = null;
         }
 
         private void Car_removeFromDataTable(object sender, EventArgs e)
@@ -224,6 +244,7 @@ namespace ParkingApp.Screens.Manager
 
         private void SystemTime_Tick1(object sender, EventArgs e)
         {
+            this.systemTimerStart = DateTime.Now;
             var freeParkingPlaces = Paths.ligthParkingPlaces.Count + Paths.heavyParkingPlaces.Count;
             freePlacesCounter.Text = "Свободных парковочных мест: " + freeParkingPlaces + "/" + Paths.totalParkingPlaces;
 
@@ -240,32 +261,14 @@ namespace ParkingApp.Screens.Manager
         {
             VisualizationTimer = new System.Timers.Timer();
             // fixme :question_mark:
+            this.visualizationTimerStart = DateTime.Now;
             VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
             VisualizationTimer.Elapsed += VisualizationTimer_Tick;
             VisualizationTimer.Start();
 
-            SystemTime.Start();
+            this.systemTimerStart = DateTime.Now;
             SystemTime.Interval = 50 * Globals.INTERVAL;
-        }
-
-        private void setPlaySpeed()
-        {
-            if (1 == 1)
-            {
-                Globals.INTERVAL = 40;
-            }
-            else if (2 == 2)
-            {
-                Globals.INTERVAL = 20;
-            }
-            else if (3 == 3)
-            {
-                Globals.INTERVAL = 10;
-            }
-            else
-            {
-                Globals.INTERVAL = 5;
-            }
+            SystemTime.Start();
         }
 
         #region helpers
@@ -286,6 +289,85 @@ namespace ParkingApp.Screens.Manager
             GC.Collect();
             ManagerMainScreen managerMainScreen = new ManagerMainScreen();
             managerMainScreen.Show();
+        }
+
+        #endregion
+
+        #region play/pause, speed up/down
+
+        private void playPause_Click(object sender, EventArgs e)
+        {
+            this.cars.ForEach((car) => car.playPauseTimer());
+
+            if (this.SystemTime.Enabled)
+            {
+                this.remainingIntervalSystem = (int)(this.SystemTime.Interval - (DateTime.Now - this.systemTimerStart).TotalMilliseconds);
+                this.SystemTime.Stop();
+
+                this.remainingIntervalVisualization = (int)(VisualizationTimer.Interval - (DateTime.Now - this.visualizationTimerStart).TotalMilliseconds);
+                VisualizationTimer.Stop();
+                return;
+            }
+            if (!this.SystemTime.Enabled)
+            {
+                this.SystemTime.Interval = this.remainingIntervalSystem;
+                VisualizationTimer.Interval = this.remainingIntervalVisualization;
+
+                this.SystemTime.Start();
+                VisualizationTimer.Start();
+
+                this.systemTimerStart = DateTime.Now;
+                this.visualizationTimerStart = DateTime.Now;
+
+                this.SystemTime.Tick += intervalAdjust;
+            }
+        }
+
+        private void speedUp_Click(object sender, EventArgs e)
+        {
+            if (!this.SystemTime.Enabled) return;
+
+            var index = getCurrentSpeed();
+            if (index + 1 >= this.playSpeeds.Length) return;
+            var newPlaySpeed = this.playSpeeds[index + 1];
+            this.adjustTimers(newPlaySpeed);
+        }
+
+        private void speedDown_Click(object sender, EventArgs e)
+        {
+            if (!this.SystemTime.Enabled) return;
+
+            var index = getCurrentSpeed();
+            if (index - 1 < 0) return;
+            var newPlaySpeed = this.playSpeeds[index - 1];
+            this.adjustTimers(newPlaySpeed);
+        }
+
+        private int getCurrentSpeed()
+        {
+            return Array.IndexOf(this.playSpeeds, Globals.INTERVAL);
+        }
+
+        private void adjustTimers(int newPlaySpeed)
+        {
+            var currentPlaySpeed = Globals.INTERVAL;
+            var playSpeedsRatio = (double)newPlaySpeed / currentPlaySpeed;
+            var newSystemTimerInterval = (this.SystemTime.Interval - (DateTime.Now - this.systemTimerStart).TotalMilliseconds) * playSpeedsRatio;
+            this.systemTimerStart = DateTime.Now;
+            this.SystemTime.Interval = (int)newSystemTimerInterval;
+            this.visualizationTimerStart = DateTime.Now;
+            VisualizationTimer.Interval = (VisualizationTimer.Interval - (DateTime.Now - this.visualizationTimerStart).TotalMilliseconds) * playSpeedsRatio;
+
+            Globals.INTERVAL = newPlaySpeed;
+            this.cars.ForEach((car) => car.adjustTimer(newPlaySpeed, currentPlaySpeed));
+            this.SystemTime.Tick += intervalAdjust;
+        }
+
+        private void intervalAdjust(object sender, EventArgs e)
+        {
+            this.systemTimerStart = DateTime.Now;
+            this.SystemTime.Interval = 50 * Globals.INTERVAL;
+            this.SystemTime.Tick -= intervalAdjust;
         }
 
         #endregion

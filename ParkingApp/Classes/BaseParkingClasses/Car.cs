@@ -45,6 +45,10 @@ namespace ParkingApp.Classes
         private ModelingParams modelingParams;
         public event EventHandler addToDataTable;
         public event EventHandler removeFromDataTable;
+        public event EventHandler disposeCar;
+        private DateTime timerStartTime;
+        private int remainingInterval;
+
 
         public Car(ModelingParams modelingParams, double probability)
         {
@@ -62,6 +66,7 @@ namespace ParkingApp.Classes
                 SizeMode = PictureBoxSizeMode.StretchImage,
             };
 
+            this.timerStartTime = DateTime.Now;
             timer = new Timer { Interval = Globals.INTERVAL };
             timer.Tick += timerTick;
         }
@@ -79,6 +84,7 @@ namespace ParkingApp.Classes
             carPath.RemoveAt(0);
             if (carPath.Count == 0 && currentPosition == Paths.roadEnd) 
             {
+                this.disposeCar.Invoke(this, EventArgs.Empty);
                 carPicBox.Dispose();
                 timer.Stop();
                 return;
@@ -88,6 +94,7 @@ namespace ParkingApp.Classes
             if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) this.removeFromDataTable.Invoke(this, EventArgs.Empty);
             if (this.parkingPlace != null && this.carPicBox.Location == this.parkingPlace)
             {
+                this.timerStartTime = DateTime.Now;
                 timer.Interval = (int)timeOnParking;
                 timer.Tick += timerReset;
             }
@@ -98,8 +105,50 @@ namespace ParkingApp.Classes
             this.carPicBox.Refresh();
             if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
             if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.heavyParkingPlace));
+
+            this.timerStartTime = DateTime.Now;
             timer.Interval = Globals.INTERVAL;
             timer.Tick -= timerReset;
+        }
+
+        public void playPauseTimer()
+        {
+            if (this.timer.Enabled)
+            {
+                
+                this.remainingInterval = (int)(this.timer.Interval - (DateTime.Now - this.timerStartTime).TotalMilliseconds);
+                this.timer.Stop();
+                return;
+            }
+            if (!this.timer.Enabled)
+            {
+                this.timer.Interval = this.remainingInterval > 0 ? this.remainingInterval : Globals.INTERVAL;
+                this.timer.Start();
+                this.timerStartTime = DateTime.Now;
+                this.timer.Tick += intervalAdjust;
+            }
+        }
+
+        public void adjustTimer(int newPlaySpeed, int currentPlaySpeed)
+        {
+            if (this.timer.Interval == currentPlaySpeed)
+            {
+                this.timerStartTime = DateTime.Now;
+                this.timer.Interval = newPlaySpeed;
+                return;
+            }
+            var playSpeedsRatio = (double)newPlaySpeed / currentPlaySpeed;
+            var newTimerInterval = (this.timer.Interval - (DateTime.Now - this.timerStartTime).TotalMilliseconds) * playSpeedsRatio;
+            this.timerStartTime = DateTime.Now;
+            this.timer.Interval = (int)newTimerInterval;
+            this.timer.Tick += intervalAdjust;
+        }
+
+        private void intervalAdjust(object sender, EventArgs e)
+        {
+            this.timerStartTime = DateTime.Now;
+            this.timer.Interval = Globals.INTERVAL;
+            this.timer.Tick -= intervalAdjust;
         }
 
         public bool shouldEnterParking(double probability)

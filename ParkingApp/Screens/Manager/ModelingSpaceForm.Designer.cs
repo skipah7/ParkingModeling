@@ -44,11 +44,14 @@
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exitButton = new System.Windows.Forms.Button();
             this.controlPanel = new System.Windows.Forms.Panel();
-            this.speedUp = new System.Windows.Forms.Button();
-            this.Pause = new System.Windows.Forms.Button();
-            this.speedDown = new System.Windows.Forms.Button();
+            this.playPause = new System.Windows.Forms.PictureBox();
+            this.speedDown = new System.Windows.Forms.PictureBox();
+            this.speedUp = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.controlPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playPause)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedUp)).BeginInit();
             this.SuspendLayout();
             // 
             // mainPanel
@@ -194,8 +197,8 @@
             // 
             // controlPanel
             // 
+            this.controlPanel.Controls.Add(this.playPause);
             this.controlPanel.Controls.Add(this.speedDown);
-            this.controlPanel.Controls.Add(this.Pause);
             this.controlPanel.Controls.Add(this.speedUp);
             this.controlPanel.Controls.Add(this.exitButton);
             this.controlPanel.Location = new System.Drawing.Point(387, 98);
@@ -203,35 +206,38 @@
             this.controlPanel.Size = new System.Drawing.Size(300, 100);
             this.controlPanel.TabIndex = 23;
             // 
-            // speedUp
+            // playPause
             // 
-            this.speedUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.speedUp.Location = new System.Drawing.Point(108, 15);
-            this.speedUp.Name = "speedUp";
-            this.speedUp.Size = new System.Drawing.Size(22, 23);
-            this.speedUp.TabIndex = 23;
-            this.speedUp.Text = ">";
-            this.speedUp.UseVisualStyleBackColor = true;
-            // 
-            // Pause
-            // 
-            this.Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Pause.Location = new System.Drawing.Point(80, 15);
-            this.Pause.Name = "Pause";
-            this.Pause.Size = new System.Drawing.Size(22, 23);
-            this.Pause.TabIndex = 24;
-            this.Pause.Text = "||";
-            this.Pause.UseVisualStyleBackColor = true;
+            this.playPause.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.playPause.Image = global::ParkingApp.Properties.Resources.playPause;
+            this.playPause.Location = new System.Drawing.Point(68, 15);
+            this.playPause.Name = "playPause";
+            this.playPause.Size = new System.Drawing.Size(50, 50);
+            this.playPause.TabIndex = 29;
+            this.playPause.TabStop = false;
+            this.playPause.Click += new System.EventHandler(this.playPause_Click);
             // 
             // speedDown
             // 
-            this.speedDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.speedDown.Location = new System.Drawing.Point(52, 15);
+            this.speedDown.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.speedDown.Image = global::ParkingApp.Properties.Resources.speedDown;
+            this.speedDown.Location = new System.Drawing.Point(12, 15);
             this.speedDown.Name = "speedDown";
-            this.speedDown.Size = new System.Drawing.Size(22, 23);
-            this.speedDown.TabIndex = 25;
-            this.speedDown.Text = "<";
-            this.speedDown.UseVisualStyleBackColor = true;
+            this.speedDown.Size = new System.Drawing.Size(50, 50);
+            this.speedDown.TabIndex = 28;
+            this.speedDown.TabStop = false;
+            this.speedDown.Click += new System.EventHandler(this.speedDown_Click);
+            // 
+            // speedUp
+            // 
+            this.speedUp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.speedUp.Image = global::ParkingApp.Properties.Resources.speedUp;
+            this.speedUp.Location = new System.Drawing.Point(124, 15);
+            this.speedUp.Name = "speedUp";
+            this.speedUp.Size = new System.Drawing.Size(50, 50);
+            this.speedUp.TabIndex = 27;
+            this.speedUp.TabStop = false;
+            this.speedUp.Click += new System.EventHandler(this.speedUp_Click);
             // 
             // ModelingSpaceForm
             // 
@@ -258,6 +264,9 @@
             this.Text = "Моделирование";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.controlPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.playPause)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedUp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,8 +289,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Panel controlPanel;
-        private System.Windows.Forms.Button speedUp;
-        private System.Windows.Forms.Button speedDown;
-        private System.Windows.Forms.Button Pause;
+        private System.Windows.Forms.PictureBox speedDown;
+        private System.Windows.Forms.PictureBox speedUp;
+        private System.Windows.Forms.PictureBox playPause;
     }
 }
