@@ -10,17 +10,27 @@ namespace ParkingApp
 {
     public partial class ManagerMainScreen : Form
     {
-        ModelingParams modelingParams;
+        private ModelingParams modelingParams;
+        private int width;
+        private int height;
+        private string[,] patterns;
+        private bool isParkingCorrect = false;
 
-        bool isParkingCorrect = false;
-
-        int width;
-        int height;
-        string[,] patterns;
         public ManagerMainScreen()
         {
             InitializeComponent();          
             recheckLaunchingButton();
+        }
+
+        public void saveParkingParams(ModelingParams modelingParams, string[,] patterns, int width, int height)
+        {
+            this.modelingParams = modelingParams;
+            this.patterns = patterns;
+            this.width = width;
+            this.height = height;
+
+            this.isParkingCorrect = true;
+            this.recheckLaunchingButton();
         }
 
         private void loadParking()

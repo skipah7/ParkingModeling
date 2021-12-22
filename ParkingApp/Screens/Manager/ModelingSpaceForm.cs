@@ -14,10 +14,13 @@ namespace ParkingApp.Screens.Manager
     {
         private static System.Timers.Timer VisualizationTimer;
 
-        private BindingList<TableItem> tableDataSource;
         private ModelingParams modelingParams;
-        private Random random;
         private string[,] patterns;
+        private int width;
+        private int height;
+        
+        private BindingList<TableItem> tableDataSource;
+        private Random random;
 
         private int timeHours;
         private int timeMinutes;
@@ -40,6 +43,8 @@ namespace ParkingApp.Screens.Manager
             this.random = new Random();
             this.modelingParams = modelingParams;
             this.patterns = patterns;
+            this.height = height;
+            this.width = width;
 
             this.timeHours = modelingParams.timeHours;
             this.timeMinutes = modelingParams.timeMinutes;
@@ -134,7 +139,7 @@ namespace ParkingApp.Screens.Manager
 
             for (var i = 0; i < parkingTime; i++)
             {
-                totalPrice += (tariffHours < 23 && tariffHours > 7) ? minutesDayRate : minutesNightRate;
+                totalPrice += (tariffHours < 23 && tariffHours >= 7) ? minutesDayRate : minutesNightRate;
                 if (tariffMinutes > 59)
                 {
                     tariffHours++;
@@ -369,6 +374,7 @@ namespace ParkingApp.Screens.Manager
             this.Dispose();
             GC.Collect();
             ManagerMainScreen managerMainScreen = new ManagerMainScreen();
+            managerMainScreen.saveParkingParams(this.modelingParams, this.patterns, this.width, this.height);
             managerMainScreen.Show();
         }
 
