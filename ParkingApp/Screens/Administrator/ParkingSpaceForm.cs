@@ -70,7 +70,7 @@ namespace ParkingApp
                 if (controls.Length == 0) continue;
 
                 PictureBox neabyPictureBox = controls[0] as PictureBox;
-                isMainHeavyPakingNearby = ImagesHelper.isImageSame(neabyPictureBox.Image as Bitmap, Resources.heavyParkingPlaceMain);
+                isMainHeavyPakingNearby |= ImagesHelper.isImageSame(neabyPictureBox.Image as Bitmap, Resources.heavyParkingPlaceMain);
                 if (!isMainHeavyPakingNearby) continue;
 
                 string[] contiguousElementsWithHeavyParking = getContiguousElements(neabyPictureBox);
@@ -80,11 +80,9 @@ namespace ParkingApp
                     if (nearbyControls.Length == 0) continue;
 
                     PictureBox pictureBox = nearbyControls[0] as PictureBox;
-                    isHeavyParkingSeconAlreadyExist = ImagesHelper.isImageSame(pictureBox.Image as Bitmap, Resources.heavyParkingPlaceSecond);
+                    isHeavyParkingSeconAlreadyExist |= ImagesHelper.isImageSame(pictureBox.Image as Bitmap, Resources.heavyParkingPlaceSecond);
                     if (isHeavyParkingSeconAlreadyExist) break;
                 }
-
-                break;
             }
 
             if (!isMainHeavyPakingNearby || isHeavyParkingSeconAlreadyExist)
