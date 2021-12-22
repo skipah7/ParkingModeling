@@ -184,8 +184,6 @@ namespace ParkingApp.Screens.Manager
         private void backToAdminMainScreen_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ManagerMainScreen managerMainScreen = new ManagerMainScreen();
-            managerMainScreen.Show();
         }
 
         #endregion
