@@ -492,9 +492,9 @@
             // 
             this.randomFlowPanel.Controls.Add(this.flowLawType);
             this.randomFlowPanel.Controls.Add(this.RandomFlowLabel);
+            this.randomFlowPanel.Controls.Add(this.exponentialFlowPanel);
             this.randomFlowPanel.Controls.Add(this.normalFlowPanel);
             this.randomFlowPanel.Controls.Add(this.uniformFlowPanel);
-            this.randomFlowPanel.Controls.Add(this.exponentialFlowPanel);
             this.randomFlowPanel.Location = new System.Drawing.Point(3, 192);
             this.randomFlowPanel.Name = "randomFlowPanel";
             this.randomFlowPanel.Size = new System.Drawing.Size(441, 110);
@@ -586,9 +586,9 @@
             // 
             this.randomParkPanel.Controls.Add(this.parkLawType);
             this.randomParkPanel.Controls.Add(this.label14);
+            this.randomParkPanel.Controls.Add(this.exponentialParkPanel);
             this.randomParkPanel.Controls.Add(this.normalParkPanel);
             this.randomParkPanel.Controls.Add(this.uniformParkPanel);
-            this.randomParkPanel.Controls.Add(this.exponentialParkPanel);
             this.randomParkPanel.Location = new System.Drawing.Point(3, 340);
             this.randomParkPanel.Name = "randomParkPanel";
             this.randomParkPanel.Size = new System.Drawing.Size(441, 110);

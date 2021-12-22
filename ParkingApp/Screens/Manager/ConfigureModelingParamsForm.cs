@@ -36,7 +36,7 @@ namespace ParkingApp.Screens.Manager
             }
             if (flowLawType == LawTypes.Exponential)
             {
-                flowValues.Add("lambda", exponentialFlowValue.Value / 100d);
+                flowValues.Add("lambda", exponentialFlowValue.Value / 500d);
             }
             if (flowLawType == LawTypes.Normal)
             {
@@ -56,7 +56,7 @@ namespace ParkingApp.Screens.Manager
             }
             if (parkLawType == LawTypes.Exponential)
             {
-                parkValues.Add("lambda", exponentialParkValue.Value / 1000d);
+                parkValues.Add("lambda", exponentialParkValue.Value / 100000d);
             }
             if (parkLawType == LawTypes.Normal)
             {
