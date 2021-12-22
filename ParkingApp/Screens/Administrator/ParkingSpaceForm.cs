@@ -70,7 +70,7 @@ namespace ParkingApp
                 if (controls.Length == 0) continue;
 
                 PictureBox neabyPictureBox = controls[0] as PictureBox;
-                isMainHeavyPakingNearby = ImagesHelper.isImageSame(neabyPictureBox.Image as Bitmap, Resources.heavyParkingPlaceMain);
+                isMainHeavyPakingNearby |= ImagesHelper.isImageSame(neabyPictureBox.Image as Bitmap, Resources.heavyParkingPlaceMain);
                 if (!isMainHeavyPakingNearby) continue;
 
                 string[] contiguousElementsWithHeavyParking = getContiguousElements(neabyPictureBox);
@@ -80,11 +80,9 @@ namespace ParkingApp
                     if (nearbyControls.Length == 0) continue;
 
                     PictureBox pictureBox = nearbyControls[0] as PictureBox;
-                    isHeavyParkingSeconAlreadyExist = ImagesHelper.isImageSame(pictureBox.Image as Bitmap, Resources.heavyParkingPlaceSecond);
+                    isHeavyParkingSeconAlreadyExist |= ImagesHelper.isImageSame(pictureBox.Image as Bitmap, Resources.heavyParkingPlaceSecond);
                     if (isHeavyParkingSeconAlreadyExist) break;
                 }
-
-                break;
             }
 
             if (!isMainHeavyPakingNearby || isHeavyParkingSeconAlreadyExist)
@@ -133,6 +131,17 @@ namespace ParkingApp
                 "парковочное место для легкового автомобиля", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            int width = (int)widthBox.Value;
+            int height = (int)heightBox.Value;
+            var newPatterns = parkingFieldClass.createFreshPatterns(width, height);
+
+            this.Hide();
+            ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(width, height, newPatterns);
+            parkingSpaceForm.Show();
+        }
+
         private void refreshParking_Click(object sender, EventArgs e)
         {
             this.patterns = parkingFieldClass.fillPatternsArray(this.width, this.height);
@@ -144,12 +153,6 @@ namespace ParkingApp
             this.Hide();
             ParkingSpaceForm parkingSpaceForm = new ParkingSpaceForm(width, height, this.patterns);
             parkingSpaceForm.Show();
-
-            // hope we can get over this
-            //Globals.downAdjacentRoadLength = height + 1;
-            //Globals.leftAdjacentRoadLength = width + 1;
-            //Globals.rightAdjacentRoadLength = 0;
-            //Globals.upAdjacentRoadLength = 0;
         }
 
         T[,] ResizeArray<T>(T[,] original, int rows, int cols)

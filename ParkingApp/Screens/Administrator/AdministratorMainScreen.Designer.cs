@@ -91,6 +91,7 @@
             this.aboutSystemButton.TabIndex = 26;
             this.aboutSystemButton.Text = "О системе";
             this.aboutSystemButton.UseVisualStyleBackColor = true;
+            this.aboutSystemButton.Click += new System.EventHandler(this.aboutSystemButton_Click);
             // 
             // aboutDevelopersButton
             // 

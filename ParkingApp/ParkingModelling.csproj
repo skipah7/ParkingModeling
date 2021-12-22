@@ -137,7 +137,6 @@
     <Compile Include="Screens\SignUpForm.Designer.cs">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\BaseParkingClasses\Tariff.cs" />
     <Compile Include="Classes\BaseParkingClasses\User.cs" />
     <Compile Include="Classes\SerializationClasses\UserValidator.cs" />
     <EmbeddedResource Include="Screens\AboutDevelopers.resx">
@@ -157,6 +156,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Manager\ConfigureModelingParamsForm.resx">
       <DependentUpon>ConfigureModelingParamsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\Manager\ManagerMainScreen.resx">
       <DependentUpon>ManagerMainScreen.cs</DependentUpon>
@@ -238,9 +238,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\carPic1.png" />
+    <Content Include="Resources\clear.png" />
     <Content Include="Resources\entrance.png" />
     <Content Include="Resources\exit.png" />
     <Content Include="Resources\heavyCarPic1.png" />
+    <Content Include="Resources\heavyCarPic2.png" />
+    <Content Include="Resources\heavyCarPic3.png" />
+    <Content Include="Resources\heavyCarPic4.png" />
+    <Content Include="Resources\playPause.png" />
+    <Content Include="Resources\speedDown.png" />
+    <Content Include="Resources\speedUp.png" />
     <None Include="Resources\heavyParkingPlaceMain.png" />
   </ItemGroup>
   <ItemGroup>

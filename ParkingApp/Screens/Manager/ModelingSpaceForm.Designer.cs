@@ -37,8 +37,21 @@
             this.freePlacesCounter = new System.Windows.Forms.Label();
             this.SystemTime = new System.Windows.Forms.Timer(this.components);
             this.SystemTimeLabel = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.exitButton = new System.Windows.Forms.Button();
+            this.controlPanel = new System.Windows.Forms.Panel();
+            this.playPause = new System.Windows.Forms.PictureBox();
+            this.speedDown = new System.Windows.Forms.PictureBox();
+            this.speedUp = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.controlPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playPause)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedUp)).BeginInit();
             this.SuspendLayout();
             // 
             // mainPanel
@@ -113,31 +126,118 @@
             this.SystemTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SystemTimeLabel.Location = new System.Drawing.Point(59, 23);
             this.SystemTimeLabel.Name = "SystemTimeLabel";
-            this.SystemTimeLabel.Size = new System.Drawing.Size(129, 16);
+            this.SystemTimeLabel.Size = new System.Drawing.Size(45, 16);
             this.SystemTimeLabel.TabIndex = 20;
-            this.SystemTimeLabel.Text = "Системное время: ";
+            this.SystemTimeLabel.Text = "00 : 00";
             // 
-            // dataGridView1
+            // dataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.Info;
-            this.dataGridView1.Location = new System.Drawing.Point(711, 98);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 81;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView1.Size = new System.Drawing.Size(300, 550);
-            this.dataGridView1.TabIndex = 21;
-            this.dataGridView1.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridView1_RowStateChanged);
-            this.dataGridView1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.exit);
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AllowUserToResizeColumns = false;
+            this.dataGridView.AllowUserToResizeRows = false;
+            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4});
+            this.dataGridView.GridColor = System.Drawing.Color.Ivory;
+            this.dataGridView.Location = new System.Drawing.Point(711, 98);
+            this.dataGridView.MultiSelect = false;
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.ReadOnly = true;
+            this.dataGridView.RowHeadersVisible = false;
+            this.dataGridView.RowHeadersWidth = 81;
+            this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridView.Size = new System.Drawing.Size(300, 550);
+            this.dataGridView.TabIndex = 21;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "placeNumber";
+            this.Column1.HeaderText = "№ места";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "arrivalTime";
+            this.Column2.HeaderText = "Время приезда";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "parkingTime";
+            this.Column3.HeaderText = "Время стоянки";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "totalPrice";
+            this.Column4.HeaderText = "Стоимость, руб";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // exitButton
+            // 
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.exitButton.Location = new System.Drawing.Point(210, 15);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(87, 28);
+            this.exitButton.TabIndex = 22;
+            this.exitButton.Text = "Выход";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
+            // controlPanel
+            // 
+            this.controlPanel.Controls.Add(this.playPause);
+            this.controlPanel.Controls.Add(this.speedDown);
+            this.controlPanel.Controls.Add(this.speedUp);
+            this.controlPanel.Controls.Add(this.exitButton);
+            this.controlPanel.Location = new System.Drawing.Point(387, 98);
+            this.controlPanel.Name = "controlPanel";
+            this.controlPanel.Size = new System.Drawing.Size(300, 100);
+            this.controlPanel.TabIndex = 23;
+            // 
+            // playPause
+            // 
+            this.playPause.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.playPause.Image = global::ParkingApp.Properties.Resources.playPause;
+            this.playPause.Location = new System.Drawing.Point(68, 15);
+            this.playPause.Name = "playPause";
+            this.playPause.Size = new System.Drawing.Size(50, 50);
+            this.playPause.TabIndex = 29;
+            this.playPause.TabStop = false;
+            this.playPause.Click += new System.EventHandler(this.playPause_Click);
+            // 
+            // speedDown
+            // 
+            this.speedDown.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.speedDown.Image = global::ParkingApp.Properties.Resources.speedDown;
+            this.speedDown.Location = new System.Drawing.Point(12, 15);
+            this.speedDown.Name = "speedDown";
+            this.speedDown.Size = new System.Drawing.Size(50, 50);
+            this.speedDown.TabIndex = 28;
+            this.speedDown.TabStop = false;
+            this.speedDown.Click += new System.EventHandler(this.speedDown_Click);
+            // 
+            // speedUp
+            // 
+            this.speedUp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.speedUp.Image = global::ParkingApp.Properties.Resources.speedUp;
+            this.speedUp.Location = new System.Drawing.Point(124, 15);
+            this.speedUp.Name = "speedUp";
+            this.speedUp.Size = new System.Drawing.Size(50, 50);
+            this.speedUp.TabIndex = 27;
+            this.speedUp.TabStop = false;
+            this.speedUp.Click += new System.EventHandler(this.speedUp_Click);
             // 
             // ModelingSpaceForm
             // 
@@ -147,7 +247,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(931, 539);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.controlPanel);
+            this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.SystemTimeLabel);
             this.Controls.Add(this.freePlacesCounter);
             this.Controls.Add(this.downAdjacentRoad);
@@ -161,9 +262,11 @@
             this.Name = "ModelingSpaceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Моделирование";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.exit);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.controlPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.playPause)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedUp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,6 +282,15 @@
         private System.Windows.Forms.Label freePlacesCounter;
         private System.Windows.Forms.Timer SystemTime;
         private System.Windows.Forms.Label SystemTimeLabel;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Panel controlPanel;
+        private System.Windows.Forms.PictureBox speedDown;
+        private System.Windows.Forms.PictureBox speedUp;
+        private System.Windows.Forms.PictureBox playPause;
     }
 }

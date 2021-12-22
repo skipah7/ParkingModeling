@@ -43,19 +43,18 @@ namespace ParkingApp.Classes
             }
         }        
 
-        public void createField(Panel panel, int width, int height)
+        public string[,] createFreshPatterns(int width, int height)
         {
+            var patterns = new string[width, height];
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Image image = ImagesHelper.getImageByName(Globals.ROAD);
-                    PictureBox pictureBox = createPictureBox(image, x, y);
-
-                    Globals.pictureBoxes.Add(pictureBox);
-                    panel.Controls.Add(pictureBox);
+                    patterns[x, y] = Globals.ROAD;
                 }
             }
+
+            return patterns;
         }
 
         #region main picture box creator + DragNDrop handlers

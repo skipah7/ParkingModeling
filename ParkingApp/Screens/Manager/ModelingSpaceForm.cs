@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ParkingApp.Classes.BaseParkingClasses;
+using System.ComponentModel;
+
 
 namespace ParkingApp.Screens.Manager
 {
@@ -13,27 +15,51 @@ namespace ParkingApp.Screens.Manager
         private static System.Timers.Timer VisualizationTimer;
 
         private ModelingParams modelingParams;
-        private Random random;
-        private double systemTimer = 0;
         private string[,] patterns;
+        private int width;
+        private int height;
+        
+        private BindingList<TableItem> tableDataSource;
+        private Random random;
+
+        private int timeHours;
+        private int timeMinutes;
+        private List<Car> cars;
+        private DateTime visualizationTimerStart;
+        private DateTime systemTimerStart;
+        private int[] playSpeeds;
+
+        private int remainingIntervalSystem;
+        private int remainingIntervalVisualization;
+
+
         public ModelingSpaceForm(int height, int width, string[,] patterns, ModelingParams modelingParams)
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.UpdateStyles();
-            this.clearValues();
+            Paths.reset();
+            this.tableDataSource = new BindingList<TableItem>();
+            this.cars = new List<Car>();
 
             this.random = new Random();
             this.modelingParams = modelingParams;
             this.patterns = patterns;
+            this.height = height;
+            this.width = width;
+
+            this.timeHours = modelingParams.timeHours;
+            this.timeMinutes = modelingParams.timeMinutes;
+
+            this.playSpeeds = new int[] { 20, 10, 5 };
 
             Globals.calculatePictureBoxSize(height, width);
             Globals.highwayPatterns = new string[width, height + 1];
             mainPanel.Location = new Point(0, 0);
-            SystemTimeLabel.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 0);
-            freePlacesCounter.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 20);
-            dataGridView1.Location = new Point(width * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE * 2, 40);
-            dataGridView1.Size = new Size(300, height * Globals.PICTURE_BOX_SIZE + Globals.PICTURE_BOX_SIZE - 40);
+            SystemTimeLabel.Location = new Point((width + 3) * Globals.PICTURE_BOX_SIZE, 0);
+            freePlacesCounter.Location = new Point((width + 3) * Globals.PICTURE_BOX_SIZE, 20);
+            dataGridView.Location = new Point((width + 3) * Globals.PICTURE_BOX_SIZE, 40);
+            dataGridView.Size = new Size(300, (height - 1) * Globals.PICTURE_BOX_SIZE);
+            dataGridView.DataSource = tableDataSource;
+            controlPanel.Location = new Point(dataGridView.Location.X, dataGridView.Location.Y + dataGridView.Size.Height);
 
             var parkingField = new ParkingFieldClass();
             parkingField.fillPictureBoxesList(width, height, patterns);
@@ -51,9 +77,14 @@ namespace ParkingApp.Screens.Manager
 
         private void VisualizationTimer_Tick(object sender, EventArgs e)
         {
+            this.visualizationTimerStart = DateTime.Now;
             VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
 
             var car = new Car(this.modelingParams, random.NextDouble());
+            car.addToDataTable += Car_addToDataTable;
+            car.removeFromDataTable += Car_removeFromDataTable;
+            car.disposeCar += Car_disposeCar;
+            this.cars.Add(car);
             car.rotateCarBeforeStart();
             moveToEntrance(car);
             if (car.shouldEnterParking(random.NextDouble()))
@@ -62,14 +93,63 @@ namespace ParkingApp.Screens.Manager
                 this.moveFromEntranceToParkingPlace(car);
                 this.setParkingTime(car);
 
-                this.moveFromParkingPlaceToExit(car);
-                this.moveFromExitToRoad(car);
+                this.moveFromParkingPlaceToTileBeforeExit(car);
+                this.moveFromTileBeforeExitToExit(car);
                 this.moveAwayFromExit(car);
             }
             else
             {
                 moveAwayFromEntrance(car);
             }
+        }
+
+        private void Car_disposeCar(object sender, EventArgs e)
+        {
+            var car = sender as Car;
+            this.cars.Remove(car);
+            car.disposeCar -= Car_disposeCar;
+            car = null;
+        }
+
+        private void Car_removeFromDataTable(object sender, EventArgs e)
+        {
+            var car = sender as Car;
+            tableDataSource.Remove(car.tableItem);
+            car.removeFromDataTable -= Car_removeFromDataTable;
+        }
+
+        private void Car_addToDataTable(object sender, EventArgs e)
+        {
+            var car = sender as Car;
+            var realParkingTime = (int)(car.timeOnParking / (50 * Globals.INTERVAL));
+            var totalPrice = this.calculateTotalPrice(realParkingTime);
+            var tableItem = new TableItem(car.parkingPlaceNumber, this.SystemTimeLabel.Text, realParkingTime, totalPrice);
+            car.tableItem = tableItem;
+            this.tableDataSource.Add(tableItem);
+            car.addToDataTable -= Car_addToDataTable;
+        }
+
+        private int calculateTotalPrice(int parkingTime)
+        {
+            var totalPrice = 0d;
+            var minutesDayRate = (double)this.modelingParams.dayTariffRate / 60;
+            var minutesNightRate = (double)this.modelingParams.nightTariffRate / 60;
+            var tariffHours = this.timeHours;
+            var tariffMinutes = this.timeMinutes;
+
+            for (var i = 0; i < parkingTime; i++)
+            {
+                totalPrice += (tariffHours < 23 && tariffHours >= 7) ? minutesDayRate : minutesNightRate;
+                if (tariffMinutes > 59)
+                {
+                    tariffHours++;
+                    tariffMinutes = 0;
+                }
+                else tariffMinutes++;
+                tariffHours = tariffHours > 23 ? 0 : tariffHours;
+            }
+
+            return (int)totalPrice;
         }
 
         private void moveToEntrance(Car car)
@@ -109,14 +189,13 @@ namespace ParkingApp.Screens.Manager
                 var nearbyElements = new[] { new PathPoint(x + 1, y), new PathPoint(x - 1, y), new PathPoint(x, y + 1), new PathPoint(x, y - 1) };
                 foreach (var element in nearbyElements)
                 {
-                    if (this.patterns.GetLength(0) < element.X || this.patterns.GetLength(1) < element.Y || element.Y < 0 || element.X < 0) continue;
+                    if (this.patterns.GetLength(0) <= element.X || this.patterns.GetLength(1) <= element.Y || element.Y < 0 || element.X < 0) continue;
                     if (this.patterns[element.X, element.Y] != Globals.HEAVY_PARKING_PLACE_SECOND) continue;
                     var mainParkingPlace = Modeling.getLocationFromPathPoint(parkPoint);
                     var secondHeavyParkingPartPosition = Modeling.getLocationFromPathPoint(new PathPoint(element.X, element.Y));
                     var newX = mainParkingPlace.X + ((secondHeavyParkingPartPosition.X - mainParkingPlace.X) / 2);
                     var newY = mainParkingPlace.Y + ((secondHeavyParkingPartPosition.Y - mainParkingPlace.Y) / 2);
 
-                    //car.setPathBetweenTwoPoints(car.carPath[car.carPath.Count - 1], new PathPoint(element.X, element.Y), true);
                     var realParkingPlace = new Point(newX, newY);
                     realParkingPlace.Offset(-mainParkingPlace.X, -mainParkingPlace.Y);
                     car.addPoints(car.carPath, realParkingPlace);
@@ -125,6 +204,7 @@ namespace ParkingApp.Screens.Manager
                     mainParkingPlace.Offset(-realParkingPlace.X, -realParkingPlace.Y);
                     car.addPoints(car.carPath, mainParkingPlace);
 
+                    car.heavyParkingPlace = Modeling.getLocationFromPathPoint(parkPoint);
                     car.parkingPlace = realParkingPlace;
                 }
             }
@@ -134,19 +214,25 @@ namespace ParkingApp.Screens.Manager
             }
         }
 
-        private void moveFromParkingPlaceToExit(Car car)
+        private void moveFromParkingPlaceToTileBeforeExit(Car car)
         {
-            car.carPath.AddRange(car.getPathList(car.currentPosition, Paths.parkingExit, Paths.parkingMatrix));
+            car.carPath.AddRange(car.getPathList(car.currentPosition, Paths.tileBeforeExit, Paths.parkingMatrix));
             Paths.parkingMatrix[car.currentPosition.X, car.currentPosition.Y] = 5;
+            car.currentPosition = Paths.tileBeforeExit;
+        }
+
+        private void moveFromTileBeforeExitToExit(Car car)
+        {
+            car.currentPosition = Paths.tileBeforeExit;
+            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.tileBeforeExit, Paths.parkingExit));
             car.currentPosition = Paths.parkingExit;
         }
 
-        private Car moveFromExitToRoad(Car car)
+        private void moveAwayFromExit(Car car)
         {
             car.currentPosition = Paths.parkingExit;
-            car.carPath.AddRange(car.setPathBetweenTwoPoints(Paths.parkingExit, Paths.roadBeforeExit));
-            car.currentPosition = Paths.roadBeforeExit;
-            return car;
+            car.carPath.AddRange(car.getPathList(Paths.parkingExit, Paths.roadEnd, Paths.roadMatrix));
+            car.currentPosition = Paths.roadEnd;
         }
 
         private void moveAwayFromEntrance(Car car)
@@ -156,108 +242,140 @@ namespace ParkingApp.Screens.Manager
             car.currentPosition = Paths.roadEnd;
         }
 
-        private void moveAwayFromExit(Car car)
-        {
-            car.currentPosition = Paths.roadBeforeExit;
-            car.carPath.AddRange(car.getPathList(Paths.roadBeforeExit, Paths.roadEnd, Paths.roadMatrix));
-            car.currentPosition = Paths.roadEnd;
-        }
-
         private void setParkingTime(Car car)
         {
-            car.timeStay = this.modelingParams.parkingInterval * 50 * Globals.INTERVAL;
-        }
-
-        private void refreshTablo()
-        {
-            Action action = () =>
-            {
-                var freeParkingPlaces = Paths.ligthParkingPlaces.Count + Paths.heavyParkingPlaces.Count;
-                freePlacesCounter.Text = "Свободных парковочных мест: " + freeParkingPlaces + "/" + Paths.totalParkingPlaces;
-                dataGridView1.DataSource = null;
-                dataGridView1.DataSource = Globals.tableItem;
-            };
-            if (InvokeRequired) Invoke(action);
-            else action();
+            car.timeOnParking = this.modelingParams.parkingInterval * 50 * Globals.INTERVAL;
         }
 
         private void SystemTime_Tick1(object sender, EventArgs e)
         {
-            systemTimer += 0.5;
-            SystemTimeLabel.Text = "Системное время: " + systemTimer;
-            this.refreshTablo();
+            this.systemTimerStart = DateTime.Now;
+            var freeParkingPlaces = Paths.ligthParkingPlaces.Count + Paths.heavyParkingPlaces.Count;
+            freePlacesCounter.Text = "Свободных парковочных мест: " + freeParkingPlaces + "/" + Paths.totalParkingPlaces;
+
+            if (timeMinutes > 59)
+            {
+                timeHours++;
+                timeMinutes = 0;
+            } else timeMinutes++;
+            timeHours = timeHours > 23 ? 0 : timeHours;
+            SystemTimeLabel.Text = timeHours.ToString("00") + " : " + timeMinutes.ToString("00");
         }
 
         private void configureTimers()
         {
             VisualizationTimer = new System.Timers.Timer();
             // fixme :question_mark:
+            this.visualizationTimerStart = DateTime.Now;
             VisualizationTimer.Interval = this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
             VisualizationTimer.Elapsed += VisualizationTimer_Tick;
             VisualizationTimer.Start();
 
-            SystemTime.Start();
+            this.systemTimerStart = DateTime.Now;
             SystemTime.Interval = 50 * Globals.INTERVAL;
-            SystemTime.Tick += SystemTime_Tick1;
+            SystemTime.Start();
         }
 
-        private void clearValues()
+        #region play/pause, speed up/down
+
+        private void playPause_Click(object sender, EventArgs e)
         {
-            Paths.reset();
-            Globals.tableItem = new List<TableItem>();
+            this.cars.ForEach((car) => car.playPauseTimer());
+
+            if (this.SystemTime.Enabled)
+            {
+                this.remainingIntervalSystem = (int)(this.SystemTime.Interval - (DateTime.Now - this.systemTimerStart).TotalMilliseconds);
+                this.SystemTime.Stop();
+
+                this.remainingIntervalVisualization = (int)(VisualizationTimer.Interval - (DateTime.Now - this.visualizationTimerStart).TotalMilliseconds);
+                VisualizationTimer.Stop();
+                return;
+            }
+            if (!this.SystemTime.Enabled)
+            {
+                this.SystemTime.Interval = this.remainingIntervalSystem > 0 ? this.remainingIntervalSystem : 50 * Globals.INTERVAL;
+                VisualizationTimer.Interval = this.remainingIntervalVisualization > 0 ? 
+                    this.remainingIntervalVisualization : 
+                    this.modelingParams.appearanceInterval * 50 * Globals.INTERVAL;
+
+                this.SystemTime.Start();
+                VisualizationTimer.Start();
+
+                this.systemTimerStart = DateTime.Now;
+                this.visualizationTimerStart = DateTime.Now;
+
+                this.SystemTime.Tick += intervalAdjust;
+            }
         }
 
-        private void setPlaySpeed()
+        private void speedUp_Click(object sender, EventArgs e)
         {
-            if (1 == 1)
-            {
-                Globals.INTERVAL = 40;
-            }
-            else if (2 == 2)
-            {
-                Globals.INTERVAL = 20;
-            }
-            else if (3 == 3)
-            {
-                Globals.INTERVAL = 10;
-            }
-            else
-            {
-                Globals.INTERVAL = 5;
-            }
+            if (!this.SystemTime.Enabled) return;
+
+            var index = getCurrentSpeed();
+            if (index + 1 >= this.playSpeeds.Length) return;
+            var newPlaySpeed = this.playSpeeds[index + 1];
+            this.adjustTimers(newPlaySpeed);
         }
 
-        private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        private void speedDown_Click(object sender, EventArgs e)
         {
-            /*
-            try
-            {
-                e.Row.HeaderCell.Value = (e.Row.Index + 1).ToString();
-                e.Row.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }*/
+            if (!this.SystemTime.Enabled) return;
+
+            var index = getCurrentSpeed();
+            if (index - 1 < 0) return;
+            var newPlaySpeed = this.playSpeeds[index - 1];
+            this.adjustTimers(newPlaySpeed);
         }
+
+        private int getCurrentSpeed()
+        {
+            return Array.IndexOf(this.playSpeeds, Globals.INTERVAL);
+        }
+
+        private void adjustTimers(int newPlaySpeed)
+        {
+            var currentPlaySpeed = Globals.INTERVAL;
+            var playSpeedsRatio = (double)newPlaySpeed / currentPlaySpeed;
+            var newSystemTimerInterval = (this.SystemTime.Interval - (DateTime.Now - this.systemTimerStart).TotalMilliseconds) * playSpeedsRatio;
+            this.systemTimerStart = DateTime.Now;
+            this.SystemTime.Interval = (int)newSystemTimerInterval;
+            this.visualizationTimerStart = DateTime.Now;
+            VisualizationTimer.Interval = (VisualizationTimer.Interval - (DateTime.Now - this.visualizationTimerStart).TotalMilliseconds) * playSpeedsRatio;
+
+            Globals.INTERVAL = newPlaySpeed;
+            this.cars.ForEach((car) => car.adjustTimer(newPlaySpeed, currentPlaySpeed));
+            this.SystemTime.Tick += intervalAdjust;
+        }
+
+        private void intervalAdjust(object sender, EventArgs e)
+        {
+            this.systemTimerStart = DateTime.Now;
+            this.SystemTime.Interval = 50 * Globals.INTERVAL;
+            this.SystemTime.Tick -= intervalAdjust;
+        }
+
+        #endregion
 
         #region helpers
 
-        private void exit(object sender, KeyPressEventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)
         {
-            if (!char.IsControl(e.KeyChar))
-            {
-                this.Hide();
-                VisualizationTimer.Stop();
-                SystemTime.Stop();
-                ConfigureModelingParamsForm configureModelingParams = new ConfigureModelingParamsForm();
-                configureModelingParams.Show();
-            }
-        }
-
-        private void shutDownApplication(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
+            VisualizationTimer.Stop();
+            SystemTime.Stop();
+            foreach (Control control in this.Controls) control.Dispose();
+            this.cars.ForEach((car) => {
+                car.timer.Stop();
+                car = null;
+                }
+            ); 
+            this.cars = null;
+            this.Close();
+            this.Dispose();
+            GC.Collect();
+            ManagerMainScreen managerMainScreen = new ManagerMainScreen();
+            managerMainScreen.saveParkingParams(this.modelingParams, this.patterns, this.width, this.height);
+            managerMainScreen.Show();
         }
 
         #endregion

@@ -37,6 +37,8 @@
             this.loginLabel = new System.Windows.Forms.Label();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.loginTextBox = new System.Windows.Forms.TextBox();
+            this.registrationPanel = new System.Windows.Forms.Panel();
+            this.registrationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // backToMainMenuButton
@@ -87,6 +89,13 @@
             this.loginTextBox.Name = "loginTextBox";
             this.loginTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.validation);
             // 
+            // registrationPanel
+            // 
+            this.registrationPanel.Controls.Add(this.signInLabel);
+            this.registrationPanel.Controls.Add(this.signInButton);
+            resources.ApplyResources(this.registrationPanel, "registrationPanel");
+            this.registrationPanel.Name = "registrationPanel";
+            // 
             // SignInForm
             // 
             resources.ApplyResources(this, "$this");
@@ -94,18 +103,19 @@
             this.BackColor = System.Drawing.SystemColors.Window;
             this.Controls.Add(this.backToMainMenuButton);
             this.Controls.Add(this.loginButton);
-            this.Controls.Add(this.signInLabel);
-            this.Controls.Add(this.signInButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.loginLabel);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.loginTextBox);
+            this.Controls.Add(this.registrationPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SignInForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.shutDownApplication);
             this.Resize += new System.EventHandler(this.preventResize);
+            this.registrationPanel.ResumeLayout(false);
+            this.registrationPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,5 +130,6 @@
         private System.Windows.Forms.Label loginLabel;
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.TextBox loginTextBox;
+        private System.Windows.Forms.Panel registrationPanel;
     }
 }

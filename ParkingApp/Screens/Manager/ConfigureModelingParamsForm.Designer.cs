@@ -74,6 +74,9 @@
             this.randomParkPanel = new System.Windows.Forms.Panel();
             this.parkLawType = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.exponentialParkPanel = new System.Windows.Forms.Panel();
+            this.exponentialParkValue = new System.Windows.Forms.TrackBar();
+            this.lambdaLabel2 = new System.Windows.Forms.Label();
             this.normalParkPanel = new System.Windows.Forms.Panel();
             this.parkDXValue = new System.Windows.Forms.TrackBar();
             this.parkMXValue = new System.Windows.Forms.TrackBar();
@@ -84,9 +87,6 @@
             this.parkAValue = new System.Windows.Forms.TrackBar();
             this.aLabel2 = new System.Windows.Forms.Label();
             this.bLabel2 = new System.Windows.Forms.Label();
-            this.exponentialParkPanel = new System.Windows.Forms.Panel();
-            this.exponentialParkValue = new System.Windows.Forms.TrackBar();
-            this.lambdaLabel2 = new System.Windows.Forms.Label();
             this.flowRadioButtons = new System.Windows.Forms.Panel();
             this.parkRadioButtons = new System.Windows.Forms.Panel();
             this.tariffLabel = new System.Windows.Forms.Label();
@@ -115,14 +115,14 @@
             this.deterministicParkPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deterministicParkInterval)).BeginInit();
             this.randomParkPanel.SuspendLayout();
+            this.exponentialParkPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.exponentialParkValue)).BeginInit();
             this.normalParkPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parkDXValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.parkMXValue)).BeginInit();
             this.uniformParkPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parkBValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.parkAValue)).BeginInit();
-            this.exponentialParkPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.exponentialParkValue)).BeginInit();
             this.flowRadioButtons.SuspendLayout();
             this.parkRadioButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dayTarifCost)).BeginInit();
@@ -146,7 +146,7 @@
             this.lambdaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lambdaLabel.Location = new System.Drawing.Point(3, 28);
             this.lambdaLabel.Name = "lambdaLabel";
-            this.lambdaLabel.Size = new System.Drawing.Size(19, 16);
+            this.lambdaLabel.Size = new System.Drawing.Size(18, 16);
             this.lambdaLabel.TabIndex = 57;
             this.lambdaLabel.Text = " λ";
             // 
@@ -156,7 +156,7 @@
             this.bLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bLabel.Location = new System.Drawing.Point(10, 43);
             this.bLabel.Name = "bLabel";
-            this.bLabel.Size = new System.Drawing.Size(16, 16);
+            this.bLabel.Size = new System.Drawing.Size(15, 16);
             this.bLabel.TabIndex = 56;
             this.bLabel.Text = "b";
             // 
@@ -166,7 +166,7 @@
             this.aLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.aLabel.Location = new System.Drawing.Point(10, 14);
             this.aLabel.Name = "aLabel";
-            this.aLabel.Size = new System.Drawing.Size(16, 16);
+            this.aLabel.Size = new System.Drawing.Size(15, 16);
             this.aLabel.TabIndex = 55;
             this.aLabel.Text = "a";
             // 
@@ -451,7 +451,7 @@
             this.MXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.MXLabel.Location = new System.Drawing.Point(3, 14);
             this.MXLabel.Name = "MXLabel";
-            this.MXLabel.Size = new System.Drawing.Size(27, 16);
+            this.MXLabel.Size = new System.Drawing.Size(26, 16);
             this.MXLabel.TabIndex = 55;
             this.MXLabel.Text = "MX";
             // 
@@ -461,7 +461,7 @@
             this.DXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.DXLabel.Location = new System.Drawing.Point(4, 42);
             this.DXLabel.Name = "DXLabel";
-            this.DXLabel.Size = new System.Drawing.Size(26, 16);
+            this.DXLabel.Size = new System.Drawing.Size(25, 16);
             this.DXLabel.TabIndex = 56;
             this.DXLabel.Text = "DX";
             // 
@@ -492,9 +492,9 @@
             // 
             this.randomFlowPanel.Controls.Add(this.flowLawType);
             this.randomFlowPanel.Controls.Add(this.RandomFlowLabel);
+            this.randomFlowPanel.Controls.Add(this.exponentialFlowPanel);
             this.randomFlowPanel.Controls.Add(this.normalFlowPanel);
             this.randomFlowPanel.Controls.Add(this.uniformFlowPanel);
-            this.randomFlowPanel.Controls.Add(this.exponentialFlowPanel);
             this.randomFlowPanel.Location = new System.Drawing.Point(3, 192);
             this.randomFlowPanel.Name = "randomFlowPanel";
             this.randomFlowPanel.Size = new System.Drawing.Size(441, 110);
@@ -586,9 +586,9 @@
             // 
             this.randomParkPanel.Controls.Add(this.parkLawType);
             this.randomParkPanel.Controls.Add(this.label14);
+            this.randomParkPanel.Controls.Add(this.exponentialParkPanel);
             this.randomParkPanel.Controls.Add(this.normalParkPanel);
             this.randomParkPanel.Controls.Add(this.uniformParkPanel);
-            this.randomParkPanel.Controls.Add(this.exponentialParkPanel);
             this.randomParkPanel.Location = new System.Drawing.Point(3, 340);
             this.randomParkPanel.Name = "randomParkPanel";
             this.randomParkPanel.Size = new System.Drawing.Size(441, 110);
@@ -616,6 +616,39 @@
             this.label14.Size = new System.Drawing.Size(160, 13);
             this.label14.TabIndex = 63;
             this.label14.Text = "Выбор закона распределения";
+            // 
+            // exponentialParkPanel
+            // 
+            this.exponentialParkPanel.Controls.Add(this.exponentialParkValue);
+            this.exponentialParkPanel.Controls.Add(this.lambdaLabel2);
+            this.exponentialParkPanel.Location = new System.Drawing.Point(195, 26);
+            this.exponentialParkPanel.Name = "exponentialParkPanel";
+            this.exponentialParkPanel.Size = new System.Drawing.Size(200, 78);
+            this.exponentialParkPanel.TabIndex = 96;
+            this.exponentialParkPanel.Visible = false;
+            // 
+            // exponentialParkValue
+            // 
+            this.exponentialParkValue.BackColor = System.Drawing.SystemColors.Window;
+            this.exponentialParkValue.Location = new System.Drawing.Point(28, 28);
+            this.exponentialParkValue.Maximum = 500;
+            this.exponentialParkValue.Minimum = 10;
+            this.exponentialParkValue.Name = "exponentialParkValue";
+            this.exponentialParkValue.Size = new System.Drawing.Size(168, 45);
+            this.exponentialParkValue.TabIndex = 94;
+            this.exponentialParkValue.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.exponentialParkValue.Value = 250;
+            this.exponentialParkValue.Scroll += new System.EventHandler(this.showToolTipDividedBy20000);
+            // 
+            // lambdaLabel2
+            // 
+            this.lambdaLabel2.AutoSize = true;
+            this.lambdaLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lambdaLabel2.Location = new System.Drawing.Point(3, 28);
+            this.lambdaLabel2.Name = "lambdaLabel2";
+            this.lambdaLabel2.Size = new System.Drawing.Size(18, 16);
+            this.lambdaLabel2.TabIndex = 57;
+            this.lambdaLabel2.Text = " λ";
             // 
             // normalParkPanel
             // 
@@ -659,7 +692,7 @@
             this.MXLabelPark.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.MXLabelPark.Location = new System.Drawing.Point(3, 14);
             this.MXLabelPark.Name = "MXLabelPark";
-            this.MXLabelPark.Size = new System.Drawing.Size(27, 16);
+            this.MXLabelPark.Size = new System.Drawing.Size(26, 16);
             this.MXLabelPark.TabIndex = 55;
             this.MXLabelPark.Text = "MX";
             // 
@@ -669,7 +702,7 @@
             this.DXLabelPark.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.DXLabelPark.Location = new System.Drawing.Point(4, 42);
             this.DXLabelPark.Name = "DXLabelPark";
-            this.DXLabelPark.Size = new System.Drawing.Size(26, 16);
+            this.DXLabelPark.Size = new System.Drawing.Size(25, 16);
             this.DXLabelPark.TabIndex = 56;
             this.DXLabelPark.Text = "DX";
             // 
@@ -716,7 +749,7 @@
             this.aLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.aLabel2.Location = new System.Drawing.Point(10, 14);
             this.aLabel2.Name = "aLabel2";
-            this.aLabel2.Size = new System.Drawing.Size(16, 16);
+            this.aLabel2.Size = new System.Drawing.Size(15, 16);
             this.aLabel2.TabIndex = 55;
             this.aLabel2.Text = "a";
             // 
@@ -726,42 +759,9 @@
             this.bLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bLabel2.Location = new System.Drawing.Point(10, 43);
             this.bLabel2.Name = "bLabel2";
-            this.bLabel2.Size = new System.Drawing.Size(16, 16);
+            this.bLabel2.Size = new System.Drawing.Size(15, 16);
             this.bLabel2.TabIndex = 56;
             this.bLabel2.Text = "b";
-            // 
-            // exponentialParkPanel
-            // 
-            this.exponentialParkPanel.Controls.Add(this.exponentialParkValue);
-            this.exponentialParkPanel.Controls.Add(this.lambdaLabel2);
-            this.exponentialParkPanel.Location = new System.Drawing.Point(195, 26);
-            this.exponentialParkPanel.Name = "exponentialParkPanel";
-            this.exponentialParkPanel.Size = new System.Drawing.Size(200, 78);
-            this.exponentialParkPanel.TabIndex = 96;
-            this.exponentialParkPanel.Visible = false;
-            // 
-            // exponentialParkValue
-            // 
-            this.exponentialParkValue.BackColor = System.Drawing.SystemColors.Window;
-            this.exponentialParkValue.Location = new System.Drawing.Point(28, 28);
-            this.exponentialParkValue.Maximum = 500;
-            this.exponentialParkValue.Minimum = 10;
-            this.exponentialParkValue.Name = "exponentialParkValue";
-            this.exponentialParkValue.Size = new System.Drawing.Size(168, 45);
-            this.exponentialParkValue.TabIndex = 94;
-            this.exponentialParkValue.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.exponentialParkValue.Value = 250;
-            this.exponentialParkValue.Scroll += new System.EventHandler(this.showTooltipDividedBy1000);
-            // 
-            // lambdaLabel2
-            // 
-            this.lambdaLabel2.AutoSize = true;
-            this.lambdaLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lambdaLabel2.Location = new System.Drawing.Point(3, 28);
-            this.lambdaLabel2.Name = "lambdaLabel2";
-            this.lambdaLabel2.Size = new System.Drawing.Size(19, 16);
-            this.lambdaLabel2.TabIndex = 57;
-            this.lambdaLabel2.Text = " λ";
             // 
             // flowRadioButtons
             // 
@@ -818,7 +818,7 @@
             this.dayTarifCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dayTarifCostLabel.Location = new System.Drawing.Point(12, 478);
             this.dayTarifCostLabel.Name = "dayTarifCostLabel";
-            this.dayTarifCostLabel.Size = new System.Drawing.Size(231, 16);
+            this.dayTarifCostLabel.Size = new System.Drawing.Size(230, 16);
             this.dayTarifCostLabel.TabIndex = 110;
             this.dayTarifCostLabel.Text = "Стоимость дневного тарифа (руб)";
             // 
@@ -828,7 +828,7 @@
             this.nightTarifCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nightTarifCostLabel.Location = new System.Drawing.Point(12, 516);
             this.nightTarifCostLabel.Name = "nightTarifCostLabel";
-            this.nightTarifCostLabel.Size = new System.Drawing.Size(223, 16);
+            this.nightTarifCostLabel.Size = new System.Drawing.Size(222, 16);
             this.nightTarifCostLabel.TabIndex = 111;
             this.nightTarifCostLabel.Text = "Стоимость ночного тарифа (руб)";
             // 
@@ -910,6 +910,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.deterministicParkInterval)).EndInit();
             this.randomParkPanel.ResumeLayout(false);
             this.randomParkPanel.PerformLayout();
+            this.exponentialParkPanel.ResumeLayout(false);
+            this.exponentialParkPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.exponentialParkValue)).EndInit();
             this.normalParkPanel.ResumeLayout(false);
             this.normalParkPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parkDXValue)).EndInit();
@@ -918,9 +921,6 @@
             this.uniformParkPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parkBValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.parkAValue)).EndInit();
-            this.exponentialParkPanel.ResumeLayout(false);
-            this.exponentialParkPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.exponentialParkValue)).EndInit();
             this.flowRadioButtons.ResumeLayout(false);
             this.flowRadioButtons.PerformLayout();
             this.parkRadioButtons.ResumeLayout(false);

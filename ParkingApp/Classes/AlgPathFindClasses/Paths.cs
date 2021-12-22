@@ -11,10 +11,12 @@ namespace ParkingApp.Classes.AlgPathFind
         public static PathPoint roadStart;
         public static PathPoint roadEnd;
         public static PathPoint roadBeforeEntrance;
-        public static PathPoint roadBeforeExit;
+        public static PathPoint tileBeforeExit;
 
         public static List<PathPoint> ligthParkingPlaces = new List<PathPoint>();
         public static List<PathPoint> heavyParkingPlaces = new List<PathPoint>();
+
+        public static Dictionary<int, int> parkingPlacesIdentity;
 
         public static int[,] parkingMatrix;
         public static int[,] roadMatrix;
@@ -27,7 +29,9 @@ namespace ParkingApp.Classes.AlgPathFind
             parkingEntrance = new PathPoint(0, 0);
             parkingExit = new PathPoint(0, 0);
             roadBeforeEntrance = new PathPoint(0, 0);
-            roadBeforeExit = new PathPoint(0, 0);
+            tileBeforeExit = new PathPoint(0, 0);
+            parkingPlacesIdentity = new Dictionary<int, int>();
+            int parkingPlaceNumber = 1;
 
             for (int x = 0; x < width; x++)
             {
@@ -41,25 +45,29 @@ namespace ParkingApp.Classes.AlgPathFind
                     {
                         parkingMatrix[x, y] = 5;
                         ligthParkingPlaces.Add(new PathPoint(x, y));
+                        int id = x * 10 + y;
+                        parkingPlacesIdentity.Add(id, parkingPlaceNumber++);
                     }
                     else if (patterns[x, y] == Globals.HEAVY_PARKING_PLACE_MAIN)
                     {
                         parkingMatrix[x, y] = 5;
                         heavyParkingPlaces.Add(new PathPoint(x, y));
+                        int id = x * 10 + y;
+                        parkingPlacesIdentity.Add(id, parkingPlaceNumber++);
                     }
                     else if (patterns[x, y] == Globals.ENTRANCE)
                     {
                         // fixme
-                        parkingMatrix[x, y] = 1;
+                        parkingMatrix[x, y] = 2;
                         parkingEntrance.set(x, y);
-                        roadBeforeEntrance = getRoadPathPoint(parkingEntrance);
+                        roadBeforeEntrance.set(parkingEntrance.X, parkingEntrance.Y + 1);
                     }
                     else if (patterns[x, y] == Globals.EXIT)
                     {
                         // fixme
-                        parkingMatrix[x, y] = 1;
+                        parkingMatrix[x, y] = 2;
                         parkingExit.set(x, y);
-                        roadBeforeExit = getRoadPathPoint(parkingExit);
+                        tileBeforeExit.set(parkingExit.X, parkingExit.Y - 1);
                     }
                     else
                     {
@@ -69,11 +77,6 @@ namespace ParkingApp.Classes.AlgPathFind
             }
 
             totalParkingPlaces = heavyParkingPlaces.Count + ligthParkingPlaces.Count;
-        }
-
-        public static PathPoint getRoadPathPoint(PathPoint pointPark)
-        {
-            return new PathPoint(pointPark.X, pointPark.Y + 1);
         }
         
         public static void fillRoadMatrix(int width, int height)
@@ -104,7 +107,8 @@ namespace ParkingApp.Classes.AlgPathFind
             int value = rnd.Next(parkingPlacesList.Count);
             var parkingPlace = parkingPlacesList.ElementAt(value);
 
-            car.parkingPlaceNumber = int.Parse(parkingPlace.X + "" + parkingPlace.Y);
+            var id = parkingPlace.X * 10 + parkingPlace.Y;
+            car.parkingPlaceNumber = Paths.parkingPlacesIdentity[id];
             parkingPlacesList.Remove(parkingPlace);
             parkingMatrix[parkingPlace.X, parkingPlace.Y] = 3;
      
@@ -118,10 +122,13 @@ namespace ParkingApp.Classes.AlgPathFind
             roadStart = null;
             roadEnd = null;
             roadBeforeEntrance = null;
-            roadBeforeExit = null;
+            tileBeforeExit = null;
             ligthParkingPlaces = new List<PathPoint>();
+            heavyParkingPlaces = new List<PathPoint>();
             parkingMatrix = null;
             roadMatrix = null;
+            parkingPlacesIdentity = null;
+            totalParkingPlaces = 0;
         }
 
         #region A* algoritm
@@ -149,8 +156,10 @@ namespace ParkingApp.Classes.AlgPathFind
                 //Если X — цель, то мы нашли маршрут.
                 if ((currentNode.Position.X == goal.X) && (currentNode.Position.Y == goal.Y))
                 {
-                    if ((field[goal.X, goal.Y] != 1) && (field[goal.X, goal.Y] != 7))
-                    { field[goal.X, goal.Y] = 5; }//парковочное место занято}
+                    if ((field[goal.X, goal.Y] == 3))
+                    { 
+                        field[goal.X, goal.Y] = 5; //парковочное место занято
+                    }
                     return GetPathForNode(currentNode);
                 }
                 //Переносим X из списка ожидающих рассмотрения в список уже рассмотренных.

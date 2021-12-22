@@ -56,7 +56,7 @@ namespace ParkingApp.Screens.Manager
             }
             if (parkLawType == LawTypes.Exponential)
             {
-                parkValues.Add("lambda", exponentialParkValue.Value / 1000d);
+                parkValues.Add("lambda", exponentialParkValue.Value / 20000d);
             }
             if (parkLawType == LawTypes.Normal)
             {
@@ -70,20 +70,21 @@ namespace ParkingApp.Screens.Manager
             var lightCarProbability = this.lightCarProbability.Value / 100d;
             var heavyCarProbability = this.heavyCarProbability.Value / 100d;
 
-            this.modelingParams = new ModelingParams(flowLawType, parkLawType, flowValues, parkValues, lightToHeavyRatio, lightCarProbability, heavyCarProbability);
-            Globals.tariff = createTariff();
+            this.modelingParams = new ModelingParams(
+                flowLawType, 
+                parkLawType,
+                flowValues, 
+                parkValues, 
+                lightToHeavyRatio, 
+                lightCarProbability, 
+                heavyCarProbability,
+                this.nightTarifCost.Value,
+                this.dayTarifCost.Value,
+                (int)this.startTimeHours.Value,
+                (int)this.startTimeMinutes.Value
+            );
 
             this.Close();
-            //Globals.calculateDelta();
-        }
-
-        private Tariff createTariff()
-        {
-            int carPrice = 100;
-            Tariff tariff;
-            tariff = new Tariff(Globals.HOURLY_RATE, carPrice);
-            tariff = new Tariff(Globals.DAILY_RATE, carPrice);
-            return tariff;
         }
 
         #region UIHelpers
@@ -105,6 +106,11 @@ namespace ParkingApp.Screens.Manager
         private void showTooltipDividedBy1000(object sender, EventArgs e)
         {
             trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 1000d).ToString());
+        }
+
+        private void showToolTipDividedBy20000(object sender, EventArgs e)
+        {
+            trackBarTooltip.SetToolTip(sender as TrackBar, ((sender as TrackBar).Value / 20000d).ToString());
         }
 
         private bool checkABValues(int a, int b)
@@ -178,8 +184,6 @@ namespace ParkingApp.Screens.Manager
         private void backToAdminMainScreen_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ManagerMainScreen managerMainScreen = new ManagerMainScreen();
-            managerMainScreen.Show();
         }
 
         #endregion

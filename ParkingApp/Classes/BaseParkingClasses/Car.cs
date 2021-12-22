@@ -3,6 +3,7 @@ using ParkingApp.Classes.BaseParkingClasses;
 using ParkingApp.Properties;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,17 +31,25 @@ namespace ParkingApp.Classes
 
         public PathPoint currentPosition { get; set; }
         public Point parkingPlace { get; set; }
+        public Point heavyParkingPlace { get; set; }
         public PictureBox carPicBox { get; set; }
         public List<Point> carPath { get; set; }
         public TableItem tableItem { get; set; }
 
         public int parkingPlaceNumber { get; set; }
-        public double timeStay { get; set; }
+        public double timeOnParking { get; set; }
 
         public CarType carType;
         public Timer timer;
         private CarDirection currentCarDirection = CarDirection.Top;
         private ModelingParams modelingParams;
+        public event EventHandler addToDataTable;
+        public event EventHandler removeFromDataTable;
+        public event EventHandler disposeCar;
+        private DateTime timerStartTime;
+        private int remainingInterval;
+
+
         public Car(ModelingParams modelingParams, double probability)
         {
             this.modelingParams = modelingParams;
@@ -57,12 +66,15 @@ namespace ParkingApp.Classes
                 SizeMode = PictureBoxSizeMode.StretchImage,
             };
 
+            this.timerStartTime = DateTime.Now;
             timer = new Timer { Interval = Globals.INTERVAL };
             timer.Tick += timerTick;
         }
 
-        public async void timerTick(object sender, EventArgs e)
+        public void timerTick(object sender, EventArgs e)
         {
+            if (carPath.Count == 0) return;
+
             carPicBox.BringToFront();
             var newX = carPicBox.Location.X + carPath.ElementAt(0).X;
             var newY = carPicBox.Location.Y + carPath.ElementAt(0).Y;
@@ -72,22 +84,71 @@ namespace ParkingApp.Classes
             carPath.RemoveAt(0);
             if (carPath.Count == 0 && currentPosition == Paths.roadEnd) 
             {
+                this.disposeCar.Invoke(this, EventArgs.Empty);
                 carPicBox.Dispose();
                 timer.Stop();
                 return;
             }
 
-            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingEntrance)) this.addCarToDataGrid(this);
-            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) Globals.tableItem.Remove(this.tableItem);
+            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingEntrance)) this.addToDataTable.Invoke(this, EventArgs.Empty);
+            if (this.carPicBox.Location == Modeling.getLocationFromPathPoint(Paths.parkingExit)) this.removeFromDataTable.Invoke(this, EventArgs.Empty);
             if (this.parkingPlace != null && this.carPicBox.Location == this.parkingPlace)
             {
-                timer.Stop();
-                await Task.Delay(Convert.ToInt32(timeStay));
-                this.carPicBox.Refresh();
-                timer.Start();
-                if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
-                if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
+                this.timerStartTime = DateTime.Now;
+                timer.Interval = (int)timeOnParking;
+                timer.Tick += timerReset;
             }
+        }
+
+        private void timerReset(object sender, EventArgs e)
+        {
+            this.carPicBox.Refresh();
+            if (this.carType == CarType.Ligth) Paths.ligthParkingPlaces.Add(Modeling.getPathPointFromLocation(this.parkingPlace));
+            if (this.carType == CarType.Heavy) Paths.heavyParkingPlaces.Add(Modeling.getPathPointFromLocation(this.heavyParkingPlace));
+
+            this.timerStartTime = DateTime.Now;
+            timer.Interval = Globals.INTERVAL;
+            timer.Tick -= timerReset;
+        }
+
+        public void playPauseTimer()
+        {
+            if (this.timer.Enabled)
+            {
+                
+                this.remainingInterval = (int)(this.timer.Interval - (DateTime.Now - this.timerStartTime).TotalMilliseconds);
+                this.timer.Stop();
+                return;
+            }
+            if (!this.timer.Enabled)
+            {
+                this.timer.Interval = this.remainingInterval > 0 ? this.remainingInterval : Globals.INTERVAL;
+                this.timer.Start();
+                this.timerStartTime = DateTime.Now;
+                this.timer.Tick += intervalAdjust;
+            }
+        }
+
+        public void adjustTimer(int newPlaySpeed, int currentPlaySpeed)
+        {
+            if (this.timer.Interval == currentPlaySpeed)
+            {
+                this.timerStartTime = DateTime.Now;
+                this.timer.Interval = newPlaySpeed;
+                return;
+            }
+            var playSpeedsRatio = (double)newPlaySpeed / currentPlaySpeed;
+            var newTimerInterval = (this.timer.Interval - (DateTime.Now - this.timerStartTime).TotalMilliseconds) * playSpeedsRatio;
+            this.timerStartTime = DateTime.Now;
+            this.timer.Interval = (int)newTimerInterval;
+            this.timer.Tick += intervalAdjust;
+        }
+
+        private void intervalAdjust(object sender, EventArgs e)
+        {
+            this.timerStartTime = DateTime.Now;
+            this.timer.Interval = Globals.INTERVAL;
+            this.timer.Tick -= intervalAdjust;
         }
 
         public bool shouldEnterParking(double probability)
@@ -102,16 +163,6 @@ namespace ParkingApp.Classes
                 result = (probability <= this.modelingParams.lightCarProbability) && (Paths.ligthParkingPlaces.Count != 0);
             }
             return result;
-        }
-
-        private void addCarToDataGrid(Car car)
-        {
-            car.tableItem = new TableItem(
-                this.modelingParams.parkingInterval,
-                car.parkingPlaceNumber,
-                Convert.ToInt32(Globals.tariff.carPrice * this.modelingParams.parkingInterval)
-            );
-            Globals.tableItem.Add(car.tableItem);
         }
 
         public List<Point> getPathList(PathPoint start, PathPoint end, int[,] matrix)
@@ -133,8 +184,6 @@ namespace ParkingApp.Classes
             List<Point> points = new List<Point>();
             var firstPoint = Modeling.getLocationFromPathPoint(start);
             var secondPoint = Modeling.getLocationFromPathPoint(end);
-
-
 
             secondPoint.Offset(-firstPoint.X, -firstPoint.Y);
             this.addPoints(points, secondPoint);
@@ -204,8 +253,11 @@ namespace ParkingApp.Classes
             }
             if (this.carType == CarType.Heavy)
             {
-                int value = random.Next(0, 1);
+                int value = random.Next(0, 4);
                 if (value == 0) return Resources.heavyCarPic1;
+                if (value == 1) return Resources.heavyCarPic2;
+                if (value == 2) return Resources.heavyCarPic3;
+                if (value == 3) return Resources.heavyCarPic4;
             }
             return Resources.carPic5;
         }
