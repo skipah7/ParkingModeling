@@ -63,15 +63,16 @@ namespace ParkingApp
             string[] contiguousElements = getContiguousElements(sender as PictureBox);
 
             bool isMainHeavyPakingNearby = false;
-            bool isHeavyParkingSeconAlreadyExist = false;
+            bool isHeavyParkingSecondAlreadyExists = false;
             foreach (string element in contiguousElements)
             {
                 Control[] controls = this.Controls.Find(element, true);
                 if (controls.Length == 0) continue;
 
                 PictureBox neabyPictureBox = controls[0] as PictureBox;
-                isMainHeavyPakingNearby |= ImagesHelper.isImageSame(neabyPictureBox.Image as Bitmap, Resources.heavyParkingPlaceMain);
-                if (!isMainHeavyPakingNearby) continue;
+                var isHeavyParkingNearbyTemp = ImagesHelper.isImageSame(neabyPictureBox.Image as Bitmap, Resources.heavyParkingPlaceMain);
+                if (!isHeavyParkingNearbyTemp) continue;
+                isMainHeavyPakingNearby |= isHeavyParkingNearbyTemp;
 
                 string[] contiguousElementsWithHeavyParking = getContiguousElements(neabyPictureBox);
                 foreach (string elementCoordinates in contiguousElementsWithHeavyParking)
@@ -80,12 +81,12 @@ namespace ParkingApp
                     if (nearbyControls.Length == 0) continue;
 
                     PictureBox pictureBox = nearbyControls[0] as PictureBox;
-                    isHeavyParkingSeconAlreadyExist |= ImagesHelper.isImageSame(pictureBox.Image as Bitmap, Resources.heavyParkingPlaceSecond);
-                    if (isHeavyParkingSeconAlreadyExist) break;
+                    isHeavyParkingSecondAlreadyExists |= ImagesHelper.isImageSame(pictureBox.Image as Bitmap, Resources.heavyParkingPlaceSecond);
+                    if (isHeavyParkingSecondAlreadyExists) break;
                 }
             }
 
-            if (!isMainHeavyPakingNearby || isHeavyParkingSeconAlreadyExist)
+            if (!isMainHeavyPakingNearby || isHeavyParkingSecondAlreadyExists)
             {
                 e.Effect = DragDropEffects.None;
             }
